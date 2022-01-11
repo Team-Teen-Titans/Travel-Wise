@@ -102,3 +102,9 @@ dist
 
 # TernJS port file
 .tern-port
+
+# Webpack Build Folder
+build
+
+.DS_Store
+src/.DS_Store
