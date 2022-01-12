@@ -7,7 +7,7 @@ const FlightSelector = () => {
     originAirport: null,
     destinationAirport: null,
     departureDate: null,
-    arrivalDate: null,
+    returnDate: null,
     oneWayOrRound: null,
   });
 
