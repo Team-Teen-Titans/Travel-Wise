@@ -5,13 +5,24 @@ const Dotenv = require('dotenv-webpack');
 
 module.exports = {
   entry: path.join(__dirname, 'src/index.js'),
+  devServer: {
+    static: path.join(__dirname, 'build'),
+    compress: true,
+    port: 8080,
+    proxy: {
+      '/': {
+        target: 'http://localhost:3000/',
+      },
+    },
+  },
+
   output: {
     path: path.resolve(__dirname, 'build'),
     filename: 'bundle.js',
   },
 
   devtool: 'inline-source-map',
-  mode: 'development',
+  mode: process.env.NODE_ENV,
 
   module: {
     rules: [
