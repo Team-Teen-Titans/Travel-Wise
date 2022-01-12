@@ -15,14 +15,19 @@ const FlightSelector = () => {
     console.log(tripInfo);
   });
 
-  const handleSearch = (e) => {
-    console.log(tripInfo);
-    navigate("/flights", { state: { tripInfo } });
-  };
+  //   const handleSearch = (e) => {
+  //     console.log(tripInfo);
+  //     navigate("/flights", { state: { tripInfo } });
+  //   };
 
   const getAirportCode = (input) => {
     axios.request();
   };
+
+  const oneWayHandle = () =>
+    setTripInfo({ ...tripInfo, oneWayOrRound: "onewaytrip" });
+  const roundTripHandle = () =>
+    setTripInfo({ ...tripInfo, oneWayOrRound: "roundtrip" });
 
   //need to set all the state with each input type
   //need to get the first airport code for each city to pass as state to next component
@@ -32,9 +37,7 @@ const FlightSelector = () => {
       <h3>Type of trip?</h3>
       <span>
         <button
-          onClick={() =>
-            setTripInfo({ ...tripInfo, oneWayOrRound: "onewaytrip" })
-          }
+          onClick={oneWayHandle}
           className="border 1px rounded"
           id="one-way"
         >
@@ -42,9 +45,7 @@ const FlightSelector = () => {
         </button>
         {" or "}
         <button
-          onClick={() =>
-            setTripInfo({ ...tripInfo, oneWayOrRound: "roundtrip" })
-          }
+          onClick={roundTripHandle}
           className="border 1px rounded"
           id="round-trip"
         >
@@ -73,7 +74,8 @@ const FlightSelector = () => {
 
       <br />
       <br />
-      <button onClick={handleSearch}>Search Flights Now</button>
+      <button>Search Flights Now</button>
+      {/* onClick={handleSearch} */}
     </div>
   );
 };
