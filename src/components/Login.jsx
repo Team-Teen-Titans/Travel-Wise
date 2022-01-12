@@ -29,7 +29,35 @@ const Login = () => {
       });
   };
 
-  return <div></div>;
+  return (
+    <div id='login'>
+      <div className='login-form'>
+        <p>Email</p>
+        <input
+          className='form-control login-input'
+          type='text'
+          placeholder='Enter email'
+          onChange={onEmailChange}
+        />
+        <p>Password</p>
+        <input
+          className='form-control login-input'
+          type='password'
+          placeholder='Password'
+          onChange={onPasswordChange}
+        />
+      </div>
+      <button
+        className='btn btn-primary'
+        id='loginbtn'
+        type='submit'
+        onClick={loginreq}
+      >
+        Log In
+      </button>
+      {/* account for error and if error, redirect user to signup */}
+    </div>
+  );
 };
 
 export default Login;
