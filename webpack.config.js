@@ -4,7 +4,10 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const Dotenv = require("dotenv-webpack");
 
 module.exports = {
-  entry: path.join(__dirname, "src/index.js"),
+  entry: [
+    "regenerator-runtime/runtime.js",
+    path.join(__dirname, "src/index.js"),
+  ],
   devServer: {
     static: path.join(__dirname, "build"),
     compress: true,

@@ -12,8 +12,8 @@ render(
   <BrowserRouter>
     <Routes>
       <Route path="/" element={<App />}>
-        <Route path="" element={<FlightSelector />} />
-        <Route path="home" element={<FlightSelector />} />
+        <Route path="" element={<HomepageContainer />} />
+        <Route path="home" element={<HomepageContainer />} />
         <Route
           path="country"
           element={<VaccineMap />}

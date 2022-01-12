@@ -1,4 +1,3 @@
-import { useNavigate } from "react-router";
 const VACCOVID_API_HOST =
   "vaccovid-coronavirus-vaccine-and-treatment-tracker.p.rapidapi.com";
 const VACCINATION_API_HOST = "covid-19-world-vaccination-data.p.rapidapi.com";
@@ -27,8 +26,6 @@ const countryCodeToName = {
   USA: "United States",
 };
 
-const navigate = useNavigate();
-
 const countryNameToCode = {
   "United Kingdom": "UK",
   "United States": "USA",
@@ -44,5 +41,4 @@ export {
   countryCodeToName,
   countryNameToCode,
   flightKey,
-  navigate,
 };

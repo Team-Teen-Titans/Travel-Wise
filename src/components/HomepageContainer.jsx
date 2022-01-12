@@ -6,7 +6,6 @@ import CovidMap from "./CovidMap";
 const HomepageContainer = () => {
   return (
     <div>
-      <NavBar />
       <FlightSelector />
       <CovidMap />
     </div>
