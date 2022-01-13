@@ -43,69 +43,68 @@ const SignUp = () => {
   };
 
   return (
-    <div id='signup'>
-      <div className='signup-form'>
-        <h2>Sign Up</h2>
-        <form id='signup'>
-          <label>
-            First Name:
-            <input
-              className='border 1px rounded'
-              type='text'
-              onChange={handleChange}
-              required
-            />
-          </label>
-          <label>
-            Last Name:
-            <input
-              className='border 1px rounded'
-              type='text'
-              onChange={handleChange}
-              required
-            />
-          </label>
-          <label>
-            Email:
-            <input
-              className='border 1px rounded'
-              type='text'
-              onChange={handleChange}
-              required
-            />
-          </label>
-          <label>
-            Password:
-            <input
-              className='border 1px rounded'
-              type='password'
-              onChange={handleChange}
-              required
-            />
-          </label>
-          <label>
-            Confirm Password:
-            <input
-              className='border 1px rounded'
-              type='password'
-              onChange={handleChange}
-              required
-            />
-          </label>
+    <div className='signup-form'>
+      <h2>Sign Up</h2>
+      <form id='signup'>
+        <label>
+          First Name:
+          <input
+            className='border 1px rounded'
+            type='text'
+            onChange={handleChange}
+            required
+          />
+        </label>
+        <label>
+          Last Name:
+          <input
+            className='border 1px rounded'
+            type='text'
+            onChange={handleChange}
+            required
+          />
+        </label>
+        <label>
+          Email:
+          <input
+            className='border 1px rounded'
+            type='text'
+            onChange={handleChange}
+            required
+          />
+        </label>
+        <label>
+          Password:
+          <input
+            className='border 1px rounded'
+            type='password'
+            onChange={handleChange}
+            required
+          />
+        </label>
+        <label>
+          Confirm Password:
+          <input
+            className='border 1px rounded'
+            type='password'
+            onChange={handleChange}
+            required
+          />
+        </label>
 
-          <Link to={'/login'}>
-            <button> Sign in instead </button>
-          </Link>
+        {/* <Link to={'/login'}>
+          <button> Sign in instead </button>
+        </Link> */}
+        {/* option to add link back to login if user already has account */}
 
-          <button
-            className='btn btn-primary'
-            type='submit'
-            onClick={handleSubmit}
-          >
-            Submit
-          </button>
-        </form>
-      </div>
+        <button
+          className='btn btn-primary'
+          type='submit'
+          onClick={handleSubmit}
+        >
+          Submit
+        </button>
+      </form>
       {passwordError && <p>Passwords do not match. Please try again.</p>}
     </div>
   );

@@ -17,7 +17,7 @@ const Login = () => {
     setPassword(passwordValue);
   };
 
-  const loginreq = () => {
+  const handleSubmit = () => {
     axios
       .post('/user/login', { email: email, password: password })
       .then((res) => {
@@ -33,34 +33,34 @@ const Login = () => {
   };
 
   return (
-    <div id='login'>
-      <div className='login-form'>
-        <p>Email</p>
-        <input
-          className='form-control login-input'
-          type='text'
-          placeholder='Enter email'
-          onChange={onEmailChange}
-          required
-        />
-        <p>Password</p>
-        <input
-          className='form-control login-input'
-          type='password'
-          placeholder='Password'
-          onChange={onPasswordChange}
-          required
-        />
-      </div>
+    <div className='login-form'>
+      <form id='login'>
+        <label>
+          Email: 
+          <input className='border 1px rounded'
+            type='text'
+            onChange={onEmailChange}
+            required
+          />
+        </label>
+        <label>
+          Password:  
+          <input className='border 1px rounded'
+            type='password'
+            onChange={onPasswordChange}
+            required
+          />
+        </label>
+      </form>
       <button
-        className='btn btn-primary'
+        className='border 1px rounded'
         type='submit'
-        onClick={loginreq}
+        onClick={handleSubmit}
       >
         Log In
       </button>
       {loginError && <p>Invalid email or password</p>}
-      <p>Need to sign up? Click <Link id='signUp-link' to={'/signup'}>here</Link> to get started!</p>
+      <p>Need to sign up? Click <Link to={'/signup'}>here</Link> to get started!</p>
     </div>
   );
 };

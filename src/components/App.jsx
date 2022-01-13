@@ -1,14 +1,14 @@
 import React from 'react';
 import NavBar from './Navbar';
 import Footer from './Footer';
-import SignUp from './SignUp';
+import Login from './Login';
 
 const App = () => {
   return (
     <div>
       <div>
         <NavBar />
-        <SignUp />
+        <Login />
       </div>
       <footer>
         <Footer />
