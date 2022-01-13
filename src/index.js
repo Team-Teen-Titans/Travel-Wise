@@ -5,6 +5,7 @@ import App from './components/App';
 import About from './components/About';
 import VaccineMap from './components/VaccineMap';
 import CovidMap from './components/CovidMap';
+import Login from './components/Login';
 import Styles from './stylesheets/styles.css';
 
 render(
@@ -15,6 +16,7 @@ render(
         <Route path="home" element={<CovidMap />} />
         <Route path="country" element={<VaccineMap />} render={(props) => <VaccineMap {...props}/>}/>
         <Route path="about" element={<About />} />
+        <Route path="login" element={<Login />} />
       </Route>
     </Routes>
   </BrowserRouter>,
