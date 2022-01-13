@@ -125,7 +125,7 @@ const FlightSelector = () => {
       <br />
 
       <span>
-        <label for="departure-date">Departure Date: </label>
+        <label htmlFor="departure-date">Departure Date: </label>
         <input
           type="date"
           name="departure"
@@ -134,7 +134,7 @@ const FlightSelector = () => {
           onChange={handleChange("departureDate")}
         ></input>
         {"  "}
-        <label for="return-date">Return Date: </label>
+        <label htmlFor="return-date">Return Date: </label>
         <input
           type="date"
           name="return"
@@ -146,17 +146,17 @@ const FlightSelector = () => {
       <br />
       <br />
       <span>
-        <label for="origin-city">From City: </label>
+        <label htmlFor="origin-city">From City: </label>
         <input
-          for="origin"
+          htmlFor="origin"
           name="origin"
           className="border 1px rounded"
           onChange={handleChange("originAirport")}
         ></input>
         {"  "}
-        <label for="destination-city">Destination: </label>
+        <label htmlFor="destination-city">Destination: </label>
         <input
-          for="destination"
+          htmlFor="destination"
           name="destination"
           className="border 1px rounded"
           onChange={handleChange("destinationAirport")}
