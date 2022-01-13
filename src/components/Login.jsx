@@ -22,10 +22,9 @@ const Login = () => {
       .post('/user/login', { email: email, password: password })
       .then((res) => {
         console.log(res);
-        sessionStorage.setItem('email', email);
+        // sessionStorage.setItem('email', email);
         // sessionStorage.setItem('loggedIn', ******);
-        // window.location.href= '/*****'
-        //where do we want to route user after they have logged in
+        window.location.href= '/home';
       })
       .catch((err) => {
         console.log(err);
