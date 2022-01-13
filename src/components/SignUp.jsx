@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 const SignUp = () => {
   const [state, setstate] = useState({
@@ -9,7 +10,7 @@ const SignUp = () => {
     password: '',
     confirmPassword: '',
   });
-  const [passwordMatch, setPasswordMatch] = useState(false);
+  const [passwordError, setPasswordError] = useState(false);
 
   const handleChange = (e) => {
     const { id, value } = e.target;
@@ -37,7 +38,7 @@ const SignUp = () => {
           console.log(err);
         });
     } else {
-      setPasswordMatch(true);
+      setPasswordError(true);
     }
   };
 
@@ -49,7 +50,7 @@ const SignUp = () => {
           <label>
             First Name:
             <input
-              className='form-control login-input'
+              className='border 1px rounded'
               type='text'
               onChange={handleChange}
               required
@@ -58,7 +59,7 @@ const SignUp = () => {
           <label>
             Last Name:
             <input
-              className='form-control login-input'
+              className='border 1px rounded'
               type='text'
               onChange={handleChange}
               required
@@ -67,7 +68,7 @@ const SignUp = () => {
           <label>
             Email:
             <input
-              className='form-control login-input'
+              className='border 1px rounded'
               type='text'
               onChange={handleChange}
               required
@@ -76,7 +77,7 @@ const SignUp = () => {
           <label>
             Password:
             <input
-              className='form-control login-input'
+              className='border 1px rounded'
               type='password'
               onChange={handleChange}
               required
@@ -85,20 +86,27 @@ const SignUp = () => {
           <label>
             Confirm Password:
             <input
-              className='form-control login-input'
+              className='border 1px rounded'
               type='password'
               onChange={handleChange}
               required
             />
           </label>
+
+          <Link to={'/login'}>
+            <button> Sign in instead </button>
+          </Link>
+
           <button
             className='btn btn-primary'
             type='submit'
             onClick={handleSubmit}
-          />
+          >
+            Submit
+          </button>
         </form>
       </div>
-      {passwordMatch && <p>Passwords do not match. Please try again.</p>}
+      {passwordError && <p>Passwords do not match. Please try again.</p>}
     </div>
   );
 };
