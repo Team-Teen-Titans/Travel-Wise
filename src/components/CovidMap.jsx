@@ -1,10 +1,10 @@
-import React from 'react';
-import { useEffect, useState } from 'react/cjs/react.development';
-import { Chart } from 'react-google-charts';
-import axios from 'axios';
-import { covidOptions, countryCodeToName } from '../utils/constants';
-import Loader from './Spinner';
-import { Link, useNavigate } from 'react-router-dom';
+import React from "react";
+import { useEffect, useState } from "react/cjs/react.development";
+import { Chart } from "react-google-charts";
+import axios from "axios";
+import { covidOptions, countryCodeToName } from "../utils/constants";
+import Loader from "./Spinner";
+import { Link, useNavigate } from "react-router-dom";
 
 const CovidMap = () => {
   const [covidData, setCovidData] = useState([]);
@@ -19,7 +19,7 @@ const CovidMap = () => {
         const cache = data.map((el) => {
           return [countryCodeToName[el.Country] || el.Country, el.TotalCases];
         });
-        cache.unshift(['Country', 'Total Cases']);
+        cache.unshift(["Country", "Total Cases"]);
         setCovidData(cache);
         setLoading(false);
       })
@@ -29,33 +29,35 @@ const CovidMap = () => {
   }, []);
 
   const options = {
-    colorAxis: { colors: ['green', 'black', 'red'] },
+    colorAxis: { colors: ["green", "black", "red"] },
   };
 
   return (
-    <div className='flex flex-col min-h-screen'>
+    <div className="flex flex-col min-h-screen">
       <h1>Covid Map</h1>
-      { loading ? <Loader/> :
-        <Chart 
+      {loading ? (
+        <Loader />
+      ) : (
+        <Chart
           chartEvents={[
             {
-              eventName: 'select',
+              eventName: "select",
               callback: ({ chartWrapper }) => {
                 const chart = chartWrapper.getChart();
                 const selection = chart.getSelection();
                 if (selection.length === 0) return;
                 const region = covidData[selection[0].row + 1];
-                navigate('/country', {state: { Country: region[0] }});
+                navigate("/country", { state: { Country: region[0] } });
               },
             },
           ]}
           chartType="GeoChart"
           width="100%"
-          height="60vh"
+          height="40vh"
           data={covidData}
           options={options}
         />
-      }
+      )}
     </div>
   );
 };
