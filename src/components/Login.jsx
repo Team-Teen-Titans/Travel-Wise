@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [loginError, setLoginError] = useState(false);
 
   const onEmailChange = (e) => {
     const emailValue = e.target.value;
@@ -18,14 +19,17 @@ const Login = () => {
 
   const loginreq = () => {
     axios
-      .post('****login route****', { email: email, password: password })
+      .post('/user/login', { email: email, password: password })
       .then((res) => {
         console.log(res);
-        //sessions?
-        //route to homepage? or saved trips?
+        sessionStorage.setItem('email', email);
+        // sessionStorage.setItem('loggedIn', ******);
+        // window.location.href= '/*****'
+        //where do we want to route user after they have logged in
       })
       .catch((err) => {
         console.log(err);
+        setLoginError(true);
       });
   };
 
@@ -55,7 +59,8 @@ const Login = () => {
       >
         Log In
       </button>
-      {/* account for error and if error, redirect user to signup */}
+      {loginError && <p>Invalid email or password</p>}
+      <p>Need to sign up? Click <Link id='signUp-link' to={'/signup'}>here</Link> to get started!</p>
     </div>
   );
 };
