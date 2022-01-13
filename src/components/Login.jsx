@@ -42,6 +42,7 @@ const Login = () => {
           type='text'
           placeholder='Enter email'
           onChange={onEmailChange}
+          required
         />
         <p>Password</p>
         <input
@@ -49,11 +50,11 @@ const Login = () => {
           type='password'
           placeholder='Password'
           onChange={onPasswordChange}
+          required
         />
       </div>
       <button
         className='btn btn-primary'
-        id='loginbtn'
         type='submit'
         onClick={loginreq}
       >
