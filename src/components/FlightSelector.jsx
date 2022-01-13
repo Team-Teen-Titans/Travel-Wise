@@ -184,8 +184,26 @@ const FlightSelector = () => {
           onChange={handleChange("destinationAirport")}
         ></input>
       </span>
+
       <br />
       <br />
+      <label htmlFor="cabinClass">Cabin Class: </label>
+      <span>
+        <select
+          onChange={handleChange("cabinClass")}
+          className="border 1px rounded"
+        >
+          <option value="Economy">Economy</option>
+          <option value="Business">Business</option>
+          <option value="First">First</option>
+          <option value="Premium_Economy">Premium Economy</option>
+        </select>
+      </span>
+      <br />
+      <br />
+      <span>
+        <h3>Passenger Information</h3>
+      </span>
       <span>
         <label htmlFor="numOfAdults">Adults: </label>
         <input
@@ -217,20 +235,6 @@ const FlightSelector = () => {
         ></input>
       </span>
 
-      <br />
-      <br />
-      <label htmlFor="cabinClass">Cabin Class: </label>
-      <span>
-        <select
-          onChange={handleChange("cabinClass")}
-          className="border 1px rounded"
-        >
-          <option value="Economy">Economy</option>
-          <option value="Business">Business</option>
-          <option value="First">First</option>
-          <option value="Premium_Economy">Premium Economy</option>
-        </select>
-      </span>
       <br />
       <br />
       <button onClick={handleSearchSubmit} className="border 1px rounded">
