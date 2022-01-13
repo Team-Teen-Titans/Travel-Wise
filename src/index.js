@@ -6,7 +6,6 @@ import About from "./components/About";
 import VaccineMap from "./components/VaccineMap";
 import HomepageContainer from "./components/HomepageContainer";
 import Styles from "./stylesheets/styles.css";
-import FlightSelector from "./components/FlightSelector";
 
 render(
   <BrowserRouter>
