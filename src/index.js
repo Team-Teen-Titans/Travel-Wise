@@ -1,14 +1,3 @@
-<<<<<<< HEAD
-import React from 'react';
-import { render } from 'react-dom';
-import { Routes, Route, BrowserRouter } from 'react-router-dom';
-import App from './components/App';
-import About from './components/About';
-import VaccineMap from './components/VaccineMap';
-import CovidMap from './components/CovidMap';
-import Login from './components/Login';
-import Styles from './stylesheets/styles.css';
-=======
 import React from "react";
 import { render } from "react-dom";
 import { Routes, Route, BrowserRouter } from "react-router-dom";
@@ -16,8 +5,8 @@ import App from "./components/App";
 import About from "./components/About";
 import VaccineMap from "./components/VaccineMap";
 import HomepageContainer from "./components/HomepageContainer";
+import Login from "./components/Login";
 import Styles from "./stylesheets/styles.css";
->>>>>>> dev
 
 render(
   <BrowserRouter>
