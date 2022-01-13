@@ -13,6 +13,10 @@ const FlightSelector = () => {
     departureDate: null,
     returnDate: null,
     oneWayOrRound: null,
+    numOfAdults: 1,
+    numOfChildren: 0,
+    numOfInfants: 0,
+    cabinClass: "Economy",
   });
 
   useEffect(() => {
@@ -76,6 +80,20 @@ const FlightSelector = () => {
         break;
       case "returnDate":
         setTripInfo({ ...tripInfo, returnDate: e.target.value });
+        break;
+      case "numOfAdults":
+        setTripInfo({ ...tripInfo, numOfAdults: e.target.value });
+        break;
+      case "numOfChildren":
+        setTripInfo({ ...tripInfo, numOfChildren: e.target.value });
+        break;
+      case "numOfInfants":
+        setTripInfo({ ...tripInfo, numOfInfants: e.target.value });
+        break;
+      case "cabinClass":
+        // if (e.target.value === "Premium Economy")
+        //   setTripInfo({ ...tripInfo, cabinClass: "Premium_Economy" });
+        setTripInfo({ ...tripInfo, cabinClass: e.target.value });
         break;
       default:
         console.log("handleChange ran", type);
@@ -162,7 +180,55 @@ const FlightSelector = () => {
           onChange={handleChange("destinationAirport")}
         ></input>
       </span>
+      <br />
+      <br />
+      <span>
+        <label htmlFor="numOfAdults">Adults: </label>
+        <input
+          htmlFor="numOfAdults"
+          // type="number"
+          defaultValue="1"
+          name="number of adults"
+          className="border 1px rounded"
+          onChange={handleChange("numOfAdults")}
+        ></input>
+        {"  "}
+        <label htmlFor="numOfChildren">Children: </label>
+        <input
+          htmlFor="numOfChildren"
+          defaultValue="0"
+          name="number of children"
+          className="border 1px rounded"
+          onChange={handleChange("numOfChildren")}
+        ></input>
+        {"  "}
+        <label htmlFor="numOfInfants">Infants: </label>
+        <input
+          htmlFor="numOfInfants"
+          // type="number"
+          defaultValue="0"
+          name="number of infants"
+          className="border 1px rounded"
+          onChange={handleChange("numOfInfants")}
+        ></input>
+      </span>
 
+      <br />
+      <br />
+      <label htmlFor="cabinClass">Cabin Class: </label>
+      <span>
+        <select
+          onChange={handleChange("cabinClass")}
+          className="border 1px rounded"
+        >
+          <option selected value="Economy">
+            Economy
+          </option>
+          <option value="Business">Business</option>
+          <option value="First">First</option>
+          <option value="Premium_Economy">Premium Economy</option>
+        </select>
+      </span>
       <br />
       <br />
       <button onClick={handleSearchSubmit} className="border 1px rounded">
