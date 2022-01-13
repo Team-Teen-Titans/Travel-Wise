@@ -172,6 +172,7 @@ const FlightSelector = () => {
         <input
           htmlFor="origin"
           name="origin"
+          placeholder="Charlottesville"
           className="border 1px rounded"
           onChange={handleChange("originAirport")}
         ></input>
@@ -179,6 +180,7 @@ const FlightSelector = () => {
         <label htmlFor="destination-city">Destination: </label>
         <input
           htmlFor="destination"
+          placeholder="Paris"
           name="destination"
           className="border 1px rounded"
           onChange={handleChange("destinationAirport")}
