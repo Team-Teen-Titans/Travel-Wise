@@ -62,6 +62,7 @@ const FlightSelector = () => {
 
   //sets the tripInfo state based on changes to the inputs
   const handleChange = (type) => (e) => {
+    let removedText;
     switch (type) {
       case "onewaytrip":
         setTripInfo({ ...tripInfo, oneWayOrRound: type });
@@ -82,17 +83,21 @@ const FlightSelector = () => {
         setTripInfo({ ...tripInfo, returnDate: e.target.value });
         break;
       case "numOfAdults":
-        setTripInfo({ ...tripInfo, numOfAdults: e.target.value });
+        removedText = e.target.value.replace(/\D+/g, "");
+        if (removedText === "") removedText = 0;
+        setTripInfo({ ...tripInfo, numOfAdults: removedText });
         break;
       case "numOfChildren":
-        setTripInfo({ ...tripInfo, numOfChildren: e.target.value });
+        removedText = e.target.value.replace(/\D+/g, "");
+        if (removedText === "") removedText = 0;
+        setTripInfo({ ...tripInfo, numOfChildren: removedText });
         break;
       case "numOfInfants":
-        setTripInfo({ ...tripInfo, numOfInfants: e.target.value });
+        removedText = e.target.value.replace(/\D+/g, "");
+        if (removedText === "") removedText = 0;
+        setTripInfo({ ...tripInfo, numOfInfants: removedText });
         break;
       case "cabinClass":
-        // if (e.target.value === "Premium Economy")
-        //   setTripInfo({ ...tripInfo, cabinClass: "Premium_Economy" });
         setTripInfo({ ...tripInfo, cabinClass: e.target.value });
         break;
       default:
@@ -112,7 +117,6 @@ const FlightSelector = () => {
     const minDate = date.split("");
     let changeDay = +minDate[minDate.length - 1] + 1;
     minDate[minDate.length - 1] = changeDay;
-    console.log(minDate.join(""));
     return minDate.join("");
   };
 
@@ -221,9 +225,7 @@ const FlightSelector = () => {
           onChange={handleChange("cabinClass")}
           className="border 1px rounded"
         >
-          <option selected value="Economy">
-            Economy
-          </option>
+          <option value="Economy">Economy</option>
           <option value="Business">Business</option>
           <option value="First">First</option>
           <option value="Premium_Economy">Premium Economy</option>
