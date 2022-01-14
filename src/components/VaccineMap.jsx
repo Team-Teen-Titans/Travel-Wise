@@ -2,15 +2,16 @@ import React from 'react';
 import { useEffect, useState } from 'react/cjs/react.development';
 import { Chart } from 'react-google-charts';
 import axios from 'axios';
-import { vaccinationOptions } from '../utils/constants';
+import { countryNameToCode, vaccinationOptions } from '../utils/constants';
+import { covidOptions, countryCodeToName } from '../utils/constants';
 import Loader from './Spinner';
 import { useLocation } from 'react-router';
 import object from '../utils/isoCodes';
 import Table from './Table';
 
 const VaccineMap = () => {
-  const [ countryData, setCountryData ] = useState([]);
-  const [ loading, setLoading ] = useState(true);
+  const [countryData, setCountryData] = useState([]);
+  const [loading, setLoading] = useState(true);
   const { state } = useLocation();
   let iso;
   if (!state) {
@@ -18,8 +19,11 @@ const VaccineMap = () => {
     iso = 'USA';
   } else {
     const { Country } = state;
-    vaccinationOptions.params['iso'] = object[Country];
+    console.log('Country: ', Country);
+    const codeConversion = countryNameToCode[Country];
+    vaccinationOptions.params['iso'] = object[Country] || object[codeConversion];
     iso = object[Country];
+    console.log('iso: ', iso);
   }
 
   useEffect(() => {
@@ -27,16 +31,20 @@ const VaccineMap = () => {
       .request(vaccinationOptions)
       .then((response) => response.data)
       .then((data) => {
-        const { country, total_vaccinations } = data[data.length-1];
+        const { country, total_vaccinations } = data[data.length - 1];
         return { country, total_vaccinations };
       })
       .then((data) => {
-        const cache = [ [], [] ];
+        const cache = [[], []];
         for (const property in data) {
-          const capitalizedString = `${property[0].toUpperCase()}${property.slice(1)}`;
+          const capitalizedString = `${property[0].toUpperCase()}${property.slice(
+            1
+          )}`;
           const formattedString = capitalizedString.replaceAll(/_/g, ' ');
           cache[0].push(formattedString);
-          const dataPoint = Number.isNaN(+data[property]) ? data[property] : +data[property];
+          const dataPoint = Number.isNaN(+data[property])
+            ? data[property]
+            : +data[property];
           cache[1].push(dataPoint);
         }
         setCountryData(cache);
@@ -47,28 +55,27 @@ const VaccineMap = () => {
       });
   }, []);
 
-  const options = {
-  };
-    
+  const options = {};
 
   return (
     <div>
-      <h1>Vaccine Map</h1>
-      {loading ? <Loader/> :
-        <Chart 
-          chartType="GeoChart"
-          width="100%"
-          height="60vh"
+      <h1 align='center' className='py-4 text-lg font-mono'>
+        Total Number of Vaccinations
+      </h1>
+      {loading ? (
+        <Loader />
+      ) : (
+        <Chart
+          chartType='GeoChart'
+          width='100%'
+          height='60vh'
           data={countryData}
           options={options}
         />
-      }
-      {loading ? <Loader/> : 
-        <Table iso={iso}/>
-      }
+      )}
+      {loading ? <Loader /> : <Table iso={iso} />}
     </div>
   );
-
 };
 
 export default VaccineMap;

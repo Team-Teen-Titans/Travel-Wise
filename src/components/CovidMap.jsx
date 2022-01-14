@@ -17,14 +17,15 @@ const CovidMap = () => {
       .then((response) => response.data)
       .then((data) => {
         const cache = data.map((el) => {
-          const casesPerNum = Math.floor((el.ActiveCases / el.Population) * 100000) || 0;
+          const casesPerNum =
+            Math.floor((el.ActiveCases / el.Population) * 100000) || 0;
           // console.log(el.Country, 'cases per 100,000: ', casesPerNum);
           return [countryCodeToName[el.Country] || el.Country, casesPerNum];
         });
         cache.unshift(['Country', 'Cases per 100,000']);
         setCovidData(cache);
         setLoading(false);
-        console.log(cache);
+        // console.log(cache);
       })
       .catch(function (error) {
         console.error(error);
@@ -40,7 +41,7 @@ const CovidMap = () => {
 
   return (
     <div className='flex flex-col min-h-screen'>
-      <h1>Covid Map</h1>
+      <h1 align='center' className='py-4 text-lg font-mono'>Covid-19 Cases per 100,000 People</h1>
       {loading ? (
         <Loader />
       ) : (
@@ -59,7 +60,7 @@ const CovidMap = () => {
           ]}
           chartType='GeoChart'
           width='100%'
-          height='40vh'
+          height='60vh'
           data={covidData}
           options={options}
         />
