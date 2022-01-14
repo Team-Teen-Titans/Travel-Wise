@@ -12,8 +12,10 @@ module.exports = {
     static: path.join(__dirname, "build"),
     compress: true,
     port: 8080,
+    //needed to render pages with react router without going to the server
+    historyApiFallback: true,
     proxy: {
-      "/": {
+      "/api/**": {
         target: "http://localhost:3000/",
       },
     },

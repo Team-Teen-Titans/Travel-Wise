@@ -5,6 +5,7 @@ import App from "./components/App";
 import About from "./components/About";
 import VaccineMap from "./components/VaccineMap";
 import HomepageContainer from "./components/HomepageContainer";
+import FlightResults from "./components/FlightResults";
 import Styles from "./stylesheets/styles.css";
 
 render(
@@ -19,6 +20,10 @@ render(
           render={(props) => <VaccineMap {...props} />}
         />
         <Route path="about" element={<About />} />
+        <Route path="flights" 
+          element={<FlightResults />} 
+          render={(props) => <FlightResults {...props} />}
+        />
       </Route>
     </Routes>
   </BrowserRouter>,

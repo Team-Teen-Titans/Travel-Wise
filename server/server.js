@@ -7,10 +7,22 @@ const PORT = 3000;
 app.use(cors());
 
 /**
+ * require routers
+ */
+
+const flightsRouter = require('./routes/flights');
+
+/**
  * handle parsing request body
  */
 app.use(express.json());
 
+//handle flights query 
+app.use('/api/flights', flightsRouter);
+
+// catch-all route handler for any requests to an unknown route
+// set status code and send status as a string in response
+app.use((req, res) => res.sendStatus(404));
 
 //global error handler
 app.use((err, req, res, next) => {
