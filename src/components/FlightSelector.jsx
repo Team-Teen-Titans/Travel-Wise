@@ -25,35 +25,11 @@ const FlightSelector = () => {
   //where flight options will be displayed
   const handleSearchSubmit = () => {
     console.log(tripInfo);
-    const originCode = getAirportCode(tripInfo.originAirport);
-    const destinationCode = getAirportCode(tripInfo.destinationAirport);
     navigate('/flights', {
       state: {
-        tripInfo: {
-          ...tripInfo,
-          originAirport: originCode,
-          destinationAirport: destinationCode,
-        },
+        ...tripInfo,
       },
     });
-  };
-
-  //this gets the airport code input so that state can be set by airport code and not by
-  //city name so the query will run successfully
-  const getAirportCode = async (cityName) => {
-    const cityUrl = cityName.replace(/\s/g, '%20');
-    console.log(cityUrl);
-    let airportCode;
-    await axios
-      .request({
-        method: 'GET',
-        url: `https://api.flightapi.io/iata/${flightKey}/${cityUrl}/airport`,
-        //left off here getting CORS error trying to send http req from front-end
-        // headers: {},
-      })
-      .then((res) => (airportCode = res.data[0].iata))
-      .catch((err) => console.error(err));
-    return airportCode;
   };
 
   //sets the tripInfo state based on changes to the inputs

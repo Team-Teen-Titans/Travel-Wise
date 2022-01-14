@@ -1,7 +1,7 @@
-const express = require("express");
+const express = require('express');
 const app = express();
-const cors = require("cors");
-const path = require("path");
+const cors = require('cors');
+const path = require('path');
 const PORT = 3000;
 
 app.use(cors());
@@ -20,6 +20,7 @@ app.use(express.json());
 //handle flights query 
 app.use('/api/flights', flightsRouter);
 
+
 // catch-all route handler for any requests to an unknown route
 // set status code and send status as a string in response
 app.use((req, res) => res.sendStatus(404));
@@ -27,9 +28,9 @@ app.use((req, res) => res.sendStatus(404));
 //global error handler
 app.use((err, req, res, next) => {
   const defaultErr = {
-    log: "Express error handler caught unknown middleware error",
+    log: 'Express error handler caught unknown middleware error',
     status: 500,
-    message: { err: "An error occurred" },
+    message: { err: 'An error occurred' },
   };  
   // change error of default error object
   const errorObj = {
@@ -41,7 +42,7 @@ app.use((err, req, res, next) => {
 
 //handle page not found
 app.use((req, res) =>
-  res.status(404).send("This is not the page you're looking for...")
+  res.status(404).send('This is not the page you\'re looking for...')
 );
 
 app.listen(PORT, () => console.log(`Server listening on port: ${PORT}`));

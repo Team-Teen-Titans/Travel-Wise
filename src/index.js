@@ -8,7 +8,7 @@ import HomepageContainer from './components/HomepageContainer';
 import Login from './components/Login';
 import Styles from './stylesheets/styles.css';
 import SignUp from './components/SignUp';
-import FlightResults from "./components/FlightResults";
+import FlightResults from './components/FlightResults';
 
 
 render(
