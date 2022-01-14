@@ -1,12 +1,11 @@
-const { hashPassword, comparePassword } = require('./../encryption');
-const db = require('./../models/userModel');
+const db = require('../db-model/model');
 
 const userController = {};
 
 const bcrypt = require('bcrypt');
 const SALT_WORK_FACTOR = 10;
 
-userController.signup = (req, res, next) => {
+userController.signup = async (req, res, next) => {
 	// add logic so that username cannot contain '@' symbol
 
 	if (
@@ -44,14 +43,71 @@ userController.signup = (req, res, next) => {
 };
 
 userController.login = async (req, res, next) => {
-	const { usernameOrEmail, password } = req.body;
-	if (!(usernameOrEmail || password)) {
+	const { email, password } = req.body;
+	if (!(email || password)) {
 		// potentially separate above line into 2 separate if statements which returns different errors based on what is missing
 		res.locals.userForgotAField = true;
 		return next();
 	} else {
-		if (usernameOrEmail.includes('@')) {
-		}
+		// check if email in database
+		// if (email.includes('@')) {
+		const queryToGrabHashedPassword = `SELECT password FROM users WHERE email = $1`;
+		const paramForPassword = [email];
+		db.query(queryToGrabHashedPassword, paramForPassword)
+			.then(async (data) => {
+				if (data.rowCount > 0) {
+					try {
+						const hashedPassword = data.rows[0].password;
+						// console.log(hashedPassword);
+						const isMatch = await bcrypt.compare(password, hashedPassword);
+						res.locals.isMatch = isMatch; //this is a boolean value
+						return next();
+					} catch (err) {
+						return next(err);
+					}
+				}
+			})
+			.catch((err) => {
+				// console.log(err);
+				return next(err);
+			});
+
+		// const queryToCheckEmail = `SELECT * FROM users WHERE email = $1`;
+		// const params = [email];
+		// db.query(queryToCheckEmail, params)
+		// 	.then((data) => {
+		// 		if (data.rowCount === 1) {
+		// 			try {
+		// 				const isMatch = await bcrypt.compare(password, hashedPassword);
+		// 				res.locals.isMatch = isMatch; //this is a boolean value
+		// 				return next();
+		// 			} catch (err) {
+		// 				return next(err);
+		// 			}
+		// 		}
+		// 		return next({ message: "User doesn't exist" });
+		// 	})
+		// 	.catch((err) => next(err));
+		// }
+		// else {
+		// 	const queryToCheckDisplayName = `SELECT * FROM users WHERE display_name = $1`;
+		// 	const params = [email];
+		// 	db.query(queryToCheckDisplayName, params)
+		// 		.then((data) => {
+		// 			if (data.rowCount === 1) {
+		// 				try {
+		// 					const isMatch = await bcrypt.compare(password, hashedPassword);
+		// 					res.locals.isMatch = isMatch; //this is a boolean value
+		// 					return next();
+		// 				} catch (err) {
+		// 					return next(err);
+		// 				}
+		// 			}
+		// 			return next({ message: "User doesn't exist" });
+		// 		})
+		// 		.catch((err) => next(err));
+		// }
+		// check password after hashing
 	}
 };
 
@@ -66,13 +122,14 @@ userController.hashPassword = async (req, res, next) => {
 		return next(err);
 	}
 };
-userController.checkPassword = async (req, res, next) => {
-	try {
-		const { rawPassword, hashedPassword } = req.body;
-		const isMatch = await bcrypt.compare(rawPassword, hashedPassword);
-		res.locals.isMatch = isMatch; //this is a boolean value
-		return next();
-	} catch (err) {
-		return next(err);
-	}
-};
+// userController.checkPassword = async (req, res, next) => {
+// 	try {
+// 		const { rawPassword, hashedPassword } = req.body;
+// 		const isMatch = await bcrypt.compare(rawPassword, hashedPassword);
+// 		res.locals.isMatch = isMatch; //this is a boolean value
+// 		return next();
+// 	} catch (err) {
+// 		return next(err);
+// 	}
+// };
+module.exports = userController;
