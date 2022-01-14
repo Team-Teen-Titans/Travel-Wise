@@ -1,10 +1,10 @@
-import React from "react";
-import { useEffect, useState } from "react/cjs/react.development";
-import { Chart } from "react-google-charts";
-import axios from "axios";
-import { covidOptions, countryCodeToName } from "../utils/constants";
-import Loader from "./Spinner";
-import { Link, useNavigate } from "react-router-dom";
+import React from 'react';
+import { useEffect, useState } from 'react/cjs/react.development';
+import { Chart } from 'react-google-charts';
+import axios from 'axios';
+import { covidOptions, countryCodeToName } from '../utils/constants';
+import Loader from './Spinner';
+import { Link, useNavigate } from 'react-router-dom';
 
 const CovidMap = () => {
   const [covidData, setCovidData] = useState([]);
@@ -17,9 +17,11 @@ const CovidMap = () => {
       .then((response) => response.data)
       .then((data) => {
         const cache = data.map((el) => {
-          return [countryCodeToName[el.Country] || el.Country, el.TotalCases];
+          const casesPerNum = (el.ActiveCases / el.Population) * 100000;
+          // console.log(el.Country, 'cases per 100,000: ', casesPerNum);
+          return [countryCodeToName[el.Country] || el.Country, casesPerNum];
         });
-        cache.unshift(["Country", "Total Cases"]);
+        cache.unshift(['Country', 'Cases per 100,000']);
         setCovidData(cache);
         setLoading(false);
       })
@@ -29,11 +31,11 @@ const CovidMap = () => {
   }, []);
 
   const options = {
-    colorAxis: { colors: ["green", "black", "red"] },
+    colorAxis: { colors: ['green', 'black', 'red'] },
   };
 
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className='flex flex-col min-h-screen'>
       <h1>Covid Map</h1>
       {loading ? (
         <Loader />
@@ -41,19 +43,19 @@ const CovidMap = () => {
         <Chart
           chartEvents={[
             {
-              eventName: "select",
+              eventName: 'select',
               callback: ({ chartWrapper }) => {
                 const chart = chartWrapper.getChart();
                 const selection = chart.getSelection();
                 if (selection.length === 0) return;
                 const region = covidData[selection[0].row + 1];
-                navigate("/country", { state: { Country: region[0] } });
+                navigate('/country', { state: { Country: region[0] } });
               },
             },
           ]}
-          chartType="GeoChart"
-          width="100%"
-          height="40vh"
+          chartType='GeoChart'
+          width='100%'
+          height='40vh'
           data={covidData}
           options={options}
         />
