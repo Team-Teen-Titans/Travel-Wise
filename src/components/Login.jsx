@@ -19,12 +19,9 @@ const Login = () => {
 
 	const handleSubmit = () => {
 		axios
-			.post('/user/login', {
-				email: email,
-				password: password,
-			})
+			.post('/api/user/login', { email: email, password: password })
 			.then((res) => {
-				console.log(res.data);
+				console.log(res);
 				// sessionStorage.setItem('email', email);
 				// sessionStorage.setItem('loggedIn', ******);
 				window.location.href = '/home';

@@ -20,7 +20,7 @@ const userRouter = require('./routes/userRouter');
 app.use(express.json());
 //handle flights query
 app.use('/api/flights', flightsRouter);
-app.use('/user', userRouter);
+app.use('/api/user', userRouter);
 
 // catch-all route handler for any requests to an unknown route
 // set status code and send status as a string in response

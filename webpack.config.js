@@ -15,8 +15,9 @@ module.exports = {
 		//needed to render pages with react router without going to the server
 		historyApiFallback: true,
 		proxy: {
-			'/': {
+			'/api': {
 				target: 'http://localhost:3000/',
+				changeOrigin: true,
 			},
 		},
 	},
@@ -27,7 +28,7 @@ module.exports = {
 	},
 
 	devtool: 'inline-source-map',
-	mode: process.env.NODE_ENV,
+	// mode: process.env.NODE_ENV,
 
 	module: {
 		rules: [
