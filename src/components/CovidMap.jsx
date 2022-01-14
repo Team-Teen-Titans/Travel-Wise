@@ -17,13 +17,14 @@ const CovidMap = () => {
       .then((response) => response.data)
       .then((data) => {
         const cache = data.map((el) => {
-          const casesPerNum = (el.ActiveCases / el.Population) * 100000;
+          const casesPerNum = Math.floor((el.ActiveCases / el.Population) * 100000) || 0;
           // console.log(el.Country, 'cases per 100,000: ', casesPerNum);
           return [countryCodeToName[el.Country] || el.Country, casesPerNum];
         });
         cache.unshift(['Country', 'Cases per 100,000']);
         setCovidData(cache);
         setLoading(false);
+        console.log(cache);
       })
       .catch(function (error) {
         console.error(error);
@@ -31,7 +32,10 @@ const CovidMap = () => {
   }, []);
 
   const options = {
-    colorAxis: { colors: ['green', 'black', 'red'] },
+    colorAxis: { colors: ['#00853f', 'black', '#e31b23'] },
+    // backgroundColor: '#81d4fa',
+    datalessRegionColor: 'grey',
+    defaultColor: '#f5f5f5',
   };
 
   return (
