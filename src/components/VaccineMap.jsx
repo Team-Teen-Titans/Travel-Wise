@@ -22,7 +22,7 @@ const VaccineMap = () => {
     console.log('Country: ', Country);
     const codeConversion = countryNameToCode[Country];
     vaccinationOptions.params['iso'] = object[Country] || object[codeConversion];
-    iso = object[Country];
+    iso = object[Country] || object[codeConversion];
     console.log('iso: ', iso);
   }
 
