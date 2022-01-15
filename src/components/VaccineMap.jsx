@@ -3,7 +3,6 @@ import { useEffect, useState } from 'react/cjs/react.development';
 import { Chart } from 'react-google-charts';
 import axios from 'axios';
 import { countryNameToCode, vaccinationOptions } from '../utils/constants';
-import { covidOptions, countryCodeToName } from '../utils/constants';
 import Loader from './Spinner';
 import { useLocation } from 'react-router';
 import object from '../utils/isoCodes';
