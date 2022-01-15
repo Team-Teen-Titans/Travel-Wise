@@ -3,6 +3,7 @@ const app = express();
 const cors = require('cors');
 const path = require('path');
 const PORT = 3000;
+require('dotenv').config();
 
 app.use(cors());
 
@@ -11,14 +12,15 @@ app.use(cors());
  */
 
 const flightsRouter = require('./routes/flights');
+const userRouter = require('./routes/userRouter');
 
 /**
  * handle parsing request body
  */
 app.use(express.json());
-
-//handle flights query 
+//handle flights query
 app.use('/api/flights', flightsRouter);
+app.use('/api/user', userRouter);
 
 
 // catch-all route handler for any requests to an unknown route
