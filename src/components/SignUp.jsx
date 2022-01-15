@@ -13,8 +13,8 @@ const SignUp = () => {
   const [passwordError, setPasswordError] = useState(false);
 
   const handleChange = (e) => {
-    const { id, value } = e.target;
-    setstate({ ...state, [id]: value });
+    const { name, value } = e.target;
+    setstate({ ...state, [name]: value });
     console.log(state);
   };
 
@@ -51,6 +51,7 @@ const SignUp = () => {
           <input
             className='border 1px rounded'
             type='text'
+            name='firstName'
             onChange={handleChange}
             required
           />
@@ -60,6 +61,7 @@ const SignUp = () => {
           <input
             className='border 1px rounded'
             type='text'
+            name='lastName'
             onChange={handleChange}
             required
           />
@@ -69,6 +71,7 @@ const SignUp = () => {
           <input
             className='border 1px rounded'
             type='text'
+            name='email'
             onChange={handleChange}
             required
           />
@@ -78,6 +81,7 @@ const SignUp = () => {
           <input
             className='border 1px rounded'
             type='password'
+            name='password'
             onChange={handleChange}
             required
           />
@@ -87,6 +91,7 @@ const SignUp = () => {
           <input
             className='border 1px rounded'
             type='password'
+            name='confirmPassword'
             onChange={handleChange}
             required
           />

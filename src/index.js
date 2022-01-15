@@ -8,6 +8,7 @@ import HomepageContainer from './components/HomepageContainer';
 import Login from './components/Login';
 import Styles from './stylesheets/styles.css';
 import SignUp from './components/SignUp';
+import FlightResults from "./components/FlightResults";
 
 
 render(
@@ -24,6 +25,10 @@ render(
         <Route path='about' element={<About />} />
         <Route path='login' element={<Login />} />
         <Route path='signup' element={<SignUp />} />
+        <Route path='flights' 
+          element={<FlightResults />} 
+          render={(props) => <FlightResults {...props} />}
+        />
       </Route>
     </Routes>
   </BrowserRouter>,

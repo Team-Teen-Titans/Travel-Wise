@@ -19,12 +19,12 @@ const Login = () => {
 
   const handleSubmit = () => {
     axios
-      .post('/user/login', { email: email, password: password })
+      .post('/api/user/login', { email: email, password: password })
       .then((res) => {
         console.log(res);
         // sessionStorage.setItem('email', email);
         // sessionStorage.setItem('loggedIn', ******);
-        window.location.href= '/home';
+        window.location.href = '/home';
       })
       .catch((err) => {
         console.log(err);
@@ -36,16 +36,18 @@ const Login = () => {
     <div className='login-form'>
       <form id='login'>
         <label>
-          Email: 
-          <input className='border 1px rounded'
+          Email:
+          <input
+            className='border 1px rounded'
             type='text'
             onChange={onEmailChange}
             required
           />
         </label>
         <label>
-          Password:  
-          <input className='border 1px rounded'
+          Password:
+          <input
+            className='border 1px rounded'
             type='password'
             onChange={onPasswordChange}
             required
@@ -60,7 +62,9 @@ const Login = () => {
         Log In
       </button>
       {loginError && <p>Invalid email or password</p>}
-      <p>Need to sign up? Click <Link to={'/signup'}>here</Link> to get started!</p>
+      <p>
+        Need to sign up? Click <Link to={'/signup'}>here</Link> to get started!
+      </p>
     </div>
   );
 };

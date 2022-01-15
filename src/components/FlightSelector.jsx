@@ -45,7 +45,7 @@ const FlightSelector = () => {
   //this gets the airport code input so that state can be set by airport code and not by
   //city name so the query will run successfully
   const getAirportCode = async (cityName) => {
-    let cityUrl = cityName.replace(/\s/g, "%20");
+    const cityUrl = cityName.replace(/\s/g, "%20");
     console.log(cityUrl);
     let airportCode;
     await axios
@@ -115,7 +115,7 @@ const FlightSelector = () => {
   //sets minimum return date to today+1
   const findRoundTripMinDate = (date) => {
     const minDate = date.split("");
-    let changeDay = +minDate[minDate.length - 1] + 1;
+    const changeDay = +minDate[minDate.length - 1] + 1;
     minDate[minDate.length - 1] = changeDay;
     return minDate.join("");
   };

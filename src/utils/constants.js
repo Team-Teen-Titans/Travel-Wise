@@ -1,34 +1,34 @@
 const VACCOVID_API_HOST =
-  "vaccovid-coronavirus-vaccine-and-treatment-tracker.p.rapidapi.com";
-const VACCINATION_API_HOST = "covid-19-world-vaccination-data.p.rapidapi.com";
+  'vaccovid-coronavirus-vaccine-and-treatment-tracker.p.rapidapi.com';
+const VACCINATION_API_HOST = 'covid-19-world-vaccination-data.p.rapidapi.com';
 
 const vaccinationOptions = {
-  method: "GET",
+  method: 'GET',
   url: process.env.VACCINATION_API_ENDPOINT,
-  params: { iso: "USA" },
+  params: { iso: 'USA' },
   headers: {
-    "x-rapidapi-host": VACCINATION_API_HOST,
-    "x-rapidapi-key": process.env.VACCINATION_API_KEY,
+    'x-rapidapi-host': VACCINATION_API_HOST,
+    'x-rapidapi-key': process.env.VACCINATION_API_KEY,
   },
 };
 
 const covidOptions = {
-  method: "GET",
-  url: "https://vaccovid-coronavirus-vaccine-and-treatment-tracker.p.rapidapi.com/api/npm-covid-data/countries", // example uses Asia only, need to update .env to include different endpoints
+  method: 'GET',
+  url: 'https://vaccovid-coronavirus-vaccine-and-treatment-tracker.p.rapidapi.com/api/npm-covid-data/countries', // example uses Asia only, need to update .env to include different endpoints
   headers: {
-    "x-rapidapi-host": VACCOVID_API_HOST,
-    "x-rapidapi-key": process.env.VACCOVID_API_KEY,
+    'x-rapidapi-host': VACCOVID_API_HOST,
+    'x-rapidapi-key': process.env.VACCOVID_API_KEY,
   },
 };
 
 const countryCodeToName = {
-  UK: "United Kingdom",
-  USA: "United States",
+  UK: 'United Kingdom',
+  USA: 'United States',
 };
 
 const countryNameToCode = {
-  "United Kingdom": "UK",
-  "United States": "USA",
+  'United Kingdom': 'UK',
+  'United States': 'USA',
 };
 
 const flightKey = process.env.FLIGHT_API_KEY;
