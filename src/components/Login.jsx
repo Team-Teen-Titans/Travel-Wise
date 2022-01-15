@@ -3,20 +3,19 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 
 const Login = () => {
-	const [email, setEmail] = useState('');
-	const [password, setPassword] = useState('');
-	const [loginError, setLoginError] = useState(false);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [loginError, setLoginError] = useState(false);
 
-	const onEmailChange = (e) => {
-		const emailValue = e.target.value;
-		setEmail(emailValue);
-	};
+  const onEmailChange = (e) => {
+    const emailValue = e.target.value;
+    setEmail(emailValue);
+  };
 
-	const onPasswordChange = (e) => {
-		const passwordValue = e.target.value;
-		setPassword(passwordValue);
-	};
-
+  const onPasswordChange = (e) => {
+    const passwordValue = e.target.value;
+    setPassword(passwordValue);
+  };
 	const handleSubmit = () => {
 		axios
 			.post('/api/user/login', { email: email, password: password })
@@ -68,6 +67,7 @@ const Login = () => {
 			</p>
 		</div>
 	);
+
 };
 
 export default Login;
