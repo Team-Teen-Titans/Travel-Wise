@@ -1,13 +1,19 @@
-import React from 'react'
+import React from 'react';
+import FlightCard from './FlightCard';
+import { Link } from 'react-router-dom';
 
-const FlightFeed = () => {
-    return (
-        <div>
-        <h3>Available Flights</h3>
-        {/* {flights} */}
-            
-        </div>
-    )
-}
+const FlightFeed = ({ flights }) => {
+  return (
+    <div>
+      <h3>Available Departing Flights</h3>
+      {flights.map((flightInfo, index) => (
+        <FlightCard key={index} flightInfo={flightInfo} />
+      ))}
+
+      {flights.length === 0 && <p> No flights available. Click <Link to={'/home'}>here</Link> to return to the home page and search again.</p>}
+
+    </div>
+  );
+};
 
 export default FlightFeed;
