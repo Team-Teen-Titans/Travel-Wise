@@ -1,12 +1,19 @@
 const express = require('express');
 const app = express();
+const session = require('express-session');
 const cors = require('cors');
-const path = require('path');
+// const path = require('path');
+const cookieParser = require('cookie-parser');
+const passport = require('passport');
 const PORT = 3000;
 require('dotenv').config();
+require('./google-oauth');
 
 app.use(cors());
-
+app.use(cookieParser());
+app.use(session({ secret: 'cats', resave: false, saveUninitialized: true }));
+app.use(passport.initialize());
+app.use(passport.session());
 /**
  * require routers
  */
@@ -19,6 +26,8 @@ const userRouter = require('./routes/userRouter');
  */
 app.use(express.json());
 //handle flights query
+
+// app.get('/google/callback', (req, res) => res.status(200).send('google oauth'))
 app.use('/api/flights', flightsRouter);
 app.use('/api/user', userRouter);
 

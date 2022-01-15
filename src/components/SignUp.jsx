@@ -24,7 +24,7 @@ const SignUp = () => {
       console.log('password match --> submitted');
 
       axios
-        .post('/user/signup', {
+        .post('/api/user/signup', {
           first_name: state.firstName,
           last_name: state.lastName,
           email: state.email,
