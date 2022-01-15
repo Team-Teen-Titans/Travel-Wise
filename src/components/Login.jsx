@@ -24,7 +24,7 @@ const Login = () => {
 				console.log(res);
 				// sessionStorage.setItem('email', email);
 				// sessionStorage.setItem('loggedIn', ******);
-				window.location.href = '/home';
+				// window.location.href = '/home';
 			})
 			.catch((err) => {
 				console.log(err);
@@ -61,6 +61,7 @@ const Login = () => {
 			>
 				Log In
 			</button>
+			<a href="/api/user/google">Authenticate with Google</a>
 			{loginError && <p>Invalid email or password</p>}
 			<p>
 				Need to sign up? Click <Link to={'/signup'}>here</Link> to get started!

@@ -1,34 +1,36 @@
 const db = require('../db-model/model');
-
+const { randomUUID } = require('crypto');
 const userController = {};
 
 const bcrypt = require('bcrypt');
 const SALT_WORK_FACTOR = 10;
 
-userController.signup = async (req, res, next) => {
+userController.createUser = async (req, res, next) => {
 	// add logic so that username cannot contain '@' symbol
-
 	if (
-		!req.body.display_name ||
 		!req.body.password ||
 		!req.body.first_name ||
 		!req.body.last_name ||
 		!req.body.email
 	) {
 		console.log('Not all required fields are completed.');
-		return next();
+		return res.status(400).send({ error: 'All fields are required.' });
 	} else {
-		const { display_name, password, first_name, last_name, email } = req.body;
+		const { password, first_name, last_name, email } = req.body;
 		try {
-			const password = await hashPassword(password);
-			const params = [display_name, password, first_name, last_name, email];
+			const hashedPassword = await bcrypt.hash(password, SALT_WORK_FACTOR);
+			const user_id = randomUUID();
+			// console.log(user_id);
+			const created_at = Date.now().toString();
+			const params = [user_id, hashedPassword, first_name, last_name, email, created_at];
 			//sql query to make new user
 
 			const registration =
-				'INSERT INTO users (display_name, password, first_name, last_name, email) VALUES ($1, $2, $3, $4, $5)';
+				'INSERT INTO users (user_id, password, first_name, last_name, email, created_at) VALUES ($1, $2, $3, $4, $5, $6) RETURNING user_id';
 			db.query(registration, params)
 				.then((data) => {
-					res.locals.newUser = data.rows;
+					console.log('hi:', data);
+					res.locals.id = data.rows[0].user_id;
 					return next();
 				})
 				.catch((err) => {
@@ -51,8 +53,9 @@ userController.login = async (req, res, next) => {
 	} else {
 		// check if email in database
 		// if (email.includes('@')) {
-		const queryToGrabHashedPassword = `SELECT password FROM users WHERE email = $1`;
+		const queryToGrabHashedPassword = `SELECT * FROM users WHERE email = $1`;
 		const paramForPassword = [email];
+		// console.log('whats up')
 		db.query(queryToGrabHashedPassword, paramForPassword)
 			.then(async (data) => {
 				if (data.rowCount > 0) {
@@ -60,11 +63,18 @@ userController.login = async (req, res, next) => {
 						const hashedPassword = data.rows[0].password;
 						// console.log(hashedPassword);
 						const isMatch = await bcrypt.compare(password, hashedPassword);
-						res.locals.isMatch = isMatch; //this is a boolean value
+						if (!isMatch) {
+							return res.redirect('/signup');
+						}
+						// console.log(data.rows)
+						res.locals.id = data.rows[0].user_id;
+						// console.log(res.locals.id);
 						return next();
 					} catch (err) {
 						return next(err);
 					}
+				} else {
+					return res.status(400).send('Username or password is incorrect.')
 				}
 			})
 			.catch((err) => {
