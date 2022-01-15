@@ -3,8 +3,7 @@ import { useLocation } from 'react-router-dom';
 import axios from 'axios';
 import Loader from './Spinner';
 
-const FlightResults = () => {
-  const { state } = useLocation();
+const FlightModal = ({state}) => {
   const [tripInfo, setTripInfo] = useState(state);
   const [loading, setLoading] = useState(true);
   console.log('state:', state);
@@ -47,11 +46,11 @@ const FlightResults = () => {
   );
 };
 
-export default FlightResults;
+export default FlightModal;
 
 
 /* Change the flight selector so that it will pop open a modal to flight results (name TBD) component and drill state
-when the origin/destination/roundtrip/date info is all selected. 
+when the origin/destination is selected. 
 
 Move the cabin class and passenger count info into the current flight results component that's becoming a modal, and add that info
 to the drilled in state. On initial mount, the existing functionality will still get the airport codes from backend. 
