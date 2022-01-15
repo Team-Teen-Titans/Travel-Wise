@@ -8,24 +8,27 @@ const FlightResults = () => {
 
   //function requests the airport codes from the backend by referencing the city name
   //backend hits the API and returns the airport codes
-  const getAirportCode = async (cityName) => {
+  const getAirportCode = (cityName) => {
     const cityUrl = cityName.replace(/\s/g, '%20');
     console.log(cityUrl);
-    return await axios
+    return axios
       .request({
         method: 'GET',
         url: `/api/flights/airport/${cityUrl}`,
       })
-      .then(res => res.data)
-      .then((res) => {return res.locals.airportCode;})
+      .then(res => {
+        console.log('res.data:', res.data)
+        console.log(typeof res.data, 'type of res.data')
+        return res.data
+      })
       .catch((err) => console.error(err));
   };
 
   useEffect(() => {
     const originCode = getAirportCode(state.originAirport);
     const destinationCode = getAirportCode(state.destinationAirport);
-    console.log(originCode);
-    console.log(destinationCode);
+    console.log(originCode, 'origin code in useEffect');
+    console.log(destinationCode, 'destination code in useEffect');
   }, []);
 
   return (
