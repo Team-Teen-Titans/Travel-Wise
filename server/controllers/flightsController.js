@@ -27,7 +27,7 @@ flightsController.getFlights = (req, res, next) => {
       )
       .then((res) => res.data)
       .then((flightInfo) => {
-        res.locals.flightsData = flightInfo.data;
+        res.locals.flightsData = flightInfo;
         console.log(res.locals.flightsData);
         return next();
       })
