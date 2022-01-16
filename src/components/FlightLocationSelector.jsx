@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import 'regenerator-runtime';
 import FlightModal from './FlightModal';
+import FlightResults from './FlightResults';
 
 const FlightLocationSelector = () => {
   const [tripLocationInfo, setTripLocationInfo] = useState({
@@ -8,7 +9,7 @@ const FlightLocationSelector = () => {
     destinationCity: '',
   });
 
-  const [showModal, setShowModal] = false;
+  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     console.log(tripLocationInfo);
@@ -21,11 +22,8 @@ const FlightLocationSelector = () => {
   };
 
   const handleSearchSubmit = () => {
-    console.log('state upon submit: ', tripLocationInfo);
+    // console.log('state upon submit: ', tripLocationInfo);
     setShowModal(true);
-    //onclick sets modal to open?
-    //when i render the modal, i pass in my state as a prop so it can make the call for airports
-    //need to pass in state of modal
   };
 
   return (
