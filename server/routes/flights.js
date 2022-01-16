@@ -11,8 +11,8 @@ router.get('/flight-info',
 router.get('/airport/:city',
   flightsController.getAirport,
   (req, res) => {
-    console.log(res.locals.airportCode);
-    return res.status(200).send(res.locals.airportCode)
+    console.log(res.locals.airportCodes);
+    return res.status(200).send(res.locals.airportCodes);
   });
 
 module.exports = router;
