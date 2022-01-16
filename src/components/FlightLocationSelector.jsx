@@ -11,14 +11,9 @@ const FlightLocationSelector = () => {
 
   const [showModal, setShowModal] = useState(false);
 
-  useEffect(() => {
-    console.log(tripLocationInfo);
-  });
-
   const handleChange = (e) => {
     const { name, value } = e.target;
     setTripLocationInfo({ ...tripLocationInfo, [name]: value });
-    console.log(tripLocationInfo);
   };
 
   const handleSearchSubmit = () => {
