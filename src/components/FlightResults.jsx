@@ -12,9 +12,6 @@ const FlightResults = () => {
   console.log("tripInfo:", tripInfo);
   const navigate = useNavigate();
 
-  //left off with working airport code (not promise) coming in, but we need to run function so it works
-  //for both origin and destination
-
   //function requests the airport codes from the backend by referencing the city name
   //backend hits the API and returns the airport codes
   const getAirportCode = async (originCity, destinationCity) => {
@@ -23,7 +20,8 @@ const FlightResults = () => {
       const destinationUrl = destinationCity.replace(/\s/g, "%20");
       const originRes = await axios.get(`/api/flights/airport/${originUrl}`);
       const destinationRes = await axios.get(
-        `/api/flights/airport/${destinationUrl}`
+        // `/api/flights/airport/${destinationUrl}`
+        `/api/flights/airport/HNL`
       );
       setTripInfo({
         ...tripInfo,

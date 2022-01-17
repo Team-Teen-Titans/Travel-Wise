@@ -21,11 +21,12 @@ flightsController.getFlights = (req, res, next) => {
   } = req.body;
 
   if (oneWayOrRound === "onewaytrip") {
-    axios
+    console.log("inside onewaytrip");
+
+    return axios
       .get(
         `https://api.flightapi.io/onewaytrip/${flightKey}/${originAirport}/${destinationAirport}/${departureDate}/${numOfAdults}/${numOfChildren}/${numOfInfants}/${cabinClass}/USD`
       )
-      .then((res) => res.data)
       .then((flightInfo) => {
         res.locals.flightsData = flightInfo;
         console.log(res.locals.flightsData);
@@ -38,14 +39,16 @@ flightsController.getFlights = (req, res, next) => {
         });
       });
   } else if (oneWayOrRound === "roundtrip") {
-    axios
+    console.log("inside roundtrip");
+
+    return axios
       .get(
         `https://api.flightapi.io/roundtrip/${flightKey}/${originAirport}/${destinationAirport}/${departureDate}/${returnDate}/${numOfAdults}/${numOfChildren}/${numOfInfants}/${cabinClass}/USD`
       )
-      .then((res) => res.data)
       .then((flightInfo) => {
-        res.locals.flightsData = flightInfo.data;
-        console.log(res.locals.flightsData);
+        console.log("inside thenable");
+        res.locals.flightsData = flightInfo;
+        console.log(res.locals.flightsData, "flightInfo");
         return next();
       })
       .catch((err) => {
