@@ -14,18 +14,19 @@ const CovidMap = () => {
   useEffect(() => {
     axios
       .request(covidOptions)
-      .then((response) => response.data)
-      .then((data) => {
-        const cache = data.map((el) => {
-          const casesPerNum =
-            Math.floor((el.ActiveCases / el.Population) * 100000) || 0;
-          // console.log(el.Country, 'cases per 100,000: ', casesPerNum);
-          return [countryCodeToName[el.Country] || el.Country, casesPerNum];
-        });
-        cache.unshift(['Country', 'Cases per 100,000']);
-        setCovidData(cache);
+      .then(({ data }) => {
+        console.log(data)
+        const formattedData = [['Country', 'Cases per 100,000']];
+        for (let i = 0; i < data.length; i++) {
+          const { ActiveCases, Population, Country, TwoLetterSymbol, ThreeLetterSymbol } = data[i];
+          if (Country === 'Diamond Princess' || Country === 'MS Zaandam' || Country === 'Channel Islands') {
+            continue;
+          }
+          const casesPerNum = Math.floor((ActiveCases / Population) * 100000) || 0;
+          formattedData.push([{v: TwoLetterSymbol , f: Country, iso: ThreeLetterSymbol}, casesPerNum])
+        }
+        setCovidData(formattedData);
         setLoading(false);
-        // console.log(cache);
       })
       .catch(function (error) {
         console.error(error);
@@ -54,7 +55,8 @@ const CovidMap = () => {
                 const selection = chart.getSelection();
                 if (selection.length === 0) return;
                 const region = covidData[selection[0].row + 1];
-                navigate('/country', { state: { Country: region[0] } });
+                 console.log('region',region[0])
+                navigate('/country', { state: {Country : region[0]} });
               },
             },
           ]}

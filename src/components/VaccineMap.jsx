@@ -12,11 +12,13 @@ const VaccineMap = () => {
   const [countryData, setCountryData] = useState([]);
   const [loading, setLoading] = useState(true);
   const { state } = useLocation();
+  
   let iso;
   if (!state) {
     vaccinationOptions.params['iso'] = 'USA';
     iso = 'USA';
   } else {
+    console.log
     const { Country } = state;
     console.log('Country: ', Country);
     const codeConversion = countryNameToCode[Country];
@@ -26,19 +28,19 @@ const VaccineMap = () => {
   }
 
   useEffect(() => {
-    axios
-      .request(vaccinationOptions)
-      .then((response) => response.data)
-      .then((data) => {
+    // console.log('state:',state)
+    // vaccinationOptions.params.iso = state.iso
+    // console.log(vaccinationOptions)
+    axios.request(vaccinationOptions)
+      .then(({ data }) => {
+        console.log(data[data.length - 1])
         const { country, total_vaccinations } = data[data.length - 1];
         return { country, total_vaccinations };
       })
       .then((data) => {
         const cache = [[], []];
         for (const property in data) {
-          const capitalizedString = `${property[0].toUpperCase()}${property.slice(
-            1
-          )}`;
+          const capitalizedString = `${property[0].toUpperCase()}${property.slice(1)}`;
           const formattedString = capitalizedString.replaceAll(/_/g, ' ');
           cache[0].push(formattedString);
           const dataPoint = Number.isNaN(+data[property])
