@@ -140,6 +140,7 @@ const FlightModal = ({ tripLocationInfo }) => {
     //     ...tripInfo,
     //   },
     // });
+    navigate('/login');
     //where should we direct from here to show cards? flights?
   };
 
@@ -163,9 +164,9 @@ const FlightModal = ({ tripLocationInfo }) => {
       {loading ? (
         <Loader />
       ) : (
-        <ReactModal isOpen={modalIsOpen} onRequestClose={closeModal}>
-          <div className='place-center'>
-            <h3>Type of trip?</h3>
+        <ReactModal isOpen={modalIsOpen} onRequestClose={closeModal} className='bg-gray-200 flex justify-center h-screen my-24'>
+          <div className='place-center bg-gray-200'>
+            <h3 className='text-base font-semibold text-xl tracking-tight'>Staying or returning?</h3>
             <span>
               <button
                 onClick={handleChange('onewaytrip')}
@@ -188,7 +189,7 @@ const FlightModal = ({ tripLocationInfo }) => {
             <br />
 
             <span>
-              <label htmlFor='departure-date'>Departure Date: </label>
+              <label htmlFor='departure-date' className='text-base font-semibold text-xl tracking-tight'>Departure Date: </label>
               <input
                 type='date'
                 name='departure'
@@ -197,7 +198,7 @@ const FlightModal = ({ tripLocationInfo }) => {
                 onChange={handleChange('departureDate')}
               ></input>
               {'  '}
-              <label htmlFor='return-date'>Return Date: </label>
+              <label htmlFor='return-date' className='text-base font-semibold text-xl tracking-tight'>Return Date: </label>
               <input
                 type='date'
                 name='return'
@@ -209,7 +210,7 @@ const FlightModal = ({ tripLocationInfo }) => {
             <br />
             <br />
             <span>
-              <label htmlFor='origin-airport'>Departure Airport: </label>
+              <label htmlFor='origin-airport' className='text-base font-semibold text-xl tracking-tight'>Departure Airport: </label>
               <select
                 htmlFor='originSelection'
                 name='originSelection'
@@ -219,7 +220,7 @@ const FlightModal = ({ tripLocationInfo }) => {
                 {originAirportsList}
               </select>
               {'  '}
-              <label htmlFor='destination-airport'>Arrival Airport: </label>
+              <label htmlFor='destination-airport' className='text-base font-semibold text-xl tracking-tight'>Arrival Airport: </label>
               <select
                 htmlFor='destinationSelection'
                 name='destinationSelection'
@@ -232,7 +233,7 @@ const FlightModal = ({ tripLocationInfo }) => {
 
             <br />
             <br />
-            <label htmlFor='cabinClass'>Cabin Class: </label>
+            <label htmlFor='cabinClass' className='text-base font-semibold text-xl tracking-tight'>Cabin Class: </label>
             <span>
               <select
                 onChange={handleChange('cabinClass')}
@@ -247,35 +248,35 @@ const FlightModal = ({ tripLocationInfo }) => {
             <br />
             <br />
             <span>
-              <h3>Passenger Information</h3>
+              <h3 className='text-lg font-semibold text-xl tracking-tight'>Passenger Information: </h3>
             </span>
             <span>
-              <label htmlFor='numOfAdults'>Adults: </label>
+              <label htmlFor='numOfAdults' className='text-base font-semibold text-xl tracking-tight'>Adults: </label>
               <input
                 htmlFor='numOfAdults'
                 // type="number"
                 defaultValue='1'
                 name='number of adults'
-                className='border 1px rounded'
+                className='border 1px rounded w-8'
                 onChange={handleChange('numOfAdults')}
               ></input>
               {'  '}
-              <label htmlFor='numOfChildren'>Children: </label>
+              <label htmlFor='numOfChildren' className='text-base font-semibold text-xl tracking-tight'>Children: </label>
               <input
                 htmlFor='numOfChildren'
                 defaultValue='0'
                 name='number of children'
-                className='border 1px rounded'
+                className='border 1px rounded w-8'
                 onChange={handleChange('numOfChildren')}
               ></input>
               {'  '}
-              <label htmlFor='numOfInfants'>Infants: </label>
+              <label htmlFor='numOfInfants' className='text-base font-semibold text-xl tracking-tigh'>Infants: </label>
               <input
                 htmlFor='numOfInfants'
                 // type="number"
                 defaultValue='0'
                 name='number of infants'
-                className='border 1px rounded'
+                className='border 1px rounded w-8'
                 onChange={handleChange('numOfInfants')}
               ></input>
             </span>
