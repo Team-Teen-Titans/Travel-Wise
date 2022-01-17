@@ -164,7 +164,7 @@ const FlightModal = ({ tripLocationInfo }) => {
       {loading ? (
         <Loader />
       ) : (
-        <ReactModal isOpen={modalIsOpen} onRequestClose={closeModal} className='bg-gray-200 flex justify-center h-screen my-24'>
+        <ReactModal isOpen={modalIsOpen} onRequestClose={closeModal} ariaHideApp={false} className='bg-gray-200 flex justify-center h-screen my-24'>
           <div className='place-center bg-gray-200'>
             <h3 className='text-base font-semibold text-xl tracking-tight'>Staying or returning?</h3>
             <span>

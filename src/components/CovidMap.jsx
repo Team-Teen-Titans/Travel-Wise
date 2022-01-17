@@ -21,6 +21,7 @@ const CovidMap = () => {
             Math.floor((el.ActiveCases / el.Population) * 100000) || 0;
           // console.log(el.Country, 'cases per 100,000: ', casesPerNum);
           return [countryCodeToName[el.Country] || el.Country, casesPerNum];
+          // return [el.TwoLetterSymbol, casesPerNum] 
         });
         cache.unshift(['Country', 'Cases per 100,000']);
         setCovidData(cache);
