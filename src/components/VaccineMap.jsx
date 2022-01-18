@@ -20,16 +20,16 @@ const VaccineMap = () => {
         // console.log('data:',data)
         const latestVaccinationData = data[data.length - 1];
         console.log(latestVaccinationData)
-        const onHoverMapDataArray = [['Country','Total Vaccinations'], [state, latestVaccinationData.total_vaccinations]]
+        const onHoverMapDataArray = [['Country','Total Vaccinations'], [state, Number(latestVaccinationData.total_vaccinations)]]
         setOnHoverMapData(onHoverMapDataArray);
         console.log('onHoverMapDataArray:',onHoverMapDataArray)
-        const countryDataArray = [['Country','Total Vaccinations']];
+        const countryDataArray = [['','']];
         for (const property in latestVaccinationData) {
           const formattedPropertyName = property.replace(/(^[a-z])|(_[a-z])/g, matched => matched.toUpperCase().replace('_', ' '));
           countryDataArray.push([formattedPropertyName, latestVaccinationData[property]])
         }
         setCountryData(countryDataArray);
-        console.log(countryData)
+        console.log('countryDataArray:',countryDataArray)
         // console.log(countryData.slice(0,2))
         setLoading(false);
       })
