@@ -1,5 +1,4 @@
-import React from 'react';
-import { useEffect, useState } from 'react/cjs/react.development';
+import React, { useEffect, useState } from 'react';
 import { Chart } from 'react-google-charts';
 import axios from 'axios';
 import { covidOptions, countryCodeToName } from '../utils/constants';
@@ -15,8 +14,10 @@ const CovidMap = () => {
     axios
       .request(covidOptions)
       .then(({ data }) => {
-        console.log(data)
+        //initialize data array with the names of the columns
         const formattedData = [['Country', 'Cases per 100,000']];
+
+        //loop thru data, adding info from the API to "formattedData" array
         for (let i = 0; i < data.length; i++) {
           const { ActiveCases, Population, Country, TwoLetterSymbol, ThreeLetterSymbol } = data[i];
           if (Country === 'Diamond Princess' || Country === 'MS Zaandam' || Country === 'Channel Islands') {
@@ -24,6 +25,8 @@ const CovidMap = () => {
           }
           const casesPerNum = Math.floor((ActiveCases / Population) * 100000) || 0;
           formattedData.push([{v: TwoLetterSymbol , f: Country, iso: ThreeLetterSymbol.toUpperCase()}, casesPerNum])
+          //NOTE: the google map chart does not require a "iso" property for the first column, but we save it there so we can pass that object to the "VaccineMap" component
+          //  because that component needs a three-letter iso code in order to make its API request
         }
         setCovidData(formattedData);
         setLoading(false);
@@ -55,7 +58,6 @@ const CovidMap = () => {
                 const selection = chart.getSelection();
                 if (selection.length === 0) return;
                 const region = covidData[selection[0].row + 1];
-                 console.log('region',region[0])
                 navigate('/country', { state: region[0] });
               },
             },

@@ -1,47 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Chart } from 'react-google-charts';
-import axios from 'axios';
-import { vaccinationOptions } from '../utils/constants';
 
 const options = {
-  allowHtml: true,
+  alternatingRowStyle: true,
   showRowNumber: true,
   firstRowNumber: 0,
   backgroundColor: '#E4E4E4',
 };
 
-const formatters = [
-  {
-    column: [0, 1],
-    options: '<a href="mailto:{1}">{0}</a>',
-  },
-];
-
-const Table = ({countryData}) => {
-  // const [ covidData, setCovidData ] = useState([]);
-  // vaccinationOptions.params['iso'] = iso;
-  console.log('countryData in Table',countryData)
-  // useEffect(() => {
-    
-  //   axios
-  //     .request(vaccinationOptions)
-  //     .then((response) => response.data)
-  //     .then((data) => data[data.length-1])
-  //     .then((data) => {
-  //       const cache = [['','']];
-  //       for (const property in data) {
-  //         const capitalizedString = `${property[0].toUpperCase()}${property.slice(1)}`;
-  //         const formattedString = capitalizedString.replaceAll(/_/g, ' ');
-  //         cache.push([formattedString, data[property]]);
-  //       }
-  //       // console.log('table:',cache)
-  //       setCovidData(cache);
-  //     })
-  //     .catch(function (error) {
-  //       console.error(error);
-  //     });
-  // }, []);
-
+const Table = ({ countryData }) => {
   return (
     <Chart
       chartType="Table"
@@ -49,7 +16,6 @@ const Table = ({countryData}) => {
       height="400px"
       data={countryData}
       options={options}
-      formatters={formatters}
     />
   );
 };

@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { Chart } from 'react-google-charts';
 import axios from 'axios';
-import { countryNameToCode, vaccinationOptions } from '../utils/constants';
+import { vaccinationOptions } from '../utils/constants';
 import Loader from './Spinner';
 import { useLocation } from 'react-router';
-import object from '../utils/isoCodes';
 import Table from './Table';
 
 const VaccineMap = () => {
@@ -17,20 +16,18 @@ const VaccineMap = () => {
     vaccinationOptions.params.iso = state.iso;
     axios.request(vaccinationOptions)
       .then(({ data }) => {
-        // console.log('data:',data)
+        //setting onhover data for vaccine map
         const latestVaccinationData = data[data.length - 1];
-        console.log(latestVaccinationData)
         const onHoverMapDataArray = [['Country','Total Vaccinations'], [state, Number(latestVaccinationData.total_vaccinations)]]
         setOnHoverMapData(onHoverMapDataArray);
-        console.log('onHoverMapDataArray:',onHoverMapDataArray)
+
+        //setting table data for the Table component
         const countryDataArray = [['','']];
         for (const property in latestVaccinationData) {
           const formattedPropertyName = property.replace(/(^[a-z])|(_[a-z])/g, matched => matched.toUpperCase().replace('_', ' '));
           countryDataArray.push([formattedPropertyName, latestVaccinationData[property]])
         }
         setCountryData(countryDataArray);
-        console.log('countryDataArray:',countryDataArray)
-        // console.log(countryData.slice(0,2))
         setLoading(false);
       })
       .catch(function (error) {
@@ -56,7 +53,7 @@ const VaccineMap = () => {
           options={options}
         />
       )}
-      {loading ? <Loader /> : <Table iso={countryData} />}
+      {loading ? <Loader /> : <Table countryData={countryData} />}
     </div>
   );
 };
