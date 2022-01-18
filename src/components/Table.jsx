@@ -17,36 +17,37 @@ const formatters = [
   },
 ];
 
-const Table = ({iso}) => {
-  const [ covidData, setCovidData ] = useState([]);
-  vaccinationOptions.params['iso'] = iso;
-
-  useEffect(() => {
+const Table = ({countryData}) => {
+  // const [ covidData, setCovidData ] = useState([]);
+  // vaccinationOptions.params['iso'] = iso;
+  console.log('countryData in Table',countryData)
+  // useEffect(() => {
     
-    axios
-      .request(vaccinationOptions)
-      .then((response) => response.data)
-      .then((data) => data[data.length-1])
-      .then((data) => {
-        const cache = [['','']];
-        for (const property in data) {
-          const capitalizedString = `${property[0].toUpperCase()}${property.slice(1)}`;
-          const formattedString = capitalizedString.replaceAll(/_/g, ' ');
-          cache.push([formattedString, data[property]]);
-        }
-        setCovidData(cache);
-      })
-      .catch(function (error) {
-        console.error(error);
-      });
-  }, []);
+  //   axios
+  //     .request(vaccinationOptions)
+  //     .then((response) => response.data)
+  //     .then((data) => data[data.length-1])
+  //     .then((data) => {
+  //       const cache = [['','']];
+  //       for (const property in data) {
+  //         const capitalizedString = `${property[0].toUpperCase()}${property.slice(1)}`;
+  //         const formattedString = capitalizedString.replaceAll(/_/g, ' ');
+  //         cache.push([formattedString, data[property]]);
+  //       }
+  //       // console.log('table:',cache)
+  //       setCovidData(cache);
+  //     })
+  //     .catch(function (error) {
+  //       console.error(error);
+  //     });
+  // }, []);
 
   return (
     <Chart
       chartType="Table"
       width="100%"
       height="400px"
-      data={covidData}
+      data={countryData}
       options={options}
       formatters={formatters}
     />

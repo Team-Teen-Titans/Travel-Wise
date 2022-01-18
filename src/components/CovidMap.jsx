@@ -23,7 +23,7 @@ const CovidMap = () => {
             continue;
           }
           const casesPerNum = Math.floor((ActiveCases / Population) * 100000) || 0;
-          formattedData.push([{v: TwoLetterSymbol , f: Country, iso: ThreeLetterSymbol}, casesPerNum])
+          formattedData.push([{v: TwoLetterSymbol , f: Country, iso: ThreeLetterSymbol.toUpperCase()}, casesPerNum])
         }
         setCovidData(formattedData);
         setLoading(false);
@@ -56,7 +56,7 @@ const CovidMap = () => {
                 if (selection.length === 0) return;
                 const region = covidData[selection[0].row + 1];
                  console.log('region',region[0])
-                navigate('/country', { state: {Country : region[0]} });
+                navigate('/country', { state: region[0] });
               },
             },
           ]}
