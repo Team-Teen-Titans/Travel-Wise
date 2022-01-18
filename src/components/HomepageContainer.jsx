@@ -8,7 +8,7 @@ const HomepageContainer = () => {
     <div>
       <FlightSelector />
       <CovidMap />
-      <Login />
+      {/* <Login /> */}
     </div>
   );
 };

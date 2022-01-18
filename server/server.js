@@ -1,19 +1,37 @@
 const express = require('express');
 const app = express();
 const session = require('express-session');
+// const flash = require('express-flash');
+// const methodOverride = require('method-override')
 const cors = require('cors');
 // const path = require('path');
-const cookieParser = require('cookie-parser');
+// const cookieParser = require('cookie-parser');
 const passport = require('passport');
+// const { Pool } = require('pg');
+// const pgSession = require('connect-pg-simple')(session)
 const PORT = 3000;
 require('dotenv').config();
-require('./google-oauth');
+require('./google-oauth')(passport);
 
 app.use(cors());
-app.use(cookieParser());
-app.use(session({ secret: 'cats', resave: false, saveUninitialized: true }));
+// app.use(cookieParser());
+app.set('view engine', 'jsx')
+app.use(express.urlencoded({ extended: true }))
+// app.use(flash())
+app.use(session({
+  // store: new pgSession({
+  //   pool: new Pool({
+  //     connectionString: process.env.DATABASE_URL,
+  //   }),
+  //   tableName: 'session'
+  // }),
+  secret: 'cats',
+  resave: false,
+  saveUninitialized: true
+}));
 app.use(passport.initialize());
 app.use(passport.session());
+// app.use(methodOverride('_method'))
 /**
  * require routers
  */
@@ -42,7 +60,7 @@ app.use((err, req, res, next) => {
     log: 'Express error handler caught unknown middleware error',
     status: 500,
     message: { err: 'An error occurred' },
-  };  
+  };
   // change error of default error object
   const errorObj = {
     ...defaultErr,

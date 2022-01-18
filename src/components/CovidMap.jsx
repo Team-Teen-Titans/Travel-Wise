@@ -42,7 +42,7 @@ const CovidMap = () => {
   return (
     <div className='flex flex-col min-h-screen'>
       <h1 align='center' className='py-4 text-lg font-mono'>Active Covid-19 Cases per 100,000 People</h1>
-      {loading ? (
+      {/* {loading ? (
         <Loader />
       ) : (
         <Chart
@@ -64,7 +64,7 @@ const CovidMap = () => {
           data={covidData}
           options={options}
         />
-      )}
+      )} */}
     </div>
   );
 };
