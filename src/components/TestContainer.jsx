@@ -2,35 +2,37 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Loader from "./Spinner";
 import FlightFeed from "./FlightFeed";
-import { getFlightsList } from "../utils/constants";
+import { useLocation } from "react-router";
 
-const TestContainer = ({ state }) => {
+const TestContainer = () => {
   const [loading, setLoading] = useState(true);
   const [flights, setFlights] = useState(null);
+  const { state } = useLocation();
+
+  // const [tripInfo, setTripInfo] = useState(props.state);
 
   useEffect(() => {
+    console.log(state);
     axios
-      .post("/api/flights/flight-info", {
-        originAirport: "LAX",
-        destinationAirport: "MIA",
-        departureDate: "2022-01-20",
-        returnDate: "2022-02-20",
-        oneWayOrRound: "roundtrip",
-        numOfAdults: 1,
-        numOfChildren: 0,
-        numOfInfants: 0,
-        cabinClass: "Economy",
-      })
-      .then((res) => {
-        console.log(res, "res from flights info query");
-        return res.data;
-      })
+      .post(
+        "/api/flights/flight-info",
+        state
+        // {
+        // originAirport: "LAX",
+        // destinationAirport: "MIA",
+        // departureDate: "2022-01-20",
+        // returnDate: "2022-02-20",
+        // oneWayOrRound: "roundtrip",
+        // numOfAdults: 1,
+        // numOfChildren: 0,
+        // numOfInfants: 0,
+        // cabinClass: "Economy",
+        // ...tripInfo,
+        // }
+      )
+      .then((res) => res.data)
       .then((apiFlightInfo) => {
-        setFlights(getFlightsList(apiFlightInfo));
-        console.log(
-          "flights as defined after returning res.data in front-end",
-          flights
-        );
+        setFlights(apiFlightInfo);
         setLoading(false);
       })
       .catch((err) => console.log("error from server:", err));

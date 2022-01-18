@@ -36,7 +36,7 @@ const flightKey = process.env.FLIGHT_API_KEY;
 const getFlightsList = (api) => {
   const flightList = [];
 
-  for (let i = 0; i < api.trips.length; i++) {
+  for (let i = 0; i < 30; i++) {
     const flight = {
       id: api.trips[i].id,
       code: api.trips[i].code,

@@ -20,8 +20,7 @@ const FlightResults = () => {
       const destinationUrl = destinationCity.replace(/\s/g, "%20");
       const originRes = await axios.get(`/api/flights/airport/${originUrl}`);
       const destinationRes = await axios.get(
-        // `/api/flights/airport/${destinationUrl}`
-        `/api/flights/airport/HNL`
+        `/api/flights/airport/${destinationUrl}`
       );
       setTripInfo({
         ...tripInfo,

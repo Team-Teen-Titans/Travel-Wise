@@ -25917,7 +25917,9 @@ const data = {
 };
 
 const keys = Object.keys(data);
+console.log(keys);
 
+console.log(data.trips[0]);
 const trips0 = {
   id: "f58150e77d759e0dmsr:UA5320~20-UA1158~21=UA396~20-UA2453~21",
   code: "UA5320~20-UA1158~21=UA396~20-UA2453~21",
@@ -25961,7 +25963,7 @@ const fares0 = {
   tripId: "f58150e77d759e0dmsr:UA5562~20-UA1431~20=UA396~20-UA2453~21",
 };
 
-// console.log(keys);
+console.log(keys);
 
 const legs0 = {
   id: "SEA-HNL:AS129~20:0",
@@ -25994,7 +25996,7 @@ const legs0 = {
 const getFlights = (api) => {
   const flightList = [];
 
-  for (let i = 0; i < api.trips.length; i++) {
+  for (let i = 0; i < 30; i++) {
     const flight = {
       id: api.trips[i].id,
       code: api.trips[i].code,
