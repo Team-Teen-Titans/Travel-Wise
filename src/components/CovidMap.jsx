@@ -1,5 +1,4 @@
-import React from 'react';
-import { useEffect, useState } from 'react/cjs/react.development';
+import React, { useEffect, useState } from 'react';
 import { Chart } from 'react-google-charts';
 import axios from 'axios';
 import { covidOptions, countryCodeToName } from '../utils/constants';
@@ -14,18 +13,23 @@ const CovidMap = () => {
   useEffect(() => {
     axios
       .request(covidOptions)
-      .then((response) => response.data)
-      .then((data) => {
-        const cache = data.map((el) => {
-          const casesPerNum =
-            Math.floor((el.ActiveCases / el.Population) * 100000) || 0;
-          // console.log(el.Country, 'cases per 100,000: ', casesPerNum);
-          return [countryCodeToName[el.Country] || el.Country, casesPerNum];
-        });
-        cache.unshift(['Country', 'Cases per 100,000']);
-        setCovidData(cache);
+      .then(({ data }) => {
+        //initialize data array with the names of the columns
+        const formattedData = [['Country', 'Cases per 100,000']];
+
+        //loop thru data, adding info from the API to "formattedData" array
+        for (let i = 0; i < data.length; i++) {
+          const { ActiveCases, Population, Country, TwoLetterSymbol, ThreeLetterSymbol } = data[i];
+          if (Country === 'Diamond Princess' || Country === 'MS Zaandam' || Country === 'Channel Islands') {
+            continue;
+          }
+          const casesPerNum = Math.floor((ActiveCases / Population) * 100000) || 0;
+          formattedData.push([{v: TwoLetterSymbol , f: Country, iso: ThreeLetterSymbol.toUpperCase()}, casesPerNum])
+          //NOTE: the google map chart does not require a "iso" property for the first column, but we save it there so we can pass that object to the "VaccineMap" component
+          //  because that component needs a three-letter iso code in order to make its API request
+        }
+        setCovidData(formattedData);
         setLoading(false);
-        // console.log(cache);
       })
       .catch(function (error) {
         console.error(error);
@@ -54,7 +58,7 @@ const CovidMap = () => {
                 const selection = chart.getSelection();
                 if (selection.length === 0) return;
                 const region = covidData[selection[0].row + 1];
-                navigate('/country', { state: { Country: region[0] } });
+                navigate('/country', { state: region[0] });
               },
             },
           ]}

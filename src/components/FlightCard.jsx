@@ -1,6 +1,6 @@
 import React from 'react';
 
-const FlightCard = ({flightInfo}) => {
+const FlightCard = ({ flightInfo }) => {
   const {
     providerId,
     seatAvailability,

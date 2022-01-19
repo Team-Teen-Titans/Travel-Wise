@@ -22,8 +22,14 @@ flightsController.getAirport = (req, res, next) => {
     })
     .then((response) => response.data)
     .then((apiInfo) => {
-      res.locals.airportCode = apiInfo.data[0].iata;
-      console.log(res.locals.airportCode);
+      const airportCodes = [];
+      apiInfo.data.map((data) => {
+        if (data.iata.length > 0){
+          airportCodes.push(data.iata);
+        }
+      });
+      res.locals.airportCodes = airportCodes;
+      console.log(res.locals.airportCodes);
       return next();
     })
     .catch(err => {
