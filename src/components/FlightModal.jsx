@@ -86,9 +86,6 @@ const FlightModal = ({ tripLocationInfo }) => {
   }, []);
 
   const handleChange = (type) => (e) => {
-    // const { name, value } = e.target;
-    // setTripInfo({ ...tripInfo, oneWayOrRound: type });
-    // setTripInfo({ ...tripInfo, [name]: value });
     let removedText;
     switch (type) {
       case 'onewaytrip':
