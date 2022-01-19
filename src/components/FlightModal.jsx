@@ -78,11 +78,10 @@ const FlightModal = ({ tripLocationInfo }) => {
         destinationSelection: destinationRes.data,
       });
       setLoading(false);
-      
+
       if (originRes.data.length > 0 && destinationRes.data.length > 0) {
         setAirportCodeFound(true);
       }
-
     } catch (err) {
       console.error(err);
     }
@@ -165,8 +164,9 @@ const FlightModal = ({ tripLocationInfo }) => {
 
   return (
     <div>
-      {loading && <Loader />}
-      {airportCodeFound? (
+      {loading ? (
+        <Loader />
+      ) : airportCodeFound ? (
         <ReactModal
           isOpen={modalIsOpen}
           onRequestClose={closeModal}
@@ -379,7 +379,6 @@ const FlightModal = ({ tripLocationInfo }) => {
                     type='button'
                     onClick={() => {
                       closeModal();
-                      setLoading(false);
                     }}
                   >
                     Close
