@@ -9,9 +9,31 @@ const flightKey = process.env.FLIGHT_API_KEY;
 const getFlightsList = (api, roundTrip = true) => {
   console.log("running processing algo");
   const flightList = [];
-
   let i = 0;
-  while (i < 30 && api.trips[i].id !== undefined) {
+  // console.log(api.trips[i], "api.trips[0]");
+  // console.log(api.fares[i], "api.fares[0]");
+  // console.log(
+  //   "api.trips[i].id: ",
+  //   api.trips[i].id,
+  //   "api.trips[i].code: ",
+  //   api.trips[i].code,
+  //   "api.trips[i].legIds[0]: ",
+  //   api.trips[i].legIds[0],
+  //   "api.fares[i].price.totalAmountUsd: ",
+  //   api.fares[i].price.totalAmountUsd,
+  //   "api.fares[i].remainingSeatsCount: ",
+  //   api.fares[i].remainingSeatsCount,
+  //   "api.fares[i].refundable: ",
+  //   api.fares[i].refundable,
+  //   "api.fares[i].exchangeable: ",
+  //   api.fares[i].exchangeable,
+  //   "api.fares[i].handoffUrl: ",
+  //   api.fares[i].handoffUrl
+  // );
+
+  while (i < 30) {
+    // while (i < 30 && api.trips[i].id !== undefined) {
+    // console.log("inside while loop");
     const flight = {};
     flight.id = api.trips[i].id;
     flight.code = api.trips[i].code;
@@ -24,6 +46,7 @@ const getFlightsList = (api, roundTrip = true) => {
 
     if (roundTrip) flight.legIdTwo = api.trips[i].legIds[1];
 
+    // console.log(flight, "flight before api.legs mapping");
     api.legs.forEach((leg) => {
       if (leg.id === flight.legIdOne) {
         const {
@@ -54,35 +77,37 @@ const getFlightsList = (api, roundTrip = true) => {
           overnight,
           segments,
         };
-      } else if (leg.id === flight.legIdTwo) {
-        const {
-          duration,
-          departureAirportCode,
-          arrivalAirportCode,
-          airlineCodes,
-          stopoverAirportCodes,
-          stopoversCount,
-          departureDateTime,
-          arrivalDateTime,
-          stopoverDurationMinutes,
-          durationMinutes,
-          overnight,
-          segments,
-        } = leg;
-        flight.legTwoInfo = {
-          duration,
-          departureAirportCode,
-          arrivalAirportCode,
-          airlineCodes,
-          stopoverAirportCodes,
-          stopoversCount,
-          departureDateTime,
-          arrivalDateTime,
-          stopoverDurationMinutes,
-          durationMinutes,
-          overnight,
-          segments,
-        };
+      } else if (flight.legIdTwo) {
+        if (leg.id === flight.legIdTwo) {
+          const {
+            duration,
+            departureAirportCode,
+            arrivalAirportCode,
+            airlineCodes,
+            stopoverAirportCodes,
+            stopoversCount,
+            departureDateTime,
+            arrivalDateTime,
+            stopoverDurationMinutes,
+            durationMinutes,
+            overnight,
+            segments,
+          } = leg;
+          flight.legTwoInfo = {
+            duration,
+            departureAirportCode,
+            arrivalAirportCode,
+            airlineCodes,
+            stopoverAirportCodes,
+            stopoversCount,
+            departureDateTime,
+            arrivalDateTime,
+            stopoverDurationMinutes,
+            durationMinutes,
+            overnight,
+            segments,
+          };
+        }
       }
     });
 
@@ -116,7 +141,9 @@ flightsController.getFlights = (req, res, next) => {
         `https://api.flightapi.io/onewaytrip/${flightKey}/${originAirport}/${destinationAirport}/${departureDate}/${numOfAdults}/${numOfChildren}/${numOfInfants}/${cabinClass}/USD`
       )
       .then((flightInfo) => {
+        console.log("inside thenable");
         res.locals.flightsData = getFlightsList(flightInfo.data, false);
+        console.log("flightsData assigned on res.locals");
         return next();
       })
       .catch((err) => {
@@ -135,6 +162,7 @@ flightsController.getFlights = (req, res, next) => {
       )
       .then((flightInfo) => {
         console.log("running thenable");
+        console.log(Object.keys(flightInfo.data), "keys of flightInfo object");
         res.locals.flightsData = getFlightsList(flightInfo.data, true);
         return next();
       })
