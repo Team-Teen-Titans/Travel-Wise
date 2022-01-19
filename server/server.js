@@ -1,37 +1,24 @@
 const express = require('express');
 const app = express();
 const session = require('express-session');
-// const flash = require('express-flash');
-// const methodOverride = require('method-override')
 const cors = require('cors');
 // const path = require('path');
-// const cookieParser = require('cookie-parser');
 const passport = require('passport');
-// const { Pool } = require('pg');
-// const pgSession = require('connect-pg-simple')(session)
 const PORT = 3000;
 require('dotenv').config();
-require('./google-oauth')(passport);
+require('./passport-config')(passport);
 
 app.use(cors());
-// app.use(cookieParser());
-app.set('view engine', 'jsx')
 app.use(express.urlencoded({ extended: true }))
-// app.use(flash())
 app.use(session({
-  // store: new pgSession({
-  //   pool: new Pool({
-  //     connectionString: process.env.DATABASE_URL,
-  //   }),
-  //   tableName: 'session'
-  // }),
-  secret: 'cats',
+  secret: 'stealthy-cat',
   resave: false,
-  saveUninitialized: true
+  saveUninitialized: true,
+  cookie: { maxAge: 3600000 }, //this is 1 hour
 }));
 app.use(passport.initialize());
 app.use(passport.session());
-// app.use(methodOverride('_method'))
+
 /**
  * require routers
  */
@@ -45,7 +32,6 @@ const userRouter = require('./routes/userRouter');
 app.use(express.json());
 //handle flights query
 
-// app.get('/google/callback', (req, res) => res.status(200).send('google oauth'))
 app.use('/api/flights', flightsRouter);
 app.use('/api/user', userRouter);
 

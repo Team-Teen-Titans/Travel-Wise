@@ -22,11 +22,11 @@ render(
           element={<VaccineMap />}
           render={(props) => <VaccineMap {...props} />}
         />
-        <Route path='about' element={<About />} />
-        <Route path='login' element={<Login />} />
-        <Route path='signup' element={<SignUp />} />
-        <Route path='flights' 
-          element={<FlightResults />} 
+        <Route path='/about' element={<About />} />
+        <Route path='/login' element={<Login />} />
+        <Route path='/signup' element={<SignUp />} />
+        <Route path='/flights'
+          element={<FlightResults />}
           render={(props) => <FlightResults {...props} />}
         />
       </Route>
