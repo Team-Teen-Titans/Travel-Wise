@@ -159,6 +159,138 @@ const FlightModal = ({ tripLocationInfo }) => {
     return minDate.join('');
   };
 
+  return (
+    <div>
+     {loading ? (
+      <Loader />
+     ) : (
+      <ReactModal isOpen={modalIsOpen} onRequestClose={closeModal} ariaHideApp={false} className='bg-gray-200 flex justify-center h-screen my-24'>
+       <div className='place-center bg-gray-200'>
+        <h3 className='text-base font-semibold text-xl tracking-tight'>Staying or returning?</h3>
+        <span>
+         <button
+          onClick={handleChange('onewaytrip')}
+          className='rounded-md py-2.5 px-2.5 m-1 text-white bg-blue-500 hover:bg-blue-400 active:bg-blue-600 shadow-md scale-90 focus:outline-none focus:ring focus:ring-blue-300'
+          id='one-way'
+         >
+          One Way
+         </button>
+         {' or '}
+         <button
+          onClick={handleChange('roundtrip')}
+          className='rounded-md py-2.5 px-2.5 m-1 text-white bg-blue-500 hover:bg-blue-400 active:bg-blue-600 shadow-md scale-90 focus:outline-none focus:ring focus:ring-blue-300'
+          id='round-trip'
+         >
+          Round Trip
+         </button>
+        </span>
+        <br />
+        <br />
+        <span>
+         <label htmlFor='departure-date' className='text-base font-semibold text-xl tracking-tight'>Departure Date: </label>
+         <input
+          type='date'
+          name='departure'
+          className='border 1px rounded'
+          min={minDate}
+          onChange={handleChange('departureDate')}
+         ></input>
+         {' '}
+         <label htmlFor='return-date' className='text-base font-semibold text-xl tracking-tight'>Return Date: </label>
+         <input
+          type='date'
+          name='return'
+          className='border 1px rounded'
+          min={findRoundTripMinDate(minDate)}
+          onChange={handleChange('returnDate')}
+         ></input>
+        </span>
+        <br />
+        <br />
+        <span>
+         <label htmlFor='origin-airport' className='text-base font-semibold text-xl tracking-tight'>Departure Airport: </label>
+         <select
+          htmlFor='originSelection'
+          name='originSelection'
+          className='border 1px rounded'
+          onChange={handleChange('originAirport')}
+         >
+          {originAirportsList}
+         </select>
+         {' '}
+         <label htmlFor='destination-airport' className='text-base font-semibold text-xl tracking-tight'>Arrival Airport: </label>
+         <select
+          htmlFor='destinationSelection'
+          name='destinationSelection'
+          className='border 1px rounded'
+          onChange={handleChange('destinationAirport')}
+         >
+          {destinationAirportsList}
+         </select>
+        </span>
+        <br />
+        <br />
+        <label htmlFor='cabinClass' className='text-base font-semibold text-xl tracking-tight'>Cabin Class: </label>
+        <span>
+         <select
+          onChange={handleChange('cabinClass')}
+          className='border 1px rounded'
+         >
+          <option value='Economy'>Economy</option>
+          <option value='Business'>Business</option>
+          <option value='First'>First</option>
+          <option value='Premium_Economy'>Premium Economy</option>
+         </select>
+        </span>
+        <br />
+        <br />
+        <span>
+         <h3 className='text-lg font-semibold text-xl tracking-tight'>Passenger Information: </h3>
+        </span>
+        <span>
+         <label htmlFor='numOfAdults' className='text-base font-semibold text-xl tracking-tight'>Adults: </label>
+         <input
+          htmlFor='numOfAdults'
+          // type="number"
+          defaultValue='1'
+          name='number of adults'
+          className='border 1px rounded w-8'
+          onChange={handleChange('numOfAdults')}
+         ></input>
+         {' '}
+         <label htmlFor='numOfChildren' className='text-base font-semibold text-xl tracking-tight'>Children: </label>
+         <input
+          htmlFor='numOfChildren'
+          defaultValue='0'
+          name='number of children'
+          className='border 1px rounded w-8'
+          onChange={handleChange('numOfChildren')}
+         ></input>
+         {' '}
+         <label htmlFor='numOfInfants' className='text-base font-semibold text-xl tracking-tigh'>Infants: </label>
+         <input
+          htmlFor='numOfInfants'
+          // type="number"
+          defaultValue='0'
+          name='number of infants'
+          className='border 1px rounded w-8'
+          onChange={handleChange('numOfInfants')}
+         ></input>
+        </span>
+        <br />
+        <br />
+        <button
+         onClick={handleSubmit}
+         className='rounded-md py-2.5 px-2.5 m-1 bg-green-500 text-white hover:bg-opacity-75 active:shadow-md scale-90'
+        >
+         Search Flights Now
+        </button>
+        <button onClick={closeModal} className='rounded-md py-2.5 px-2.5 m-1 bg-gray-500 text-white hover:bg-opacity-75 active:shadow-md scale-90'>Cancel</button>
+       </div>
+      </ReactModal>
+     )}
+    </div>
+   );
 
 };
 
