@@ -11,22 +11,6 @@ const VaccineMap = () => {
   const [onHoverMapData, setOnHoverMapData] = useState([]);
   const [loading, setLoading] = useState(true);
   const { state } = useLocation();
-<<<<<<< HEAD
-  let iso;
-  if (!state) {
-    vaccinationOptions.params['iso'] = 'USA';
-    iso = 'USA';
-  } else {
-    const { Country } = state;
-    console.log('Country: ', Country);
-    const codeConversion = countryNameToCode[Country];
-    vaccinationOptions.params['iso'] =
-      object[Country] || object[codeConversion];
-    iso = object[Country] || object[codeConversion];
-    console.log('iso: ', iso);
-  }
-=======
->>>>>>> dev
 
   useEffect(() => {
     vaccinationOptions.params.iso = state.iso;
@@ -55,7 +39,7 @@ const VaccineMap = () => {
 
   return (
     <div>
-      <h1 align='center' className='py-4 text-lg font-mono space-y-px'>
+      <h1 align='center' className='py-4 text-lg font-mono'>
         Total Number of Vaccinations
       </h1>
       {loading ? (

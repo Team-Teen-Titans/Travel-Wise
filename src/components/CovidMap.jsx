@@ -13,19 +13,6 @@ const CovidMap = () => {
   useEffect(() => {
     axios
       .request(covidOptions)
-<<<<<<< HEAD
-      .then((response) => response.data)
-      .then((data) => {
-        const cache = data.map((el) => {
-          const casesPerNum =
-            Math.floor((el.ActiveCases / el.Population) * 100000) || 0;
-          // console.log(el.Country, 'cases per 100,000: ', casesPerNum);
-          return [countryCodeToName[el.Country] || el.Country, casesPerNum];
-          // return [el.TwoLetterSymbol, casesPerNum] 
-        });
-        cache.unshift(['Country', 'Cases per 100,000']);
-        setCovidData(cache);
-=======
       .then(({ data }) => {
         //initialize data array with the names of the columns
         const formattedData = [['Country', 'Cases per 100,000']];
@@ -42,7 +29,6 @@ const CovidMap = () => {
           //  because that component needs a three-letter iso code in order to make its API request
         }
         setCovidData(formattedData);
->>>>>>> dev
         setLoading(false);
       })
       .catch(function (error) {
