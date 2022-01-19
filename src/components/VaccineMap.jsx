@@ -1,17 +1,17 @@
-import React from 'react';
-import { useEffect, useState } from 'react/cjs/react.development';
+import React, { useEffect, useState } from 'react';
 import { Chart } from 'react-google-charts';
 import axios from 'axios';
-import { countryNameToCode, vaccinationOptions } from '../utils/constants';
+import { vaccinationOptions } from '../utils/constants';
 import Loader from './Spinner';
 import { useLocation } from 'react-router';
-import object from '../utils/isoCodes';
 import Table from './Table';
 
 const VaccineMap = () => {
   const [countryData, setCountryData] = useState([]);
+  const [onHoverMapData, setOnHoverMapData] = useState([]);
   const [loading, setLoading] = useState(true);
   const { state } = useLocation();
+<<<<<<< HEAD
   let iso;
   if (!state) {
     vaccinationOptions.params['iso'] = 'USA';
@@ -25,29 +25,25 @@ const VaccineMap = () => {
     iso = object[Country] || object[codeConversion];
     console.log('iso: ', iso);
   }
+=======
+>>>>>>> dev
 
   useEffect(() => {
-    axios
-      .request(vaccinationOptions)
-      .then((response) => response.data)
-      .then((data) => {
-        const { country, total_vaccinations } = data[data.length - 1];
-        return { country, total_vaccinations };
-      })
-      .then((data) => {
-        const cache = [[], []];
-        for (const property in data) {
-          const capitalizedString = `${property[0].toUpperCase()}${property.slice(
-            1
-          )}`;
-          const formattedString = capitalizedString.replaceAll(/_/g, ' ');
-          cache[0].push(formattedString);
-          const dataPoint = Number.isNaN(+data[property])
-            ? data[property]
-            : +data[property];
-          cache[1].push(dataPoint);
+    vaccinationOptions.params.iso = state.iso;
+    axios.request(vaccinationOptions)
+      .then(({ data }) => {
+        //setting onhover data for vaccine map
+        const latestVaccinationData = data[data.length - 1];
+        const onHoverMapDataArray = [['Country','Total Vaccinations'], [state, Number(latestVaccinationData.total_vaccinations)]]
+        setOnHoverMapData(onHoverMapDataArray);
+
+        //setting table data for the Table component
+        const countryDataArray = [['','']];
+        for (const property in latestVaccinationData) {
+          const formattedPropertyName = property.replace(/(^[a-z])|(_[a-z])/g, matched => matched.toUpperCase().replace('_', ' '));
+          countryDataArray.push([formattedPropertyName, latestVaccinationData[property]])
         }
-        setCountryData(cache);
+        setCountryData(countryDataArray);
         setLoading(false);
       })
       .catch(function (error) {
@@ -69,11 +65,11 @@ const VaccineMap = () => {
           chartType='GeoChart'
           width='100%'
           height='60vh'
-          data={countryData}
+          data={onHoverMapData}
           options={options}
         />
       )}
-      {loading ? <Loader /> : <Table iso={iso} />}
+      {loading ? <Loader /> : <Table countryData={countryData} />}
     </div>
   );
 };
