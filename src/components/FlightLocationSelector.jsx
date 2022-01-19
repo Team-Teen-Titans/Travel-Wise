@@ -10,6 +10,7 @@ const FlightLocationSelector = () => {
   });
 
   const [showModal, setShowModal] = useState(false);
+  const [key, setKey] = useState(1);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -17,6 +18,7 @@ const FlightLocationSelector = () => {
   };
 
   const handleSearchSubmit = () => {
+    setKey(key + 1);
     setShowModal(true);
   };
 
@@ -44,7 +46,7 @@ const FlightLocationSelector = () => {
       </span>
       <br/>
       <button className='text-lg mx-3.5 rounded-md py-2.5 px-2.5 m-1 bg-green-500 text-white hover:bg-opacity-75 active:shadow-md scale-90' onClick={handleSearchSubmit}>Get Started</button>
-      {showModal && <FlightModal tripLocationInfo={tripLocationInfo}/>}
+      {showModal && <FlightModal key={key} tripLocationInfo={tripLocationInfo}/>}
 
     </div>
   );
