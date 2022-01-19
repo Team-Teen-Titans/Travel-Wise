@@ -17,3 +17,4 @@ const FlightFeed = ({ flights }) => {
 };
 
 export default FlightFeed;
+
