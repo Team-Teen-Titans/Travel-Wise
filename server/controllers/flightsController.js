@@ -162,7 +162,7 @@ flightsController.getFlights = (req, res, next) => {
       )
       .then((flightInfo) => {
         console.log("running thenable");
-        console.log(Object.keys(flightInfo.data), "keys of flightInfo object");
+        // console.log(Object.keys(flightInfo.data), "keys of flightInfo object");
         res.locals.flightsData = getFlightsList(flightInfo.data, true);
         return next();
       })
@@ -187,8 +187,14 @@ flightsController.getAirport = (req, res, next) => {
     })
     .then((response) => response.data)
     .then((apiInfo) => {
-      res.locals.airportCode = apiInfo.data[0].iata;
-      console.log(res.locals.airportCode);
+      const airportCodes = [];
+      apiInfo.data.map((data) => {
+        if (data.iata.length > 0) {
+          airportCodes.push(data.iata);
+        }
+      });
+      res.locals.airportCodes = airportCodes;
+      console.log(res.locals.airportCodes);
       return next();
     })
     .catch((err) => {

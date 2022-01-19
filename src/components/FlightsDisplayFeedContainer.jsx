@@ -4,7 +4,7 @@ import Loader from "./Spinner";
 import FlightFeed from "./FlightFeed";
 import { useLocation } from "react-router";
 
-const TestContainer = () => {
+const FlightsDisplayFeedContainer = () => {
   const [loading, setLoading] = useState(true);
   const [flights, setFlights] = useState(null);
   const { state } = useLocation();
@@ -40,4 +40,4 @@ const TestContainer = () => {
   return <div>{loading ? <Loader /> : <FlightFeed flights={flights} />}</div>;
 };
 
-export default TestContainer;
+export default FlightsDisplayFeedContainer;

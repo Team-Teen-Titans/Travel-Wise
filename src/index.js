@@ -8,8 +8,7 @@ import HomepageContainer from "./components/HomepageContainer";
 import Login from "./components/Login";
 import Styles from "./stylesheets/styles.css";
 import SignUp from "./components/SignUp";
-import FlightResults from "./components/FlightResults";
-import TestContainer from "./components/TestContainer";
+import FlightsDisplayFeedContainer from "./components/FlightsDisplayFeedContainer";
 
 render(
   <BrowserRouter>
@@ -26,14 +25,9 @@ render(
         <Route path="login" element={<Login />} />
         <Route path="signup" element={<SignUp />} />
         <Route
-          path="flights"
-          element={<FlightResults />}
-          render={(props) => <FlightResults {...props} />}
-        />
-        <Route
-          path="test"
-          element={<TestContainer />}
-          render={(props) => <TestContainer {...props} />}
+          path="flights-display"
+          element={<FlightsDisplayFeedContainer />}
+          render={(props) => <FlightsDisplayFeedContainer {...props} />}
         />
       </Route>
     </Routes>
