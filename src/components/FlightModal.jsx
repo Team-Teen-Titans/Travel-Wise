@@ -72,16 +72,17 @@ const FlightModal = ({ tripLocationInfo }) => {
         `/api/flights/airport/${destinationUrl}`
       );
 
-      if (originRes.data.length > 0 && destinationRes.data.length > 0) {
-        setAirportCodeFound(true);
-      }
-
       setAirportSelection({
         ...airportSelection,
         originSelection: originRes.data,
         destinationSelection: destinationRes.data,
       });
       setLoading(false);
+      
+      if (originRes.data.length > 0 && destinationRes.data.length > 0) {
+        setAirportCodeFound(true);
+      }
+
     } catch (err) {
       console.error(err);
     }
@@ -165,7 +166,7 @@ const FlightModal = ({ tripLocationInfo }) => {
   return (
     <div>
       {loading && <Loader />}
-      {airportCodeFound ? (
+      {airportCodeFound? (
         <ReactModal
           isOpen={modalIsOpen}
           onRequestClose={closeModal}
