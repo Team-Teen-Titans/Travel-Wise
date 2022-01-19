@@ -1,17 +1,16 @@
 const express = require('express');
 const passport = require('passport');
-const userController = require('../controllers/userController');
-const sessionController = require('../controllers/sessionController');
-const cookieController = require('../controllers/cookieController');
+const { checkAuthenticated, checkNotAuthenticated } = require('../controllers/sessionController');
 
 const router = express.Router();
 
-router.post('/login', userController.login, sessionController.startSession, cookieController.setSSIDCookie, (req, res) => {
-	return res.redirect('/');
-});
+router.post('/login', checkNotAuthenticated, passport.authenticate('local.auth'), (req, res) => {
+	// console.log('req user:', req.user);
+	return res.status(200).send(req.user);
+})
 
-router.post('/signup', userController.createUser, sessionController.startSession, cookieController.setSSIDCookie, (req, res) => {
-	return res.redirect('/');
+router.post('/signup', passport.authenticate('local.signup'), (req, res) => {
+	return res.status(200).send(req.user);
 });
 
 router.get('/google/callback',
@@ -21,20 +20,19 @@ router.get('/google/callback',
 	})
 );
 
-router.get('/protected', sessionController.isLoggedIn, (req, res) => {
+router.get('/protected', checkAuthenticated, (req, res) => {
 	return res.status(200).send('youre in a protected route');
 });
-router.get('/google-redirect', /*sessionController.isLoggedIn,*/(req, res) => {
+router.get('/google-redirect', (req, res) => {
 	return res.redirect('http://localhost:8080');
 });
 
-router.get('/google-failure', /*sessionController.isLoggedIn,*/(req, res) => {
+router.get('/google-failure', (req, res) => {
 	return res.redirect('http://localhost:8080/failure');
 });
 
 router.get('/google',
 	passport.authenticate('google', { scope: ['email', 'profile'] })
 )
-
 
 module.exports = router;

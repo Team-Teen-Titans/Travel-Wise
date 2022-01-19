@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loginError, setLoginError] = useState(false);
+	const navigate = useNavigate();
 
   const onEmailChange = (e) => {
     const emailValue = e.target.value;
@@ -20,13 +21,16 @@ const Login = () => {
 		axios
 			.post('/api/user/login', { email: email, password: password })
 			.then((res) => {
-				console.log(res);
+				// console.log(res);
+				if (res.status === 200) {
+					return navigate('/');
+				}
 				// sessionStorage.setItem('email', email);
 				// sessionStorage.setItem('loggedIn', ******);
 				// window.location.href = '/home';
 			})
 			.catch((err) => {
-				console.log(err);
+				console.log('error in axios in Login.jsx:',err);
 				setLoginError(true);
 			});
 	};
