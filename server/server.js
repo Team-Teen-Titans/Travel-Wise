@@ -3,17 +3,22 @@ const app = express();
 const session = require("express-session");
 const cors = require("cors");
 // const path = require('path');
-const cookieParser = require("cookie-parser");
-const passport = require("passport");
+const passport = require('passport');
 const PORT = 3000;
-require("dotenv").config();
-require("./google-oauth");
+require('dotenv').config();
+require('./passport-config')(passport);
 
 app.use(cors());
-app.use(cookieParser());
-app.use(session({ secret: "cats", resave: false, saveUninitialized: true }));
+app.use(express.urlencoded({ extended: true }))
+app.use(session({
+  secret: 'stealthy-cat',
+  resave: false,
+  saveUninitialized: true,
+  cookie: { maxAge: 3600000 }, //this is 1 hour
+}));
 app.use(passport.initialize());
 app.use(passport.session());
+
 /**
  * require routers
  */
@@ -27,9 +32,9 @@ const userRouter = require("./routes/userRouter");
 app.use(express.json());
 //handle flights query
 
-// app.get('/google/callback', (req, res) => res.status(200).send('google oauth'))
-app.use("/api/flights", flightsRouter);
-app.use("/api/user", userRouter);
+app.use('/api/flights', flightsRouter);
+app.use('/api/user', userRouter);
+
 
 // catch-all route handler for any requests to an unknown route
 // set status code and send status as a string in response
@@ -40,7 +45,7 @@ app.use((err, req, res, next) => {
   const defaultErr = {
     log: "Express error handler caught unknown middleware error",
     status: 500,
-    message: { err: "An error occurred" },
+    message: { err: 'An error occurred' },
   };
   // change error of default error object
   const errorObj = {
