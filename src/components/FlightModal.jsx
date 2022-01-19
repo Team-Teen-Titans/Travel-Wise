@@ -7,6 +7,7 @@ import Loader from './Spinner';
 import { data } from 'autoprefixer';
 
 const FlightModal = ({ tripLocationInfo }) => {
+
   //component did mount needs to get airports
   //use effect to make axios call for airport
   const originSelected = tripLocationInfo.originCity;
@@ -30,7 +31,8 @@ const FlightModal = ({ tripLocationInfo }) => {
     numOfInfants: 0,
     cabinClass: 'Economy',
   });
-
+  
+  // populate origin airport codes list
   const originAirportsList =
     airportSelection.originSelection.length > 0 &&
     airportSelection.originSelection.map((code, i) => {
@@ -41,6 +43,7 @@ const FlightModal = ({ tripLocationInfo }) => {
       );
     });
 
+  // populate destination airport codes list
   const destinationAirportsList =
     airportSelection.destinationSelection.length > 0 &&
     airportSelection.destinationSelection.map((code, i) => {
@@ -50,7 +53,8 @@ const FlightModal = ({ tripLocationInfo }) => {
         </option>
       );
     });
-
+  
+  // modal status
   const openModal = () => {
     setModalIsOpen(true);
   };
@@ -58,8 +62,6 @@ const FlightModal = ({ tripLocationInfo }) => {
   const closeModal = () => {
     setModalIsOpen(false);
   };
-
-  const navigate = useNavigate();
 
   const getAirportCode = async (originCity, destinationCity) => {
     try {
@@ -81,53 +83,58 @@ const FlightModal = ({ tripLocationInfo }) => {
     }
   };
 
+  // on FlightModal component mount
   useEffect(() => {
+    console.log('component mounted')
+    openModal();
     getAirportCode(originSelected, destinationSelected);
   }, []);
 
   const handleChange = (type) => (e) => {
     let removedText;
     switch (type) {
-      case 'onewaytrip':
-        setTripInfo({ ...tripInfo, oneWayOrRound: type });
-        break;
-      case 'roundtrip':
-        setTripInfo({ ...tripInfo, oneWayOrRound: type });
-        break;
-      case 'originAirport':
-        setTripInfo({ ...tripInfo, originAirport: e.target.value });
-        break;
-      case 'destinationAirport':
-        setTripInfo({ ...tripInfo, destinationAirport: e.target.value });
-        break;
-      case 'departureDate':
-        setTripInfo({ ...tripInfo, departureDate: e.target.value });
-        break;
-      case 'returnDate':
-        setTripInfo({ ...tripInfo, returnDate: e.target.value });
-        break;
-      case 'numOfAdults':
-        removedText = e.target.value.replace(/\D+/g, '');
-        if (removedText === '') removedText = 0;
-        setTripInfo({ ...tripInfo, numOfAdults: removedText });
-        break;
-      case 'numOfChildren':
-        removedText = e.target.value.replace(/\D+/g, '');
-        if (removedText === '') removedText = 0;
-        setTripInfo({ ...tripInfo, numOfChildren: removedText });
-        break;
-      case 'numOfInfants':
-        removedText = e.target.value.replace(/\D+/g, '');
-        if (removedText === '') removedText = 0;
-        setTripInfo({ ...tripInfo, numOfInfants: removedText });
-        break;
-      case 'cabinClass':
-        setTripInfo({ ...tripInfo, cabinClass: e.target.value });
-        break;
-      default:
-        console.log('handleChange ran', type);
+    case 'onewaytrip':
+      setTripInfo({ ...tripInfo, oneWayOrRound: type });
+      break;
+    case 'roundtrip':
+      setTripInfo({ ...tripInfo, oneWayOrRound: type });
+      break;
+    case 'originAirport':
+      setTripInfo({ ...tripInfo, originAirport: e.target.value });
+      break;
+    case 'destinationAirport':
+      setTripInfo({ ...tripInfo, destinationAirport: e.target.value });
+      break;
+    case 'departureDate':
+      setTripInfo({ ...tripInfo, departureDate: e.target.value });
+      break;
+    case 'returnDate':
+      setTripInfo({ ...tripInfo, returnDate: e.target.value });
+      break;
+    case 'numOfAdults':
+      removedText = e.target.value.replace(/\D+/g, '');
+      if (removedText === '') removedText = 0;
+      setTripInfo({ ...tripInfo, numOfAdults: removedText });
+      break;
+    case 'numOfChildren':
+      removedText = e.target.value.replace(/\D+/g, '');
+      if (removedText === '') removedText = 0;
+      setTripInfo({ ...tripInfo, numOfChildren: removedText });
+      break;
+    case 'numOfInfants':
+      removedText = e.target.value.replace(/\D+/g, '');
+      if (removedText === '') removedText = 0;
+      setTripInfo({ ...tripInfo, numOfInfants: removedText });
+      break;
+    case 'cabinClass':
+      setTripInfo({ ...tripInfo, cabinClass: e.target.value });
+      break;
+    default:
+      console.log('handleChange ran', type);
     }
   };
+
+  const navigate = useNavigate();
 
   const handleSubmit = () => {
     console.log('trip info on submit: ', tripInfo);
@@ -138,7 +145,7 @@ const FlightModal = ({ tripLocationInfo }) => {
     //   },
     // });
     navigate('/login');
-    //where should we direct from here to show cards? flights?
+    // navigate to flight results page
   };
 
   //sets minimum departure date to today

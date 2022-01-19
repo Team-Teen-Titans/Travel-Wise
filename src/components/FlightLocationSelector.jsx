@@ -17,7 +17,6 @@ const FlightLocationSelector = () => {
   };
 
   const handleSearchSubmit = () => {
-    // console.log('state upon submit: ', tripLocationInfo);
     setShowModal(true);
   };
 
