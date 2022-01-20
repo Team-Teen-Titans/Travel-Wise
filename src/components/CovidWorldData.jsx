@@ -48,7 +48,7 @@ const CovidWorldData = () => {
           totalDeaths: data[0].TotalDeaths.toLocaleString(undefined, {
             maximumFractionDigits: 2,
           }),
-          totalRecovered: data[0].TotalRecovered.toLocaleString(undefined, {
+          totalRecovered: Number(data[0].TotalRecovered).toLocaleString(undefined, {
             maximumFractionDigits: 2,
           }),
         });
@@ -57,7 +57,6 @@ const CovidWorldData = () => {
         console.log(err);
       });
   }, []);
-  console.log(state);
   return (
     <div className='flex flex-col min-h-screen'>
       <h1 align='center' className='py-4 text-3xl font-mono border-2 rounded'>
@@ -67,7 +66,7 @@ const CovidWorldData = () => {
         <Loader />
       ) : (
         <div>
-          <div flex flex-row min-h-screen justify-center items-center>
+          <div>
             <div className='mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-green-100 sm:h-20 sm:w-20'>
               <BiWorld className='h-10 w-10 text-green-600 animate-pulse' />
             </div>
@@ -109,7 +108,7 @@ const CovidWorldData = () => {
               <span className='m-2.5 p-2.5 flex justify-center items-center text-gray-900 font-bold uppercase px-6 py-2 text-l outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150'>Case Fatality: {state.caseFatality}%</span>
               <AiFillCloseCircle
                 onClick={() => setToggle(false)}
-                className='cursor-pointer text-red-600 rounded-full bg-red-100 sm:mx-0 sm:h-4 sm:w-4'
+                className='cursor-pointer text-red-600 rounded-full'
               />
             </div>
           )}
