@@ -16,7 +16,7 @@ const FlightFeed = ({ flights }) => {
       {flights.length === 0 && (
         <p>
           {" "}
-          No flights available. Click <Link to={"/home"}>here</Link> to return
+          No flights available. Click <Link to={"/"}>here</Link> to return
           to the home page and search again.
         </p>
       )}

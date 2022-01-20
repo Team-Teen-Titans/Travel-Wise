@@ -23,18 +23,12 @@ function NavBar() {
           </button>
         </div>
         <div className="w-full block flex-grow lg:flex lg:items-end lg:w-auto text-center">
-          <div className="justify-between text-sm lg:flex-grow">
+          <div className="justify-between text-sm lg:flex-grow text-right">
             <Link
               to="/"
               className="block mt-4 lg:inline-block lg:mt-0 text-white hover:text-green-300 mr-5"
             >
               Home
-            </Link>
-            <Link
-              to="/country"
-              className="block mt-4 lg:inline-block lg:mt-0 text-white hover:text-green-300 mr-5 ml-5"
-            >
-              Countries
             </Link>
             <Link
               to="/login"
