@@ -5,11 +5,11 @@ import 'regenerator-runtime';
 import ReactModal from 'react-modal';
 import Loader from './Spinner';
 import SubmitSearchButton from './SubmitSearchButton';
-import { data } from 'autoprefixer';
+// import { data } from 'autoprefixer';
 import { MdError } from 'react-icons/md';
 
 const FlightModal = ({ tripLocationInfo }) => {
-
+  // console.log('tripLocationInfo in Modal:', tripLocationInfo)
   //component did mount needs to get airports
   //use effect to make axios call for airport
   const originSelected = tripLocationInfo.originCity;
@@ -57,9 +57,7 @@ const FlightModal = ({ tripLocationInfo }) => {
       const originUrl = originCity.replace(/\s/g, "%20");
       const destinationUrl = destinationCity.replace(/\s/g, "%20");
       const originRes = await axios.get(`/api/flights/airport/${originUrl}`);
-      const destinationRes = await axios.get(
-        `/api/flights/airport/${destinationUrl}`
-      );  
+      const destinationRes = await axios.get(`/api/flights/airport/${destinationUrl}`);  
       // update airport code lists
       setAirportSelection({
         ...airportSelection,
@@ -79,7 +77,7 @@ const FlightModal = ({ tripLocationInfo }) => {
         setAirportCodeFound(true);
       }
     } catch (err) {
-      console.error(err);
+      console.error('err in getAirportCode func:',err);
     }
   };
 
@@ -163,7 +161,7 @@ const FlightModal = ({ tripLocationInfo }) => {
   const navigate = useNavigate();
 
   const handleSubmit = () => {
-    console.log("trip info on submit: ", tripInfo);
+    console.log("tripInfo on submit: ", tripInfo);
     closeModal();
     navigate("/flights-display", {
       state: {
