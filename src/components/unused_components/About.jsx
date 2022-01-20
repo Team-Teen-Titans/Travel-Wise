@@ -1,6 +1,6 @@
 import React from 'react';
 import AboutUs from './AboutUs';
-import Founders from './Founders';
+import Founders from '../Founders';
 
 const About = () => {
   return (

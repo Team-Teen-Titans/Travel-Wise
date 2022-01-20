@@ -7,8 +7,8 @@ const HomepageContainer = () => {
   return (
     <div>
       <FlightLocationSelector />
-      {/* <CovidMap /> */}
-      <Login />
+      <CovidMap />
+      {/* <Login /> */}
     </div>
   );
 };

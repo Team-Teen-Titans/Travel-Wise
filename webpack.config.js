@@ -1,33 +1,33 @@
-const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const Dotenv = require('dotenv-webpack');
+const path = require("path");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const Dotenv = require("dotenv-webpack");
 
 module.exports = {
   entry: [
-    'regenerator-runtime/runtime.js',
-    path.join(__dirname, 'src/index.js'),
+    "regenerator-runtime/runtime.js",
+    path.join(__dirname, "src/index.js"),
   ],
   devServer: {
-    static: path.join(__dirname, 'build'),
+    static: path.join(__dirname, "build"),
     compress: true,
     port: 8080,
     //needed to render pages with react router without going to the server
     historyApiFallback: true,
     proxy: {
-      '/api': {
-        target: 'http://localhost:3000/',
+      "/api/*": {
+        target: "http://localhost:3000/",
         changeOrigin: true,
       },
     },
   },
 
   output: {
-    path: path.resolve(__dirname, 'build'),
-    filename: 'bundle.js',
+    path: path.resolve(__dirname, "build"),
+    filename: "bundle.js",
   },
 
-  devtool: 'inline-source-map',
+  devtool: "inline-source-map",
   // mode: process.env.NODE_ENV,
 
   module: {
@@ -36,29 +36,29 @@ module.exports = {
         test: /\.jsx?/,
         exclude: /(node_modules)/,
         use: {
-          loader: 'babel-loader',
+          loader: "babel-loader",
           options: {
-            presets: ['@babel/preset-env', '@babel/preset-react'],
+            presets: ["@babel/preset-env", "@babel/preset-react"],
           },
         },
       },
       {
         test: /\.css$/,
-        use: [MiniCssExtractPlugin.loader, 'css-loader', 'postcss-loader'],
+        use: [MiniCssExtractPlugin.loader, "css-loader", "postcss-loader"],
       },
     ],
   },
   resolve: {
-    extensions: ['.js', '.jsx'],
+    extensions: [".js", ".jsx"],
   },
 
   plugins: [
     new HtmlWebpackPlugin({
-      title: 'Dev',
-      template: path.join(__dirname, 'index.html'),
+      title: "Dev",
+      template: path.join(__dirname, "index.html"),
     }),
     new MiniCssExtractPlugin({
-      filename: 'styles.css',
+      filename: "styles.css",
     }),
     new Dotenv(),
   ],

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const SignUp = () => {
   const [state, setstate] = useState({
@@ -10,7 +10,9 @@ const SignUp = () => {
     password: '',
     confirmPassword: '',
   });
-  const [passwordError, setPasswordError] = useState(false);
+  // const [passwordError, setPasswordError] = useState(false);
+  const [fieldsError, setFieldsError] = useState(false);
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -31,14 +33,24 @@ const SignUp = () => {
           password: state.password,
         })
         .then((res) => {
-          console.log(res);
-          window.location.href = '/login';
+          console.log('res in axios in SignUp.jsx:',res);
+          if (res.status === 200) {
+            return navigate('/');
+          }
+          // window.location.href = '/';
         })
         .catch((err) => {
-          console.log(err);
+          console.error('err in axios in SignUp.jsx:',err.response);
+          if (err.response.status === 400) {
+            return setFieldsError('Please fill out all fields.');
+          }
+          if (err.response.status === 500) {
+            return setFieldsError('This email is already taken.');
+          }
+          
         });
     } else {
-      setPasswordError(true);
+      setFieldsError('Passwords do not match. Please try again.');
     }
   };
 
@@ -110,7 +122,8 @@ const SignUp = () => {
           Submit
         </button>
       </form>
-      {passwordError && <p>Passwords do not match. Please try again.</p>}
+      {/* {passwordError && <p>Passwords do not match. Please try again.</p>} */}
+      {fieldsError && fieldsError}
     </div>
   );
 };
