@@ -3,9 +3,11 @@ import axios from 'axios';
 import Loader from './Spinner';
 import { globalCovidOptions } from '../utils/constants';
 import { BiWorld } from 'react-icons/bi';
+import { AiFillCloseCircle } from 'react-icons/ai';
 
 const CovidWorldData = () => {
   const [loading, setLoading] = useState(true);
+  const [toggle, setToggle] = useState(false);
   const [state, setState] = useState({
     activeCases: '',
     caseFatality: '',
@@ -24,15 +26,31 @@ const CovidWorldData = () => {
       .then(({ data }) => {
         setLoading(false);
         setState({
-          activeCases: data[0].ActiveCases,
+          activeCases: data[0].ActiveCases.toLocaleString(undefined, {
+            maximumFractionDigits: 2,
+          }),
           caseFatality: data[0].Case_Fatality_Rate,
-          newCases: data[0].NewCases,
-          newDeaths: data[0].NewDeaths,
-          newRecovered: data[0].NewRecovered,
-          critical: data[0].Serious_Critical,
-          totalCases: data[0].TotalCases,
-          totalDeaths: data[0].TotalDeaths,
-          totalRecovered: data[0].TotalRecovered,
+          newCases: data[0].NewCases.toLocaleString(undefined, {
+            maximumFractionDigits: 2,
+          }),
+          newDeaths: data[0].NewDeaths.toLocaleString(undefined, {
+            maximumFractionDigits: 2,
+          }),
+          newRecovered: data[0].NewRecovered.toLocaleString(undefined, {
+            maximumFractionDigits: 2,
+          }),
+          critical: data[0].Serious_Critical.toLocaleString(undefined, {
+            maximumFractionDigits: 2,
+          }),
+          totalCases: data[0].TotalCases.toLocaleString(undefined, {
+            maximumFractionDigits: 2,
+          }),
+          totalDeaths: data[0].TotalDeaths.toLocaleString(undefined, {
+            maximumFractionDigits: 2,
+          }),
+          totalRecovered: data[0].TotalRecovered.toLocaleString(undefined, {
+            maximumFractionDigits: 2,
+          }),
         });
       })
       .catch((err) => {
@@ -51,7 +69,7 @@ const CovidWorldData = () => {
         <div>
           <div flex flex-row min-h-screen justify-center items-center>
             <div className='mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-green-100 sm:h-20 sm:w-20'>
-              <BiWorld className='h-10 w-10 text-green-600'/>
+              <BiWorld className='h-10 w-10 text-green-600 animate-pulse' />
             </div>
             <div className='m-2.5 p-2.5 flex justify-center items-center'>
               <span className='text-red-500 background-transparent font-bold uppercase px-6 py-2 text-2xl outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150'>
@@ -74,16 +92,27 @@ const CovidWorldData = () => {
               </span>
             </div>
           </div>
-          <div>
-            <button className='border 1px rounded text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150'>
-              Active Cases
+          <div className='m-2.5 p-2.5 flex justify-center items-center'>
+            <button
+              onClick={() => setToggle(true)}
+              className='border 1px rounded text-blue-400 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150'
+            >
+              View More
             </button>
           </div>
-          <div>
-            <button className='border 1px rounded text-gray-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150'>
-              Closed Cases
-            </button>
-          </div>
+          {toggle && (
+            <div className='m-2.5 p-2.5 flex justify-center items-center bg-gray-300 bg-opacity-30'>
+              <span className='m-2.5 p-2.5 flex justify-center items-center text-gray-900 font-bold uppercase px-6 py-2 text-l outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150'>New Cases: {state.newCases}</span>
+              <span className='m-2.5 p-2.5 flex justify-center items-center text-gray-900 font-bold uppercase px-6 py-2 text-l outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150'>New Deaths: {state.newDeaths}</span>
+              <span className='m-2.5 p-2.5 flex justify-center items-center text-gray-900 font-bold uppercase px-6 py-2 text-l outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150'>New Recovered: {state.newRecovered}</span>
+              <span className='m-2.5 p-2.5 flex justify-center items-center text-gray-900 font-bold uppercase px-6 py-2 text-l outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150'>Critical Cases: {state.critical}</span>
+              <span className='m-2.5 p-2.5 flex justify-center items-center text-gray-900 font-bold uppercase px-6 py-2 text-l outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150'>Case Fatality: {state.caseFatality}%</span>
+              <AiFillCloseCircle
+                onClick={() => setToggle(false)}
+                className='cursor-pointer text-red-600 rounded-full bg-red-100 sm:mx-0 sm:h-4 sm:w-4'
+              />
+            </div>
+          )}
         </div>
       )}
     </div>

@@ -34,7 +34,7 @@ function NavBar() {
               to="/explore"
               className="block mt-4 lg:inline-block lg:mt-0 text-white hover:text-green-300 mr-5"
             >
-              Explore
+              COVID Update
             </Link>
             <Link
               to="/login"
