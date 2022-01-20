@@ -130,11 +130,9 @@ async function axiosApiCall(body, counter = 0) {
     cabinClass,
   } = body;
   console.log(originAirport, destinationAirport);
-  let url = "";
+  let url = `https://api.flightapi.io/onewaytrip/${flightKey}/${originAirport}/${destinationAirport}/${departureDate}/${numOfAdults}/${numOfChildren}/${numOfInfants}/${cabinClass}/USD`;
   if (oneWayOrRound === "roundtrip") {
     url = `https://api.flightapi.io/roundtrip/${flightKey}/${originAirport}/${destinationAirport}/${departureDate}/${returnDate}/${numOfAdults}/${numOfChildren}/${numOfInfants}/${cabinClass}/USD`;
-  } else {
-    url = `https://api.flightapi.io/onewaytrip/${flightKey}/${originAirport}/${destinationAirport}/${departureDate}/${numOfAdults}/${numOfChildren}/${numOfInfants}/${cabinClass}/USD`;
   }
   if (counter > 3) {
     return "no trips";

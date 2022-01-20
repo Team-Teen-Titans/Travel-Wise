@@ -32,6 +32,7 @@ const FlightsDisplayFeedContainer = () => {
       )
       .then((res) => res.data)
       .then((apiFlightInfo) => {
+        console.log('apiFlightInfo:',apiFlightInfo)
         setFlights(apiFlightInfo);
         setLoading(false);
       })
