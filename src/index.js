@@ -1,18 +1,18 @@
 import React from "react";
 import { render } from "react-dom";
-import { Routes, Route, BrowserRouter } from "react-router-dom";
+import { BrowserRouter } from "react-router-dom";
 import App from "./components/App";
-import About from "./components/About";
-import VaccineMap from "./components/VaccineMap";
-import HomepageContainer from "./components/HomepageContainer";
-import Login from "./components/Login";
-import Styles from "./stylesheets/styles.css";
-import SignUp from "./components/SignUp";
-import FlightsDisplayFeedContainer from "./components/FlightsDisplayFeedContainer";
+// import About from "./components/About";
+// import VaccineMap from "./components/VaccineMap";
+// import HomepageContainer from "./components/HomepageContainer";
+// import Login from "./components/Login";
+// import Styles from "./stylesheets/styles.css";
+// import SignUp from "./components/SignUp";
+// import FlightsDisplayFeedContainer from "./components/FlightsDisplayFeedContainer";
 
 render(
   <BrowserRouter>
-    <Routes>
+    {/* <Routes>
       <Route path="/" element={<App />}>
         <Route path="" element={<HomepageContainer />} />
         <Route path="home" element={<HomepageContainer />} />
@@ -30,8 +30,8 @@ render(
           render={(props) => <FlightsDisplayFeedContainer {...props} />}
         />
       </Route>
-    </Routes>
+    </Routes> */}
+    <App />
   </BrowserRouter>,
-
   document.getElementById("root")
 );
