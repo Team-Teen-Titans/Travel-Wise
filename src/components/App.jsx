@@ -15,11 +15,7 @@ import "../stylesheets/styles.css";
 const App = () => {
 
   return (
-    // <Routes>
-    //   <Route path="/" element={<App />}>
     <>
-      {/* <Route path="" element={<HomepageContainer />} />
-      <Route path="home" element={<HomepageContainer />} /> */}
       <NavBar/>
       <Routes>
         <Route exact path='/' element={<><FlightLocationSelector/><CovidMap/></>}/>
@@ -28,7 +24,6 @@ const App = () => {
           element={<VaccineMap />}
           render={(props) => <VaccineMap {...props} />}
         />
-        {/* <Route path="about" element={<About />} /> */}
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
         <Route
@@ -39,21 +34,7 @@ const App = () => {
       </Routes>
       <Footer/>
     </>
-    //   </Route>
-    // </Routes> 
   )
-
-
-  // return (
-  //   <div>
-  //     <div>
-  //       <NavBar />
-  //     </div>
-  //     <footer>
-  //       <Footer />
-  //     </footer>
-  //   </div>
-  // );
 };
 
 export default App;
