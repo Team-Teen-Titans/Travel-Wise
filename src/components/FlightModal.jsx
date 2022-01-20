@@ -4,10 +4,12 @@ import axios from 'axios';
 import 'regenerator-runtime';
 import ReactModal from 'react-modal';
 import Loader from './Spinner';
+import SubmitSearchButton from './SubmitSearchButton';
 import { data } from 'autoprefixer';
 import { MdError } from 'react-icons/md';
 
 const FlightModal = ({ tripLocationInfo }) => {
+
   //component did mount needs to get airports
   //use effect to make axios call for airport
   const originSelected = tripLocationInfo.originCity;
@@ -30,29 +32,17 @@ const FlightModal = ({ tripLocationInfo }) => {
     numOfAdults: 1,
     numOfChildren: 0,
     numOfInfants: 0,
-    cabinClass: "Economy",
+    cabinClass: 'Economy'
   });
 
-  const originAirportsList =
-    airportSelection.originSelection.length > 0 &&
-    airportSelection.originSelection.map((code, i) => {
-      return (
-        <option key={i} value={code}>
-          {code}
-        </option>
-      );
-    });
+  const [submitDisabled, setSubmitDisabled] = useState(true);
 
-  const destinationAirportsList =
-    airportSelection.destinationSelection.length > 0 &&
-    airportSelection.destinationSelection.map((code, i) => {
-      return (
-        <option key={i} value={code}>
-          {code}
-        </option>
-      );
-    });
-
+  // on FlightModal component mount
+  useEffect(() => {
+    getAirportCode(originSelected, destinationSelected);
+  }, []);
+  
+  // modal status
   const openModal = () => {
     setModalIsOpen(true);
   };
@@ -61,22 +51,28 @@ const FlightModal = ({ tripLocationInfo }) => {
     setModalIsOpen(false);
   };
 
-  const navigate = useNavigate();
-
   const getAirportCode = async (originCity, destinationCity) => {
     try {
+      // get airport codes from api
       const originUrl = originCity.replace(/\s/g, "%20");
       const destinationUrl = destinationCity.replace(/\s/g, "%20");
       const originRes = await axios.get(`/api/flights/airport/${originUrl}`);
       const destinationRes = await axios.get(
         `/api/flights/airport/${destinationUrl}`
-      );
-
+      );  
+      // update airport code lists
       setAirportSelection({
         ...airportSelection,
         originSelection: originRes.data,
         destinationSelection: destinationRes.data,
       });
+      // default selected airport code to first option
+      setTripInfo({
+        ...tripInfo,
+        originAirport: originRes.data[0],
+        destinationAirport: destinationRes.data[0],
+      });
+      // done loading
       setLoading(false);
 
       if (originRes.data.length > 0 && destinationRes.data.length > 0) {
@@ -87,10 +83,30 @@ const FlightModal = ({ tripLocationInfo }) => {
     }
   };
 
-  useEffect(() => {
-    getAirportCode(originSelected, destinationSelected);
-  }, []);
+  // populate origin airport codes list
+  const originAirportsList =
+    airportSelection.originSelection.length > 0 &&
+    airportSelection.originSelection.map((code, i) => {
+      return (
+        <option key={i} value={code}>
+          {code}
+        </option>
+      );
+    });
 
+  // populate destination airport codes list
+  const destinationAirportsList =
+    airportSelection.destinationSelection.length > 0 &&
+    airportSelection.destinationSelection.map((code, i) => {
+      return (
+        <option key={i} value={code}>
+          {code}
+        </option>
+      );
+    });
+  
+
+  // update trip info when fields changed
   const handleChange = (type) => (e) => {
     let removedText;
     switch (type) {
@@ -135,20 +151,25 @@ const FlightModal = ({ tripLocationInfo }) => {
     }
   };
 
+  // enable submit if there are no null fields
+  useEffect(() => {
+    console.log('checking fields');
+    console.log(Object.values(tripInfo));
+    if (submitDisabled && Object.values(tripInfo).every(field => field !== null)) {
+      setSubmitDisabled(false);
+    }
+  }, [tripInfo]);
+
+  const navigate = useNavigate();
+
   const handleSubmit = () => {
     console.log("trip info on submit: ", tripInfo);
     closeModal();
-    // navigate('/**insert route**', {
-    //   state: {
-    //     ...tripInfo,
-    //   },
-    // });
     navigate("/flights-display", {
       state: {
         ...tripInfo,
       },
     });
-    //where should we direct from here to show cards? flights?
   };
 
   //sets minimum departure date to today
@@ -177,6 +198,7 @@ const FlightModal = ({ tripLocationInfo }) => {
           ariaHideApp={false}
           className="bg-gray-200 flex justify-center h-screen my-24"
         >
+          {/* trip type */}
           <div className="place-center bg-gray-200">
             <h3 className="text-base font-semibold text-xl tracking-tight">
               Staying or returning?
@@ -200,6 +222,8 @@ const FlightModal = ({ tripLocationInfo }) => {
             </span>
             <br />
             <br />
+
+            {/* dates */}
             <span>
               <label
                 htmlFor="departure-date"
@@ -230,6 +254,8 @@ const FlightModal = ({ tripLocationInfo }) => {
             </span>
             <br />
             <br />
+
+            {/* airports */}
             <span>
               <label
                 htmlFor="origin-airport"
@@ -262,6 +288,8 @@ const FlightModal = ({ tripLocationInfo }) => {
             </span>
             <br />
             <br />
+
+            {/* flight class */}
             <label
               htmlFor="cabinClass"
               className="text-base font-semibold text-xl tracking-tight"
@@ -281,6 +309,8 @@ const FlightModal = ({ tripLocationInfo }) => {
             </span>
             <br />
             <br />
+
+            {/* passengers */}
             <span>
               <h3 className="text-lg font-semibold text-xl tracking-tight">
                 Passenger Information:{" "}
@@ -331,12 +361,7 @@ const FlightModal = ({ tripLocationInfo }) => {
             </span>
             <br />
             <br />
-            <button
-              onClick={handleSubmit}
-              className="rounded-md py-2.5 px-2.5 m-1 bg-green-500 text-white hover:bg-opacity-75 active:shadow-md scale-90"
-            >
-              Search Flights Now
-            </button>
+            <SubmitSearchButton handleSubmit={handleSubmit} submitDisabled={submitDisabled}/>
             <button
               onClick={closeModal}
               className="rounded-md py-2.5 px-2.5 m-1 bg-gray-500 text-white hover:bg-opacity-75 active:shadow-md scale-90"
@@ -345,7 +370,7 @@ const FlightModal = ({ tripLocationInfo }) => {
             </button>
           </div>
         </ReactModal>
-      ) : (
+      ) : ( 
         <ReactModal
           isOpen={modalIsOpen}
           onRequestClose={closeModal}
