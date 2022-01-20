@@ -4,6 +4,7 @@ import axios from 'axios';
 import 'regenerator-runtime';
 import ReactModal from 'react-modal';
 import Loader from './Spinner';
+import SubmitSearchButton from './SubmitSearchButton';
 import { data } from 'autoprefixer';
 import { MdError } from 'react-icons/md';
 
@@ -31,9 +32,10 @@ const FlightModal = ({ tripLocationInfo }) => {
     numOfAdults: 1,
     numOfChildren: 0,
     numOfInfants: 0,
-    cabinClass: 'Economy',
-    submitDisabled: true,
+    cabinClass: 'Economy'
   });
+
+  const [submitDisabled, setSubmitDisabled] = useState(true);
 
   // on FlightModal component mount
   useEffect(() => {
@@ -103,30 +105,6 @@ const FlightModal = ({ tripLocationInfo }) => {
       );
     });
   
-  // conditionally render submit button
-  const SubmitButton = () => {
-    if (!tripInfo.submitDisabled) {
-      return (
-        <button
-          onClick={handleSubmit}
-          className='rounded-md py-2.5 px-2.5 m-1 bg-green-500 text-white hover:bg-opacity-75 active:shadow-md scale-90'
-          disabled={tripInfo.submitDisabled}
-        >
-              Search Flights Now
-        </button>
-      );
-    } else {
-      return (
-        <button
-          onClick={handleSubmit}
-          className='rounded-md py-2.5 px-2.5 m-1 bg-gray-500 text-white hover:bg-opacity-75 active:shadow-md scale-90'
-          disabled={tripInfo.submitDisabled}
-        >
-              Please fill all fields
-        </button>
-      );
-    }
-  }; 
 
   // update trip info when fields changed
   const handleChange = (type) => (e) => {
@@ -177,9 +155,8 @@ const FlightModal = ({ tripLocationInfo }) => {
   useEffect(() => {
     console.log('checking fields');
     console.log(Object.values(tripInfo));
-    if (tripInfo.submitDisabled && Object.values(tripInfo).every(field => field !== null)) {
-      console.log('enabling submit');
-      setTripInfo({ ...tripInfo, submitDisabled: false});
+    if (submitDisabled && Object.values(tripInfo).every(field => field !== null)) {
+      setSubmitDisabled(false);
     }
   }, [tripInfo]);
 
@@ -188,17 +165,11 @@ const FlightModal = ({ tripLocationInfo }) => {
   const handleSubmit = () => {
     console.log("trip info on submit: ", tripInfo);
     closeModal();
-    // navigate('/**insert route**', {
-    //   state: {
-    //     ...tripInfo,
-    //   },
-    // });
     navigate("/flights-display", {
       state: {
         ...tripInfo,
       },
     });
-    //where should we direct from here to show cards? flights?
   };
 
   //sets minimum departure date to today
@@ -390,16 +361,7 @@ const FlightModal = ({ tripLocationInfo }) => {
             </span>
             <br />
             <br />
-
-            {/* buttons */}
-            {/* <button
-              onClick={handleSubmit}
-              className="rounded-md py-2.5 px-2.5 m-1 bg-green-500 text-white hover:bg-opacity-75 active:shadow-md scale-90"
-              disabled={tripInfo.submitDisabled}
-            >
-              Search Flights Now
-            </button> */}
-            <SubmitButton />
+            <SubmitSearchButton handleSubmit={handleSubmit} submitDisabled={submitDisabled}/>
             <button
               onClick={closeModal}
               className="rounded-md py-2.5 px-2.5 m-1 bg-gray-500 text-white hover:bg-opacity-75 active:shadow-md scale-90"
@@ -408,7 +370,7 @@ const FlightModal = ({ tripLocationInfo }) => {
             </button>
           </div>
         </ReactModal>
-      ) : (
+      ) : ( 
         <ReactModal
           isOpen={modalIsOpen}
           onRequestClose={closeModal}
