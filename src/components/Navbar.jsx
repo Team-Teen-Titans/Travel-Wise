@@ -37,10 +37,16 @@ function NavBar() {
               Countries
             </Link>
             <Link
-              to="/about"
+              to="/login"
               className="block mt-4 lg:inline-block lg:mt-0 text-white hover:text-green-300 mr-5 ml-5"
             >
-              About
+              Login
+            </Link>
+            <Link
+              to="/signup"
+              className="block mt-4 lg:inline-block lg:mt-0 text-white hover:text-green-300 mr-5 ml-5"
+            >
+              Sign up
             </Link>
           </div>
         </div>

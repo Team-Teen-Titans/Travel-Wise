@@ -1,25 +1,30 @@
-const express = require('express');
+const express = require("express");
 const app = express();
-const session = require('express-session');
-const cors = require('cors');
+const session = require("express-session");
+const cors = require("cors");
 // const path = require('path');
-const cookieParser = require('cookie-parser');
 const passport = require('passport');
 const PORT = 3000;
 require('dotenv').config();
-require('./google-oauth');
+require('./passport-config')(passport);
 
 app.use(cors());
-app.use(cookieParser());
-app.use(session({ secret: 'cats', resave: false, saveUninitialized: true }));
+app.use(express.urlencoded({ extended: true }))
+app.use(session({
+  secret: 'stealthy-cat',
+  resave: false,
+  saveUninitialized: true,
+  cookie: { maxAge: 3600000 }, //this is 1 hour
+}));
 app.use(passport.initialize());
 app.use(passport.session());
+
 /**
  * require routers
  */
 
-const flightsRouter = require('./routes/flights');
-const userRouter = require('./routes/userRouter');
+const flightsRouter = require("./routes/flightsRouter");
+const userRouter = require("./routes/userRouter");
 
 /**
  * handle parsing request body
@@ -27,7 +32,6 @@ const userRouter = require('./routes/userRouter');
 app.use(express.json());
 //handle flights query
 
-// app.get('/google/callback', (req, res) => res.status(200).send('google oauth'))
 app.use('/api/flights', flightsRouter);
 app.use('/api/user', userRouter);
 
@@ -39,21 +43,21 @@ app.use((req, res) => res.sendStatus(404));
 //global error handler
 app.use((err, req, res, next) => {
   const defaultErr = {
-    log: 'Express error handler caught unknown middleware error',
+    log: "Express error handler caught unknown middleware error",
     status: 500,
     message: { err: 'An error occurred' },
-  };  
+  };
   // change error of default error object
   const errorObj = {
     ...defaultErr,
-    message: err.message
+    message: err.message,
   };
   return res.status(errorObj.status).json(errorObj.message);
 });
 
 //handle page not found
 app.use((req, res) =>
-  res.status(404).send('This is not the page you\'re looking for...')
+  res.status(404).send("This is not the page you're looking for...")
 );
 
 app.listen(PORT, () => console.log(`Server listening on port: ${PORT}`));
