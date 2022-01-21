@@ -4,28 +4,27 @@ import { Link, useNavigate } from 'react-router-dom';
 import { FaUserPlus } from 'react-icons/fa';
 
 const SignUp = () => {
-  const [state, setstate] = useState({
-    firstName: '',
-    lastName: '',
-    email: '',
-    password: '',
-    confirmPassword: '',
-  });
-  // const [passwordError, setPasswordError] = useState(false);
-  const [fieldsError, setFieldsError] = useState(false);
-  const navigate = useNavigate();
+	const [state, setstate] = useState({
+		firstName: '',
+		lastName: '',
+		email: '',
+		password: '',
+		confirmPassword: '',
+	});
+	// const [passwordError, setPasswordError] = useState(false);
+	const [fieldsError, setFieldsError] = useState(false);
+	const navigate = useNavigate();
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setstate({ ...state, [name]: value });
-    console.log(state);
-  };
+	const handleChange = (e) => {
+		const { name, value } = e.target;
+		setstate({ ...state, [name]: value });
+		console.log(state);
+	};
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (state.password === state.confirmPassword) {
-      console.log('password match --> submitted');
-
+	const handleSubmit = (e) => {
+		e.preventDefault();
+		if (state.password === state.confirmPassword) {
+			console.log('password match --> submitted');
       axios
         .post('/api/user/signup', {
           first_name: state.firstName,
