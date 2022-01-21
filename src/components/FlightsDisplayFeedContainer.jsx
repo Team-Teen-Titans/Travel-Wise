@@ -6,38 +6,29 @@ import { useLocation } from "react-router";
 
 const FlightsDisplayFeedContainer = () => {
   const [loading, setLoading] = useState(true);
-  const [flights, setFlights] = useState(null);
+  const [flights, setFlights] = useState([]);
   const { state } = useLocation();
+  // const [noFlightsFound, setNoFlightsFound] = useState(false);
 
   // const [tripInfo, setTripInfo] = useState(props.state);
 
-  useEffect(() => {
-    console.log(state);
-    axios
-      .post(
-        "/api/flights/flight-info",
-        state
-        // {
-        // originAirport: "LAX",
-        // destinationAirport: "MIA",
-        // departureDate: "2022-01-20",
-        // returnDate: "2022-02-20",
-        // oneWayOrRound: "roundtrip",
-        // numOfAdults: 1,
-        // numOfChildren: 0,
-        // numOfInfants: 0,
-        // cabinClass: "Economy",
-        // ...tripInfo,
-        // }
-      )
-      .then((res) => res.data)
-      .then((apiFlightInfo) => {
-        setFlights(apiFlightInfo);
-        setLoading(false);
-      })
-      .catch((err) => console.log("error from server:", err));
+  useEffect(async () => {
+    console.log('options to post in FeedContainer:', state);
+    try {
+      const postStateToApi = await axios.post("/api/flights/flight-info", state);
+      console.log('data in FeedContainer:', postStateToApi.data);
+      setLoading(false);
+      setFlights(postStateToApi.data);
+    } catch (err) {
+      // console.log("error in useEffect in FeedContainer:", err);
+      setLoading(false);
+      // setNoFlightsFound('No flights were found. Please try another search.');
+    }
   }, []);
-  return <div>{loading ? <Loader /> : <FlightFeed flights={flights} />}</div>;
+
+  return (
+    loading ? <Loader /> : flights ? <FlightFeed flights={flights} /> : 'No flights were found. Please try another search.'
+    );
 };
 
 export default FlightsDisplayFeedContainer;
