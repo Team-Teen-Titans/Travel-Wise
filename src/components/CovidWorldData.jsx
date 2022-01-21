@@ -58,7 +58,7 @@ const CovidWorldData = () => {
       });
   }, []);
   return (
-    <div className='flex flex-col min-h-screen'>
+    <div className='flex flex-col min-h-screen flex h-screen'>
       <h1 align='center' className='py-4 text-3xl font-mono border-2 rounded'>
         Global Covid Data
       </h1>

@@ -145,9 +145,9 @@ const SignUp = () => {
             </Link>{' '}
             to login
           </p>
+          <div className='text-center w-full text-pink-900 font-bold py-2 px-4 mb-6 rounded'>{fieldsError && fieldsError}</div>
         </footer>
         {/* {passwordError && <p>Passwords do not match. Please try again.</p>} */}
-        {fieldsError && fieldsError}
       </div>
     </div>
   );
