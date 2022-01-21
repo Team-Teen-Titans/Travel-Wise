@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "regenerator-runtime";
 import FlightModal from "./FlightModal";
+import MyTrips from "./MyTrips";
 
 const FlightLocationSelector = () => {
   const [tripLocationInfo, setTripLocationInfo] = useState({
@@ -59,7 +60,6 @@ const FlightLocationSelector = () => {
         <button
           className="text-lg mx-3.5 rounded-md py-2.5 px-2.5 m-1 bg-green-500 text-white hover:bg-opacity-75 active:shadow-md scale-90"
           type='submit'
-          // onClick={handleSearchSubmit}
         >
           Get Started
         </button>

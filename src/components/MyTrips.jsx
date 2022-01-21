@@ -2,10 +2,13 @@ import React, { useState, useEffect } from "react";
 import TripCard from "./TripCard"
 import { Link } from "react-router-dom";
 
-const SavedTrips = () => {
-  // pull users saved tripInfo searches from database
-  const tripsList = [{
+const MyTrips = () => {
+  // pull users saved tripInfo searches from database and put into an array
+  const myTripsList = [{
+    tripNickname: 'My Hawaii Trip',
+    originAirportList: ['SEA', 'LKE', 'BFI'],
     originAirport: 'SEA',
+    destinationAirportList: ['HNL', 'HIK'],
     destinationAirport: 'HNL',
     departureDate: '2022-01-22',
     returnDate: '2022-01-29',
@@ -16,7 +19,10 @@ const SavedTrips = () => {
     cabinClass: 'Economy'
   },
   {
+    tripNickname: 'My Codesmith tour',
+    originAirportList: ['LAX', 'LOB', 'LSN'],
     originAirport: 'LAX',
+    destinationAirportList: ['JFK','LGA'],
     destinationAirport: 'JFK',
     departureDate: '2022-01-22',
     returnDate: '2022-01-29',
@@ -29,19 +35,19 @@ const SavedTrips = () => {
   // render saved tripInfo
   return (
     <div>
-      <h3>Saved Trips</h3>
-      {tripsList.map((savedTripInfo, index) => (
+      <h3>My Trips</h3>
+      {myTripsList.map((savedTripInfo, index) => (
         <TripCard key={index} savedTripInfo={savedTripInfo} />
       ))}
-      {tripsList.length === 0 && (
+      {myTripsList.length === 0 && (
         <p>
           {' '}
-			No trips saved. Click <Link to={'/'}>here</Link> to return
-			to the home page and search again.
+			No trips saved yet! Click <Link to={'/'}>here</Link> to return
+			to the home page. 
         </p>
       )}
     </div>
   );
 };
 
-export default SavedTrips;
+export default MyTrips;

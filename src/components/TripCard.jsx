@@ -4,7 +4,10 @@ import SubmitSearchButton from './SubmitSearchButton';
 
 const TripCard = ({ savedTripInfo }) => {
   const {
+    tripNickname,
+    originAirportList,
     originAirport,
+    destinationAirportList,
     destinationAirport,
     departureDate,
     returnDate,
@@ -30,15 +33,34 @@ const TripCard = ({ savedTripInfo }) => {
 
   const [submitDisabled, setSubmitDisabled] = useState(true);
 
+  // populate origin airport codes list
+  const originAirportOptions =
+    originAirportList.length > 0 &&
+    originAirportList.map((code, i) => {
+      return (
+        <option key={i} value={code}>
+          {code}
+        </option>
+      );
+    });
+
+  // populate destination airport codes list
+  const destinationAirportOptions =
+    destinationAirportList.length > 0 &&
+    destinationAirportList.map((code, i) => {
+      return (
+        <option key={i} value={code}>
+          {code}
+        </option>
+      );
+    });
+
   // update trip info when fields changed
   const handleChange = (type) => (e) => {
     let removedText;
     switch (type) {
-    case "onewaytrip":
-      setTripInfo({ ...tripInfo, oneWayOrRound: type });
-      break;
-    case "roundtrip":
-      setTripInfo({ ...tripInfo, oneWayOrRound: type });
+    case "oneWayOrRound":
+      setTripInfo({ ...tripInfo, oneWayOrRound: e.target.value });
       break;
     case "originAirport":
       setTripInfo({ ...tripInfo, originAirport: e.target.value });
@@ -114,25 +136,19 @@ const TripCard = ({ savedTripInfo }) => {
     <div>
       {/* trip type */}
       <div className="place-center bg-gray-200">
-        <h3 className="text-base font-semibold text-xl tracking-tight">
-        {` ${tripInfo.originAirport} to ${tripInfo.destinationAirport} Trip`}
+        <h3 className="text-xl font-semibold tracking-tight">
+          {tripNickname}
         </h3>
+        <br />
         <span>
-          <button
-            onClick={handleChange("onewaytrip")}
-            className="rounded-md py-2.5 px-2.5 m-1 text-white bg-blue-500 hover:bg-blue-400 active:bg-blue-600 shadow-md scale-90 focus:outline-none focus:ring focus:ring-blue-300"
-            id="one-way"
+          <select
+            onChange={handleChange("oneWayOrRound")}
+            className="border 1px rounded"
+            value={tripInfo.oneWayOrRound}
           >
-				One Way
-          </button>
-          {" or "}
-          <button
-            onClick={handleChange("roundtrip")}
-            className="rounded-md py-2.5 px-2.5 m-1 text-white bg-blue-500 hover:bg-blue-400 active:bg-blue-600 shadow-md scale-90 focus:outline-none focus:ring focus:ring-blue-300"
-            id="round-trip"
-          >
-				Round Trip
-          </button>
+            <option value="onewaytrip">One Way</option>
+            <option value="roundtrip">Round Trip</option>
+          </select>
         </span>
         <br />
         <br />
@@ -151,6 +167,7 @@ const TripCard = ({ savedTripInfo }) => {
             className="border 1px rounded"
             min={minDate}
             onChange={handleChange("departureDate")}
+            value={tripInfo.departureDate}
           ></input>{" "}
           <label
             htmlFor="return-date"
@@ -164,11 +181,49 @@ const TripCard = ({ savedTripInfo }) => {
             className="border 1px rounded"
             min={findRoundTripMinDate(minDate)}
             onChange={handleChange("returnDate")}
+            value={tripInfo.returnDate}
           ></input>
         </span>
         <br />
         <br />
 
+        {/* airports */}
+        <span>
+          <label
+            htmlFor="origin-airport"
+            className="text-base font-semibold text-xl tracking-tight"
+          >
+                Departure Airport:{" "}
+          </label>
+          <select
+            htmlFor="originAirportList"
+            name="originAirportList"
+            className="border 1px rounded"
+            onChange={handleChange("originAirport")}
+            value={tripInfo.originAirport}
+          >
+            {originAirportOptions}
+          </select>{" "}
+          <label
+            htmlFor="destination-airport"
+            className="text-base font-semibold text-xl tracking-tight"
+          >
+                Arrival Airport:{" "}
+          </label>
+          <select
+            htmlFor="destinationAirportList"
+            name="destinationAirportList"
+            className="border 1px rounded"
+            onChange={handleChange("destinationAirport")}
+            value={tripInfo.destinationAirport}
+          >
+            {destinationAirportOptions}
+          </select>
+        </span>
+        <br />
+        <br />
+
+        
         {/* flight class */}
         <label
           htmlFor="cabinClass"
@@ -180,6 +235,7 @@ const TripCard = ({ savedTripInfo }) => {
           <select
             onChange={handleChange("cabinClass")}
             className="border 1px rounded"
+            value={tripInfo.cabinClass}
           >
             <option value="Economy">Economy</option>
             <option value="Business">Business</option>
@@ -210,6 +266,7 @@ const TripCard = ({ savedTripInfo }) => {
             name="number of adults"
             className="border 1px rounded w-8"
             onChange={handleChange("numOfAdults")}
+            value={tripInfo.numOfAdults}
           ></input>{" "}
           <label
             htmlFor="numOfChildren"
@@ -223,6 +280,7 @@ const TripCard = ({ savedTripInfo }) => {
             name="number of children"
             className="border 1px rounded w-8"
             onChange={handleChange("numOfChildren")}
+            value={tripInfo.numOfChildren}
           ></input>{" "}
           <label
             htmlFor="numOfInfants"
@@ -237,6 +295,7 @@ const TripCard = ({ savedTripInfo }) => {
             name="number of infants"
             className="border 1px rounded w-8"
             onChange={handleChange("numOfInfants")}
+            value={tripInfo.numOfInfants}
           ></input>
         </span>
         <br />

@@ -18,9 +18,9 @@ const FlightModal = ({ tripLocationInfo }) => {
   const [modalIsOpen, setModalIsOpen] = useState(true);
   const [loading, setLoading] = useState(true);
   const [airportCodeFound, setAirportCodeFound] = useState(false);
-  const [airportSelection, setAirportSelection] = useState({
-    originSelection: [],
-    destinationSelection: [],
+  const [airportLists, setAirportLists] = useState({
+    originAirportList: [],
+    destinationAirportList: [],
   });
   //this is top level state that will be used to fetch flight results
   const [tripInfo, setTripInfo] = useState({
@@ -59,10 +59,10 @@ const FlightModal = ({ tripLocationInfo }) => {
       const originRes = await axios.get(`/api/flights/airport/${originUrl}`);
       const destinationRes = await axios.get(`/api/flights/airport/${destinationUrl}`);  
       // update airport code lists
-      setAirportSelection({
-        ...airportSelection,
-        originSelection: originRes.data,
-        destinationSelection: destinationRes.data,
+      setAirportLists({
+        ...airportLists,
+        originAirportList: originRes.data,
+        destinationAirportList: destinationRes.data,
       });
       // default selected airport code to first option
       setTripInfo({
@@ -81,10 +81,10 @@ const FlightModal = ({ tripLocationInfo }) => {
     }
   };
 
-  // populate origin airport codes list
-  const originAirportsList =
-    airportSelection.originSelection.length > 0 &&
-    airportSelection.originSelection.map((code, i) => {
+  // populate origin airport codes options
+  const originAirportOptions =
+    airportLists.originAirportList.length > 0 &&
+    airportLists.originAirportList.map((code, i) => {
       return (
         <option key={i} value={code}>
           {code}
@@ -92,10 +92,10 @@ const FlightModal = ({ tripLocationInfo }) => {
       );
     });
 
-  // populate destination airport codes list
-  const destinationAirportsList =
-    airportSelection.destinationSelection.length > 0 &&
-    airportSelection.destinationSelection.map((code, i) => {
+  // populate destination airport codes options
+  const destinationAirportOptions =
+    airportLists.destinationAirportList.length > 0 &&
+    airportLists.destinationAirportList.map((code, i) => {
       return (
         <option key={i} value={code}>
           {code}
@@ -262,12 +262,12 @@ const FlightModal = ({ tripLocationInfo }) => {
                 Departure Airport:{" "}
               </label>
               <select
-                htmlFor="originSelection"
-                name="originSelection"
+                htmlFor="originAirportList"
+                name="originAirportList"
                 className="border 1px rounded"
                 onChange={handleChange("originAirport")}
               >
-                {originAirportsList}
+                {originAirportOptions}
               </select>{" "}
               <label
                 htmlFor="destination-airport"
@@ -276,12 +276,12 @@ const FlightModal = ({ tripLocationInfo }) => {
                 Arrival Airport:{" "}
               </label>
               <select
-                htmlFor="destinationSelection"
-                name="destinationSelection"
+                htmlFor="destinationAirportList"
+                name="destinationAirportList"
                 className="border 1px rounded"
                 onChange={handleChange("destinationAirport")}
               >
-                {destinationAirportsList}
+                {destinationAirportOptions}
               </select>
             </span>
             <br />

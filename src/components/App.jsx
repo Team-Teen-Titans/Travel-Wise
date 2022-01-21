@@ -32,7 +32,7 @@ const App = () => {
           path="/flights-display"
           element={<FlightsDisplayFeedContainer />}
           render={(props) => <FlightsDisplayFeedContainer {...props} />}
-          />
+        />
       </Routes>
       <Footer/>
     </>
