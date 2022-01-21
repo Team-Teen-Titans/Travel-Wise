@@ -66,16 +66,16 @@ const Login = () => {
               />
             </label>
           </div>
-          <div>
-            <button
-              className='w-full bg-indigo-700 hover:bg-pink-700 text-white font-bold py-2 px-4 mb-6 rounded'
-              type='submit'
-              onClick={handleSubmit}
-            >
-              Log In
-            </button>
-          </div>
         </form>
+        <div>
+          <button
+            className='w-full bg-indigo-700 hover:bg-pink-700 text-white font-bold py-2 px-4 mb-6 rounded'
+            type='submit'
+            onClick={handleSubmit}
+          >
+            Log In
+          </button>
+        </div>
         <footer>
           <p className='text-indigo-700 text-sm float-right'>
             Need to sign up? Click{' '}
@@ -93,7 +93,11 @@ const Login = () => {
               Authenticate with Google
             </a>
           </div>
-          {loginError && <p className='text-center w-full text-pink-900 font-bold py-2 px-4 mb-6 rounded'>Invalid email or password</p>}
+          {loginError && (
+            <p className='text-center w-full text-pink-900 font-bold py-2 px-4 mb-6 rounded'>
+              Invalid email or password
+            </p>
+          )}
         </footer>
       </div>
     </div>

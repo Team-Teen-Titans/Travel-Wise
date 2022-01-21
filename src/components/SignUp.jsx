@@ -131,11 +131,6 @@ const SignUp = () => {
               Submit
             </button>
           </div>
-
-          {/* <Link to={'/login'}>
-          <button> Sign in instead </button>
-        </Link> */}
-          {/* option to add link back to login if user already has account */}
         </form>
         <footer>
           <p className='text-indigo-700 text-sm float-right'>
@@ -147,7 +142,6 @@ const SignUp = () => {
           </p>
           <div className='text-center w-full text-pink-900 font-bold py-2 px-4 mb-6 rounded'>{fieldsError && fieldsError}</div>
         </footer>
-        {/* {passwordError && <p>Passwords do not match. Please try again.</p>} */}
       </div>
     </div>
   );
