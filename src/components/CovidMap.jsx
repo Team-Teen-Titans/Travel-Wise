@@ -23,8 +23,8 @@ const CovidMap = () => {
           if (Country === 'Diamond Princess' || Country === 'MS Zaandam' || Country === 'Channel Islands') {
             continue;
           }
-          const casesPerNum = Math.floor((ActiveCases / Population) * 100000) || 0;
-          formattedData.push([{v: TwoLetterSymbol , f: Country, iso: ThreeLetterSymbol.toUpperCase()}, casesPerNum])
+          const casesPerNum = Math.floor((ActiveCases / Population) * 100000) > 0 && Math.floor((ActiveCases / Population) * 100000) || 0;
+          formattedData.push([{v: TwoLetterSymbol , f: Country, iso: ThreeLetterSymbol.toUpperCase()}, casesPerNum]);
           //NOTE: the google map chart does not require a "iso" property for the first column, but we save it there so we can pass that object to the "VaccineMap" component
           //  because that component needs a three-letter iso code in order to make its API request
         }
