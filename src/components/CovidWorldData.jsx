@@ -58,7 +58,7 @@ const CovidWorldData = () => {
       });
   }, []);
   return (
-    <div className='flex flex-col min-h-screen'>
+    <div className='flex flex-col min-h-screen flex h-screen'>
       <h1 align='center' className='py-4 text-3xl font-mono border-2 rounded'>
         Global Covid Data
       </h1>
@@ -67,7 +67,7 @@ const CovidWorldData = () => {
       ) : (
         <div>
           <div>
-            <div className='mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-green-100 sm:h-20 sm:w-20'>
+            <div className='my-6 mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-green-100 sm:h-20 sm:w-20'>
               <BiWorld className='h-10 w-10 text-green-600 animate-pulse' />
             </div>
             <div className='m-2.5 p-2.5 flex justify-center items-center'>
