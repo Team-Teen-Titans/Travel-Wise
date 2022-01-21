@@ -27,7 +27,7 @@ app.use(passport.session());
 
 const flightsRouter = require('./routes/flightsRouter');
 const userRouter = require('./routes/userRouter');
-const saveFlightsRouter = require('./routes/SaveFlightsRouter');
+const saveFlightsRouter = require('./routes/saveFlightsRouter');
 
 /**
  * handle parsing request body

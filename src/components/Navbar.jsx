@@ -6,9 +6,12 @@ function NavBar() {
 		<>
 			<nav className='flex items-center justify-between flex-wrap bg-blue-500 p-6'>
 				<div className='flex items-center flex-shrink-0 text-white mr-6'>
-					<span className='font-semibold text-xl tracking-tight'>
+					{/* <span className="font-semibold text-xl tracking-tight">
+            COVID SENTINEL
+          </span> */}
+					<Link to='/' className='font-semibold text-xl tracking-tight'>
 						COVID SENTINEL
-					</span>
+					</Link>
 				</div>
 				<div className='block lg:hidden'>
 					<button className='flex items-center px-3 py-2 border rounded text-teal-200 border-teal-400 hover:text-white hover:border-white'>
@@ -29,6 +32,12 @@ function NavBar() {
 							className='block mt-4 lg:inline-block lg:mt-0 text-white hover:text-green-300 mr-5'
 						>
 							Home
+						</Link>
+						<Link
+							to='/explore'
+							className='block mt-4 lg:inline-block lg:mt-0 text-white hover:text-green-300 mr-5'
+						>
+							COVID Update
 						</Link>
 						<Link
 							to='/login'
