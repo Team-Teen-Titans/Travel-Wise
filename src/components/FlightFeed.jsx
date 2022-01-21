@@ -8,7 +8,8 @@ const FlightFeed = ({ flights }) => {
   });
   return (
     <div>
-      <h3>Available Departing Flights</h3>
+      {/* <h3>Available Departing Flights: </h3>
+      <br /> */}
       {flights.map((flightInfo, index) => (
         <FlightCard key={index} flightInfo={flightInfo} />
       ))}
@@ -16,8 +17,8 @@ const FlightFeed = ({ flights }) => {
       {flights.length === 0 && (
         <p>
           {" "}
-          No flights available. Click <Link to={"/"}>here</Link> to return
-          to the home page and search again.
+          No flights available. Click <Link to={"/"}>here</Link> to return to
+          the home page and search again.
         </p>
       )}
     </div>
@@ -25,4 +26,3 @@ const FlightFeed = ({ flights }) => {
 };
 
 export default FlightFeed;
-

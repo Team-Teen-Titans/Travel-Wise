@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from 'react';
-import { Navigate, useNavigate } from 'react-router';
-import axios from 'axios';
-import 'regenerator-runtime';
-import ReactModal from 'react-modal';
-import Loader from './Spinner';
-import SubmitSearchButton from './SubmitSearchButton';
+import React, { useState, useEffect } from "react";
+import { Navigate, useNavigate } from "react-router";
+import axios from "axios";
+import "regenerator-runtime";
+import ReactModal from "react-modal";
+import Loader from "./Spinner";
+import SubmitSearchButton from "./SubmitSearchButton";
 // import { data } from 'autoprefixer';
-import { MdError } from 'react-icons/md';
+import { MdError } from "react-icons/md";
 
 const FlightModal = ({ tripLocationInfo }) => {
   // console.log('tripLocationInfo in Modal:', tripLocationInfo)
@@ -32,7 +32,7 @@ const FlightModal = ({ tripLocationInfo }) => {
     numOfAdults: 1,
     numOfChildren: 0,
     numOfInfants: 0,
-    cabinClass: 'Economy'
+    cabinClass: "Economy",
   });
 
   const [submitDisabled, setSubmitDisabled] = useState(true);
@@ -41,7 +41,7 @@ const FlightModal = ({ tripLocationInfo }) => {
   useEffect(() => {
     getAirportCode(originSelected, destinationSelected);
   }, []);
-  
+
   // modal status
   const openModal = () => {
     setModalIsOpen(true);
@@ -57,7 +57,9 @@ const FlightModal = ({ tripLocationInfo }) => {
       const originUrl = originCity.replace(/\s/g, "%20");
       const destinationUrl = destinationCity.replace(/\s/g, "%20");
       const originRes = await axios.get(`/api/flights/airport/${originUrl}`);
-      const destinationRes = await axios.get(`/api/flights/airport/${destinationUrl}`);  
+      const destinationRes = await axios.get(
+        `/api/flights/airport/${destinationUrl}`
+      );
       // update airport code lists
       setAirportSelection({
         ...airportSelection,
@@ -77,7 +79,7 @@ const FlightModal = ({ tripLocationInfo }) => {
         setAirportCodeFound(true);
       }
     } catch (err) {
-      console.error('err in getAirportCode func:',err);
+      console.error("err in getAirportCode func:", err);
     }
   };
 
@@ -102,7 +104,6 @@ const FlightModal = ({ tripLocationInfo }) => {
         </option>
       );
     });
-  
 
   // update trip info when fields changed
   const handleChange = (type) => (e) => {
@@ -151,9 +152,12 @@ const FlightModal = ({ tripLocationInfo }) => {
 
   // enable submit if there are no null fields
   useEffect(() => {
-    console.log('checking fields');
+    console.log("checking fields");
     console.log(Object.values(tripInfo));
-    if (submitDisabled && Object.values(tripInfo).every(field => field !== null)) {
+    if (
+      submitDisabled &&
+      Object.values(tripInfo).every((field) => field !== null)
+    ) {
       setSubmitDisabled(false);
     }
   }, [tripInfo]);
@@ -359,7 +363,10 @@ const FlightModal = ({ tripLocationInfo }) => {
             </span>
             <br />
             <br />
-            <SubmitSearchButton handleSubmit={handleSubmit} submitDisabled={submitDisabled}/>
+            <SubmitSearchButton
+              handleSubmit={handleSubmit}
+              submitDisabled={submitDisabled}
+            />
             <button
               onClick={closeModal}
               className="rounded-md py-2.5 px-2.5 m-1 bg-gray-500 text-white hover:bg-opacity-75 active:shadow-md scale-90"
@@ -368,42 +375,42 @@ const FlightModal = ({ tripLocationInfo }) => {
             </button>
           </div>
         </ReactModal>
-      ) : ( 
+      ) : (
         <ReactModal
           isOpen={modalIsOpen}
           onRequestClose={closeModal}
           ariaHideApp={false}
         >
-          <div className='justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none'>
-            <div className='relative w-auto my-6 mx-auto max-w-3xl'>
-              <div className='border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none'>
-                <div className='flex items-start justify-between p-5 border-b border-solid border-blueGray-200 rounded-t'>
-                  <h3 className='text-3xl font-semibold'>Error</h3>
+          <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
+            <div className="relative w-auto my-6 mx-auto max-w-3xl">
+              <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
+                <div className="flex items-start justify-between p-5 border-b border-solid border-blueGray-200 rounded-t">
+                  <h3 className="text-3xl font-semibold">Error</h3>
                   <button
-                    className='p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none'
+                    className="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
                     onClick={closeModal}
                   >
-                    <span className='bg-transparent text-black opacity-5 h-6 w-6 text-2xl block outline-none focus:outline-none'>
+                    <span className="bg-transparent text-black opacity-5 h-6 w-6 text-2xl block outline-none focus:outline-none">
                       x
                     </span>
                   </button>
                 </div>
-                <div className='relative p-6 flex-auto'>
-                  <p className='my-4 text-blueGray-500 text-lg leading-relaxed'>
+                <div className="relative p-6 flex-auto">
+                  <p className="my-4 text-blueGray-500 text-lg leading-relaxed">
                     There was an issue finding any airports located in your
                     selected cities. Please try again.
                   </p>
                 </div>
-                <div className='flex items-center justify-end p-6 border-t border-solid border-blueGray-200 rounded-b'>
-                  <div className='mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10'>
+                <div className="flex items-center justify-end p-6 border-t border-solid border-blueGray-200 rounded-b">
+                  <div className="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10">
                     <MdError
-                      className='h-6 w-6 text-red-600'
-                      aria-hidden='true'
+                      className="h-6 w-6 text-red-600"
+                      aria-hidden="true"
                     />
                   </div>
                   <button
-                    className='text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150'
-                    type='button'
+                    className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                    type="button"
                     onClick={() => {
                       closeModal();
                     }}
