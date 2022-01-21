@@ -7,7 +7,7 @@ import Loader from './Spinner';
 import SubmitSearchButton from './SubmitSearchButton';
 import SaveTripsModal from './SaveTripsModal';
 // import { data } from 'autoprefixer';
-import { MdError } from 'react-icons/md';
+import { MdError } from "react-icons/md";
 
 const FlightModal = ({ tripLocationInfo }) => {
 	// console.log('tripLocationInfo in Modal:', tripLocationInfo)
@@ -15,7 +15,7 @@ const FlightModal = ({ tripLocationInfo }) => {
 	//use effect to make axios call for airport
 	const originSelected = tripLocationInfo.originCity;
 	const destinationSelected = tripLocationInfo.destinationCity;
-
+  
 	const [modalIsOpen, setModalIsOpen] = useState(true);
 	const [saveTripModalIsOpen, setSaveTripModalIsOpen] = useState(false);
 	const [loading, setLoading] = useState(true);
@@ -292,7 +292,6 @@ const FlightModal = ({ tripLocationInfo }) => {
 						</span>
 						<br />
 						<br />
-
 						{/* flight class */}
 						<label
 							htmlFor='cabinClass'
