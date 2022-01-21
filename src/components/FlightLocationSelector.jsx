@@ -36,7 +36,7 @@ const FlightLocationSelector = () => {
             htmlFor="origin-city"
             name="originCity"
             placeholder="Enter departure city"
-            className="border 1px rounded rounded-md py-2.5 px-2.5 m-1"
+            className="border 1px rounded rounded-md py-2.5 px-2.5 m-1 hover:bg-gray-100 focus:bg-blue-100"
             onChange={handleChange}
           />
         </span>
@@ -51,7 +51,7 @@ const FlightLocationSelector = () => {
             htmlFor="destination-city"
             name="destinationCity"
             placeholder="Enter destination city"
-            className="border 1px rounded rounded-md py-2.5 px-2.5 m-1"
+            className="border 1px rounded rounded-md py-2.5 px-2.5 m-1 hover:bg-gray-100 focus:bg-blue-100"
             onChange={handleChange}
           />
         </span>
