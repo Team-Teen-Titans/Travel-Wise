@@ -77,17 +77,17 @@ const TripCard = ({ savedTripInfo }) => {
     case "numOfAdults":
       removedText = e.target.value.replace(/\D+/g, "");
       if (removedText === "") removedText = 0;
-      setTripInfo({ ...tripInfo, numOfAdults: removedText });
+      setTripInfo({ ...tripInfo, numOfAdults: +removedText });
       break;
     case "numOfChildren":
       removedText = e.target.value.replace(/\D+/g, "");
       if (removedText === "") removedText = 0;
-      setTripInfo({ ...tripInfo, numOfChildren: removedText });
+      setTripInfo({ ...tripInfo, numOfChildren: +removedText });
       break;
     case "numOfInfants":
       removedText = e.target.value.replace(/\D+/g, "");
       if (removedText === "") removedText = 0;
-      setTripInfo({ ...tripInfo, numOfInfants: removedText });
+      setTripInfo({ ...tripInfo, numOfInfants: +removedText });
       break;
     case "cabinClass":
       setTripInfo({ ...tripInfo, cabinClass: e.target.value });

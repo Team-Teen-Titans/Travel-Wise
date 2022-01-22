@@ -10,7 +10,7 @@ const FlightLocationSelector = () => {
   });
 
   const [showModal, setShowModal] = useState(false);
-  // const [key, setKey] = useState(1);What's the purpose of key? We dont seem to use it in FlightModal.jsx
+  const [key, setKey] = useState(1);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -19,7 +19,7 @@ const FlightLocationSelector = () => {
 
   const handleSearchSubmit = (e) => {
     e.preventDefault();
-    // setKey(key + 1);
+    setKey(key + 1);
     setShowModal(true);
   };
 
@@ -64,7 +64,7 @@ const FlightLocationSelector = () => {
           Get Started
         </button>
       </form>
-      {showModal && <FlightModal /*key={key}*/ tripLocationInfo={tripLocationInfo}/*What's the purpose of key? We dont seem to use it in FlightModal.jsx*/ />}
+      {showModal && <FlightModal key={key} tripLocationInfo={tripLocationInfo}/>}
     </div>
   );
 };
