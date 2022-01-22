@@ -8,6 +8,7 @@ import Login from "./Login";
 import SignUp from "./SignUp";
 import CovidWorldData from "./CovidWorldData";
 import FlightsDisplayFeedContainer from "./FlightsDisplayFeedContainer";
+import MyTrips from "./MyTrips";
 import "../stylesheets/styles.css";
 import axios from 'axios';
 
@@ -61,6 +62,7 @@ const App = () => {
           element={<FlightsDisplayFeedContainer />}
           render={(props) => <FlightsDisplayFeedContainer {...props} />}
         />
+        <Route path="/my-trips" element={<MyTrips />} />
       </Routes>
     </AuthContext.Provider>
   )
