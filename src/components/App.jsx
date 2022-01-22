@@ -71,7 +71,9 @@ const App = () => {
           element={<FlightsDisplayFeedContainer />}
           render={(props) => <FlightsDisplayFeedContainer {...props} />}
         />
-        <Route path="/my-trips" element={<MyTrips />} />
+        <Route path="/my-trips" 
+          element={<MyTrips />}
+        />
       </Routes>
     </AuthContext.Provider>
   );
