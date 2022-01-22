@@ -33,9 +33,15 @@ const FlightsDisplayFeedContainer = () => {
   useEffect(async () => await fetchInfo(), []);
 
   return loading ? (
-    <Loader />
+    <div className="flex h-screen justify-center items-center">
+      <Loader />
+    </div>
   ) : flights ? (
-    <FlightFeed flights={flights} />
+    <div className="flex h-screen box-content justify-center">
+      {/* <div className="relative "> */}
+      <FlightFeed flights={flights} />
+      {/* </div> */}
+    </div>
   ) : (
     <p>
       {" "}
