@@ -4,7 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { MdAccountCircle } from 'react-icons/md';
 import { FcGoogle } from 'react-icons/fc';
 
-const Login = () => {
+const Login = ({ setRefetchAuth }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loginError, setLoginError] = useState(false);
@@ -23,9 +23,10 @@ const Login = () => {
     axios
       .post('/api/user/login', { email: email, password: password })
       .then((res) => {
-        // console.log(res);
         if (res.status === 200) {
-          return navigate('/');
+          navigate('/');
+          setRefetchAuth(prev => ++prev)
+          // window.location.reload();
         }
         // sessionStorage.setItem('email', email);
         // sessionStorage.setItem('loggedIn', ******);
