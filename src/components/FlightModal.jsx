@@ -36,11 +36,7 @@ const FlightModal = ({ tripLocationInfo }) => {
     numOfAdults: 1,
     numOfChildren: 0,
     numOfInfants: 0,
-<<<<<<< HEAD
     cabinClass: 'Economy',
-=======
-    cabinClass: "Economy",
->>>>>>> dev
   });
 
   const [submitDisabled, setSubmitDisabled] = useState(true);
@@ -88,7 +84,7 @@ const FlightModal = ({ tripLocationInfo }) => {
         setAirportCodeFound(true);
       }
     } catch (err) {
-      console.error("err in getAirportCode func:", err);
+      console.error('err in getAirportCode func:', err);
     }
   };
 
@@ -123,19 +119,16 @@ const FlightModal = ({ tripLocationInfo }) => {
       toggledTrip = 'one-way';
     }
     setTripInfo({ ...tripInfo, oneWayOrRound: toggledTrip });
-
   };
 
   // update trip info when fields changed
   const handleChange = (type) => (e) => {
-
     // let toggledTrip;
     // if (toggle.status === true) {
     //   toggledTrip = 'round-trip';
     // } else {
     //   toggledTrip = 'one-way';
     // }
-
 
     let removedText;
     switch (type) {
@@ -182,7 +175,7 @@ const FlightModal = ({ tripLocationInfo }) => {
 
   // enable submit if there are no null fields
   useEffect(() => {
-    console.log("checking fields");
+    console.log('checking fields');
     console.log(Object.values(tripInfo));
     if (
       submitDisabled &&
@@ -195,9 +188,9 @@ const FlightModal = ({ tripLocationInfo }) => {
   const navigate = useNavigate();
 
   const handleSubmit = () => {
-    console.log("tripInfo on submit: ", tripInfo);
+    console.log('tripInfo on submit: ', tripInfo);
     closeModal();
-    navigate("/flights-display", {
+    navigate('/flights-display', {
       state: {
         ...tripInfo,
       },
@@ -205,18 +198,18 @@ const FlightModal = ({ tripLocationInfo }) => {
   };
 
   //sets minimum departure date to today
-  const minDate = new Date().toLocaleDateString("en-CA", {
-    day: "2-digit",
-    month: "2-digit",
-    year: "numeric",
+  const minDate = new Date().toLocaleDateString('en-CA', {
+    day: '2-digit',
+    month: '2-digit',
+    year: 'numeric',
   });
 
   //sets minimum return date to today+1
   const findRoundTripMinDate = (date) => {
-    const minDate = date.split("");
+    const minDate = date.split('');
     const changeDay = +minDate[minDate.length - 1] + 1;
     minDate[minDate.length - 1] = changeDay;
-    return minDate.join("");
+    return minDate.join('');
   };
 
   return (
@@ -228,11 +221,11 @@ const FlightModal = ({ tripLocationInfo }) => {
           isOpen={modalIsOpen}
           onRequestClose={closeModal}
           ariaHideApp={false}
-          className="bg-indigo-100 flex justify-center h-screen my-24 border-none focus:border-none"
+          className='bg-indigo-100 flex justify-center h-screen my-24 border-none focus:border-none'
         >
           {/* trip type */}
-          <div className="place-center bg-indigo-100">
-            <h3 className="text-base font-semibold text-xl tracking-tight">
+          <div className='place-center bg-indigo-100'>
+            <h3 className='text-base font-semibold text-xl tracking-tight'>
               Staying or returning?
             </h3>
             {/* <span>
@@ -271,30 +264,30 @@ const FlightModal = ({ tripLocationInfo }) => {
             {/* dates */}
             <span>
               <label
-                htmlFor="departure-date"
-                className="text-base font-semibold text-xl tracking-tight"
+                htmlFor='departure-date'
+                className='text-base font-semibold text-xl tracking-tight'
               >
-                Departure Date:{" "}
+                Departure Date:{' '}
               </label>
               <input
-                type="date"
-                name="departure"
-                className="border 1px rounded"
+                type='date'
+                name='departure'
+                className='border 1px rounded'
                 min={minDate}
-                onChange={handleChange("departureDate")}
-              ></input>{" "}
+                onChange={handleChange('departureDate')}
+              ></input>{' '}
               <label
-                htmlFor="return-date"
-                className="text-base font-semibold text-xl tracking-tight"
+                htmlFor='return-date'
+                className='text-base font-semibold text-xl tracking-tight'
               >
-                Return Date:{" "}
+                Return Date:{' '}
               </label>
               <input
-                type="date"
-                name="return"
-                className="border 1px rounded"
+                type='date'
+                name='return'
+                className='border 1px rounded'
                 min={findRoundTripMinDate(minDate)}
-                onChange={handleChange("returnDate")}
+                onChange={handleChange('returnDate')}
               ></input>
             </span>
             <br />
@@ -335,20 +328,20 @@ const FlightModal = ({ tripLocationInfo }) => {
             <br />
             {/* flight class */}
             <label
-              htmlFor="cabinClass"
-              className="text-base font-semibold text-xl tracking-tight"
+              htmlFor='cabinClass'
+              className='text-base font-semibold text-xl tracking-tight'
             >
-              Cabin Class:{" "}
+              Cabin Class:{' '}
             </label>
             <span>
               <select
-                onChange={handleChange("cabinClass")}
-                className="border 1px rounded"
+                onChange={handleChange('cabinClass')}
+                className='border 1px rounded'
               >
-                <option value="Economy">Economy</option>
-                <option value="Business">Business</option>
-                <option value="First">First</option>
-                <option value="Premium_Economy">Premium Economy</option>
+                <option value='Economy'>Economy</option>
+                <option value='Business'>Business</option>
+                <option value='First'>First</option>
+                <option value='Premium_Economy'>Premium Economy</option>
               </select>
             </span>
             <br />
@@ -356,51 +349,51 @@ const FlightModal = ({ tripLocationInfo }) => {
 
             {/* passengers */}
             <span>
-              <h3 className="text-lg font-semibold text-xl tracking-tight">
-                Passenger Information:{" "}
+              <h3 className='text-lg font-semibold text-xl tracking-tight'>
+                Passenger Information:{' '}
               </h3>
             </span>
             <span>
               <label
-                htmlFor="numOfAdults"
-                className="text-base font-semibold text-xl tracking-tight"
+                htmlFor='numOfAdults'
+                className='text-base font-semibold text-xl tracking-tight'
               >
-                Adults:{" "}
+                Adults:{' '}
               </label>
               <input
-                htmlFor="numOfAdults"
+                htmlFor='numOfAdults'
                 // type="number"
-                defaultValue="1"
-                name="number of adults"
-                className="border 1px rounded w-8"
-                onChange={handleChange("numOfAdults")}
-              ></input>{" "}
+                defaultValue='1'
+                name='number of adults'
+                className='border 1px rounded w-8'
+                onChange={handleChange('numOfAdults')}
+              ></input>{' '}
               <label
-                htmlFor="numOfChildren"
-                className="text-base font-semibold text-xl tracking-tight"
+                htmlFor='numOfChildren'
+                className='text-base font-semibold text-xl tracking-tight'
               >
-                Children:{" "}
+                Children:{' '}
               </label>
               <input
-                htmlFor="numOfChildren"
-                defaultValue="0"
-                name="number of children"
-                className="border 1px rounded w-8"
-                onChange={handleChange("numOfChildren")}
-              ></input>{" "}
+                htmlFor='numOfChildren'
+                defaultValue='0'
+                name='number of children'
+                className='border 1px rounded w-8'
+                onChange={handleChange('numOfChildren')}
+              ></input>{' '}
               <label
-                htmlFor="numOfInfants"
-                className="text-base font-semibold text-xl tracking-tigh"
+                htmlFor='numOfInfants'
+                className='text-base font-semibold text-xl tracking-tigh'
               >
-                Infants:{" "}
+                Infants:{' '}
               </label>
               <input
-                htmlFor="numOfInfants"
+                htmlFor='numOfInfants'
                 // type="number"
-                defaultValue="0"
-                name="number of infants"
-                className="border 1px rounded w-8"
-                onChange={handleChange("numOfInfants")}
+                defaultValue='0'
+                name='number of infants'
+                className='border 1px rounded w-8'
+                onChange={handleChange('numOfInfants')}
               ></input>
             </span>
             <br />
@@ -411,14 +404,14 @@ const FlightModal = ({ tripLocationInfo }) => {
             />
             <button
               onClick={closeModal}
-              className="hover:text-green-300 border 1px rounded bg-gradient-to-r from-blue-400 via-indigo-400 to-blue-400 font-bold text-white uppercase px-6 py-2 text-sm outline-none focus:outline-none hover:opacity-75 mr-1 mb-1 ease-linear transition-all duration-150"
+              className='hover:text-green-300 border 1px rounded bg-gradient-to-r from-blue-400 via-indigo-400 to-blue-400 font-bold text-white uppercase px-6 py-2 text-sm outline-none focus:outline-none hover:opacity-75 mr-1 mb-1 ease-linear transition-all duration-150'
             >
               Cancel
             </button>
 
             <button
               onClick={() => setSaveTripModalIsOpen(true)}
-              className="hover:text-green-300 border 1px rounded bg-gradient-to-r from-blue-400 via-indigo-400 to-blue-400 font-bold text-white uppercase px-6 ml-20 py-2 text-sm outline-none focus:outline-none hover:opacity-75 mr-1 mb-1 ease-linear transition-all duration-150"
+              className='hover:text-green-300 border 1px rounded bg-gradient-to-r from-blue-400 via-indigo-400 to-blue-400 font-bold text-white uppercase px-6 ml-20 py-2 text-sm outline-none focus:outline-none hover:opacity-75 mr-1 mb-1 ease-linear transition-all duration-150'
             >
               Save trip
             </button>
@@ -437,36 +430,36 @@ const FlightModal = ({ tripLocationInfo }) => {
           onRequestClose={closeModal}
           ariaHideApp={false}
         >
-          <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
-            <div className="relative w-auto my-6 mx-auto max-w-3xl">
-              <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
-                <div className="flex items-start justify-between p-5 border-b border-solid border-blueGray-200 rounded-t">
-                  <h3 className="text-3xl font-semibold">Error</h3>
+          <div className='justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none'>
+            <div className='relative w-auto my-6 mx-auto max-w-3xl'>
+              <div className='border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none'>
+                <div className='flex items-start justify-between p-5 border-b border-solid border-blueGray-200 rounded-t'>
+                  <h3 className='text-3xl font-semibold'>Error</h3>
                   <button
-                    className="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
+                    className='p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none'
                     onClick={closeModal}
                   >
-                    <span className="bg-transparent text-black opacity-5 h-6 w-6 text-2xl block outline-none focus:outline-none">
+                    <span className='bg-transparent text-black opacity-5 h-6 w-6 text-2xl block outline-none focus:outline-none'>
                       x
                     </span>
                   </button>
                 </div>
-                <div className="relative p-6 flex-auto">
-                  <p className="my-4 text-blueGray-500 text-lg leading-relaxed">
+                <div className='relative p-6 flex-auto'>
+                  <p className='my-4 text-blueGray-500 text-lg leading-relaxed'>
                     There was an issue finding any airports located in your
                     selected cities. Please try again.
                   </p>
                 </div>
-                <div className="flex items-center justify-end p-6 border-t border-solid border-blueGray-200 rounded-b">
-                  <div className="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10">
+                <div className='flex items-center justify-end p-6 border-t border-solid border-blueGray-200 rounded-b'>
+                  <div className='mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10'>
                     <MdError
-                      className="h-6 w-6 text-red-600"
-                      aria-hidden="true"
+                      className='h-6 w-6 text-red-600'
+                      aria-hidden='true'
                     />
                   </div>
                   <button
-                    className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                    type="button"
+                    className='text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150'
+                    type='button'
                     onClick={() => {
                       closeModal();
                     }}
