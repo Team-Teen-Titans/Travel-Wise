@@ -57,10 +57,10 @@ savedFlightsController.saveFlights = async (req, res, next) => {
 
 savedFlightsController.deleteFlights = async (req, res, next) => {
 	const user_id = req.user.user_id;
-	const flight_id = req.body.flight_id;
+	const trip_id = req.body.tripId;
 	const deleteSavedFlights = await db.query(
-		`DELETE FROM flights WHERE user_id = $1 AND flight_id = $2`,
-		[user_id, flight_id]
+		`DELETE FROM flights WHERE user_id = $1 AND trip_id = $2`,
+		[user_id, trip_id]
 	);
 	return next();
 };

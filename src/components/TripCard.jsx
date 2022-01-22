@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { Navigate, useNavigate } from 'react-router';
 import SubmitSearchButton from './SubmitSearchButton';
+import axios from "axios";
 
-const TripCard = ({ savedTripInfo }) => {
-  console.log('savedTripInfo:', savedTripInfo)
+const TripCard = ({ savedTripInfo, setMyTripsKey, myTripsKey }) => {
+  console.log('savedTripInfo:', savedTripInfo);
 
   const {
+    trip_id: tripId,
     trip_nickname: tripNickname,
     origin_airport: originAirport,
     origin_airport_list,
@@ -121,6 +123,18 @@ const TripCard = ({ savedTripInfo }) => {
         ...tripInfo,
       },
     });
+  };
+
+  const handleDelete = async (tripId) => {
+    try {
+      console.log('deleting trip id:', tripId);
+      await axios.delete('/api/saved-flights/delete-saved-flights',
+        { data: {tripId: tripId} });
+      window.location.reload();
+    }
+    catch (err) {
+      console.error('err in delete:', err);
+    }
   };
 
   //sets minimum departure date to today
@@ -309,6 +323,7 @@ const TripCard = ({ savedTripInfo }) => {
         <SubmitSearchButton handleSubmit={handleSubmit} submitDisabled={submitDisabled}/>
         <button
           className="rounded-md py-2.5 px-2.5 m-1 bg-red-500 text-white hover:bg-opacity-75 active:shadow-md scale-90"
+          onClick={() => handleDelete(tripId)}
         >
 			Delete
         </button>
