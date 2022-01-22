@@ -35,12 +35,18 @@ flightsController.getFlights = async (req, res, next) => {
       headers
     );
     if (tripApiCall.trips.length === 0) {
-      throw new Error("Trips property is an empty array.");
+      // throw new Error("Trips property is an empty array.");
+      res.locals.flightsData = false;
+      return next();
     }
     console.log("url", flightApiUrlWithParams);
     // console.log("running processing algo");
     const flightList = [];
-    for (let i = 0; i < 30; i++) {
+    for (let i = 0; i < 220; i++) {
+      if (tripApiCall.trips[i] === undefined) {
+        i = 220;
+        break;
+      }
       const flight = {
         id: tripApiCall.trips[i].id,
         code: tripApiCall.trips[i].code,

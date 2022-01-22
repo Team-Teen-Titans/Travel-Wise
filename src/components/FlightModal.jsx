@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import { Navigate, useNavigate } from 'react-router';
-import axios from 'axios';
-import 'regenerator-runtime';
-import ReactModal from 'react-modal';
-import Loader from './Spinner';
-import SubmitSearchButton from './SubmitSearchButton';
-import SaveTripsModal from './SaveTripsModal';
+import React, { useState, useEffect } from "react";
+import { Navigate, useNavigate } from "react-router";
+import axios from "axios";
+import "regenerator-runtime";
+import ReactModal from "react-modal";
+import Loader from "./Spinner";
+import SubmitSearchButton from "./SubmitSearchButton";
+import SaveTripsModal from "./SaveTripsModal";
 // import { data } from 'autoprefixer';
 import { MdError } from "react-icons/md";
 

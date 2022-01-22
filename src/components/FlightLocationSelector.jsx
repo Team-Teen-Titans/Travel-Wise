@@ -59,12 +59,15 @@ const FlightLocationSelector = () => {
         {/* <br /> */}
         <button
           className="text-lg mx-3.5 rounded-md py-2.5 px-2.5 m-1 bg-green-500 text-white hover:bg-opacity-75 active:shadow-md scale-90"
-          type='submit'
+          type="submit"
+          onClick={handleSearchSubmit}
         >
           Get Started
         </button>
       </form>
-      {showModal && <FlightModal key={key} tripLocationInfo={tripLocationInfo}/>}
+      {showModal && (
+        <FlightModal key={key} tripLocationInfo={tripLocationInfo} />
+      )}
     </div>
   );
 };
