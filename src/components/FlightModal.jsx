@@ -14,6 +14,7 @@ const FlightModal = ({ tripLocationInfo }) => {
 	//use effect to make axios call for airport
 	const originSelected = tripLocationInfo.originCity;
 	const destinationSelected = tripLocationInfo.destinationCity;
+	const [submitDisabled, setSubmitDisabled] = useState(true);
 	const [modalIsOpen, setModalIsOpen] = useState(true);
 	const [saveTripModalIsOpen, setSaveTripModalIsOpen] = useState(false);
 	const [loading, setLoading] = useState(true);
@@ -34,8 +35,6 @@ const FlightModal = ({ tripLocationInfo }) => {
 		numOfInfants: 0,
 		cabinClass: 'Economy',
 	});
-
-	const [submitDisabled, setSubmitDisabled] = useState(true);
 
 	// on FlightModal component mount
 	useEffect(() => {
@@ -93,6 +92,37 @@ const FlightModal = ({ tripLocationInfo }) => {
 				</option>
 			);
 		});
+	/*const getAirportCode = async (originCity, destinationCity) => {
+		try {
+			// get airport codes from api
+			const originUrl = originCity.replace(/\s/g, '%20');
+			const destinationUrl = destinationCity.replace(/\s/g, '%20');
+			const originRes = await axios.get(`/api/flights/airport/${originUrl}`);
+			const destinationRes = await axios.get(
+				`/api/flights/airport/${destinationUrl}`
+			);
+			// update airport code lists
+			setAirportLists({
+				...airportLists,
+				originAirportList: originRes.data,
+				destinationAirportList: destinationRes.data,
+			});
+			// default selected airport code to first option
+			setTripInfo({
+				...tripInfo,
+				originAirport: originRes.data[0],
+				destinationAirport: destinationRes.data[0],
+			});
+			// done loading
+			setLoading(false);
+
+			if (originRes.data.length > 0 && destinationRes.data.length > 0) {
+				setAirportCodeFound(true);
+			}
+		} catch (err) {
+			console.error('err in getAirportCode func:', err);
+		}
+	};*/
 
 	// populate destination airport codes options
 	const destinationAirportOptions =
@@ -104,6 +134,17 @@ const FlightModal = ({ tripLocationInfo }) => {
 				</option>
 			);
 		});
+
+	// // populate destination airport codes options
+	// const destinationAirportOptions =
+	// 	airportLists.destinationAirportList.length > 0 &&
+	// 	airportLists.destinationAirportList.map((code, i) => {
+	// 		return (
+	// 			<option key={i} value={code}>
+	// 				{code}
+	// 			</option>
+	// 		);
+	// 	});
 
 	// update trip info when fields changed
 	const handleChange = (type) => (e) => {
@@ -198,10 +239,10 @@ const FlightModal = ({ tripLocationInfo }) => {
 					isOpen={modalIsOpen}
 					onRequestClose={closeModal}
 					ariaHideApp={false}
-					className='bg-gray-200 flex justify-center h-screen my-24'
+					className='bg-indigo-100 flex justify-center h-screen my-24 border-none focus:border-none'
 				>
 					{/* trip type */}
-					<div className='place-center bg-gray-200'>
+					<div className='place-center bg-indigo-100'>
 						<h3 className='text-base font-semibold text-xl tracking-tight'>
 							Staying or returning?
 						</h3>
@@ -368,14 +409,14 @@ const FlightModal = ({ tripLocationInfo }) => {
 						/>
 						<button
 							onClick={closeModal}
-							className='rounded-md py-2.5 px-2.5 m-1 bg-gray-500 text-white hover:bg-opacity-75 active:shadow-md scale-90'
+							className='hover:text-green-300 border 1px rounded bg-gradient-to-r from-blue-400 via-indigo-400 to-blue-400 font-bold text-white uppercase px-6 py-2 text-sm outline-none focus:outline-none hover:opacity-75 mr-1 mb-1 ease-linear transition-all duration-150'
 						>
 							Cancel
 						</button>
 
 						<button
 							onClick={() => setSaveTripModalIsOpen(true)}
-							className='rounded-md py-2.5 px-2.5 m-1 bg-gray-500 text-white hover:bg-opacity-75 active:shadow-md scale-90'
+							className='hover:text-green-300 border 1px rounded bg-gradient-to-r from-blue-400 via-indigo-400 to-blue-400 font-bold text-white uppercase px-6 ml-20 py-2 text-sm outline-none focus:outline-none hover:opacity-75 mr-1 mb-1 ease-linear transition-all duration-150'
 						>
 							Save trip
 						</button>
