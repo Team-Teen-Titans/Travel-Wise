@@ -19,7 +19,8 @@ const Login = ({ setRefetchAuth }) => {
     const passwordValue = e.target.value;
     setPassword(passwordValue);
   };
-  const handleSubmit = () => {
+  const handleSubmit = (e) => {
+    e.preventDefault();
     axios
       .post('/api/user/login', { email: email, password: password })
       .then((res) => {
@@ -66,17 +67,17 @@ const Login = ({ setRefetchAuth }) => {
                 required
               />
             </label>
+            <div>
+              <button
+                className='w-full bg-indigo-700 hover:bg-pink-700 text-white font-bold py-2 px-4 mb-6 rounded'
+                type='submit'
+                onClick={handleSubmit}
+              >
+                Log In
+              </button>
+            </div>
           </div>
         </form>
-        <div>
-          <button
-            className='w-full bg-indigo-700 hover:bg-pink-700 text-white font-bold py-2 px-4 mb-6 rounded'
-            type='submit'
-            onClick={handleSubmit}
-          >
-            Log In
-          </button>
-        </div>
         <footer>
           <p className='text-indigo-700 text-sm float-right'>
             Need to sign up? Click{' '}

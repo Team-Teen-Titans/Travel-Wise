@@ -3,15 +3,15 @@ import axios from "axios";
 import Loader from "./Spinner";
 import FlightFeed from "./FlightFeed";
 import { useLocation } from "react-router";
+import { Link } from "react-router-dom";
 
 const FlightsDisplayFeedContainer = () => {
-  const [loading, setLoading] = useState(true);
-  const [flights, setFlights] = useState([]);
   const { state } = useLocation();
-  // const [noFlightsFound, setNoFlightsFound] = useState(false);
-  // const [tripInfo, setTripInfo] = useState(props.state);
+  const [loading, setLoading] = useState(true);
+  const [flights, setFlights] = useState(false);
 
-  useEffect(async () => {
+  const fetchInfo = async (count = 0) => {
+    if (count > 3) return "No flights were found. Please try another search.";
     console.log("options to post in FeedContainer:", state);
     try {
       const postStateToApi = await axios.post(
@@ -19,21 +19,35 @@ const FlightsDisplayFeedContainer = () => {
         state
       );
       console.log("data in FeedContainer:", postStateToApi.data);
-      setLoading(false);
       setFlights(postStateToApi.data);
-    } catch (err) {
-      // console.log("error in useEffect in FeedContainer:", err);
+      if (postStateToApi.data === false && count <= 3) {
+        return await fetchInfo(count + 1);
+      }
       setLoading(false);
-      // setNoFlightsFound('No flights were found. Please try another search.');
+      return;
+    } catch (err) {
+      setLoading(false);
     }
-  }, []);
+  };
+
+  useEffect(async () => await fetchInfo(), []);
 
   return loading ? (
-    <Loader />
+    <div className="flex h-screen justify-center items-center">
+      <Loader />
+    </div>
   ) : flights ? (
-    <FlightFeed flights={flights} />
+    <div className="flex h-screen box-content justify-center">
+      {/* <div className="relative "> */}
+      <FlightFeed flights={flights} />
+      {/* </div> */}
+    </div>
   ) : (
-    "No flights were found. Please try another search."
+    <p>
+      {" "}
+      No flights available. Click <Link to={"/"}>here</Link> to return to the
+      home page and search again.
+    </p>
   );
 };
 
