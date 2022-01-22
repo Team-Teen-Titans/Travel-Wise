@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import ReactModal from 'react-modal';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import ReactModal from "react-modal";
 
 const SaveTripsModal = ({
   saveTripModalIsOpen,
@@ -27,7 +27,7 @@ const SaveTripsModal = ({
       cabin_class: tripInfo.cabinClass,
     };
     const saveFlightRequest = await axios.post(
-      '/api/saved-flights/save-flights',
+      "/api/saved-flights/save-flights",
       postStuff
     );
     console.log(saveFlightRequest.data);
@@ -39,14 +39,16 @@ const SaveTripsModal = ({
       onRequestClose={() => setSaveTripModalIsOpen(false)}
       ariaHideApp={false}
     >
-      <form onSubmit={handleOnSubmit}>
-        <label>
-					Enter a nickname for this trip:
-          <input type='text' id='nickname' required />
-        </label>
-        <button type='submit'>Save</button>
-      </form>
-      <button onClick={() => setSaveTripModalIsOpen(false)}>Cancel</button>
+      <div className="flex space-x-5 space-y-5 px-5 bg-gradient-to-b from-blue-300 to-blue-200 box-content border-2 border-indigo-700 rounded-md py-3 my-3">
+        <form onSubmit={handleOnSubmit}>
+          <label>
+            Enter a nickname for this trip:
+            <input type="text" id="nickname" required />
+          </label>
+          <button type="submit">Save</button>
+        </form>
+        <button onClick={() => setSaveTripModalIsOpen(false)}>Cancel</button>
+      </div>
     </ReactModal>
   );
 };

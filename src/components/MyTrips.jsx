@@ -24,7 +24,9 @@ const MyTrips = () => {
   return (
     <div>
       {loading ? (
+      <div className="flex justify-center items-center pt-20">
         <Loader />
+      </div>
       )
         :
         (
