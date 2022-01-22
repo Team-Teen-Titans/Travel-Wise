@@ -71,7 +71,7 @@ flightsController.getFlights = async (req, res, next) => {
       });
 
       //sets value to false if no leg two
-      if (!flight.hasOwnProperty("legTwoInfo")) flight.legTwoInfo = false;
+      if (!Object.hasOwnProperty.call(flight, "legTwoInfo")) flight.legTwoInfo = false;
 
       flightList.push(flight);
     }

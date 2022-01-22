@@ -3,20 +3,26 @@ import { Navigate, useNavigate } from 'react-router';
 import SubmitSearchButton from './SubmitSearchButton';
 
 const TripCard = ({ savedTripInfo }) => {
+  console.log('savedTripInfo:', savedTripInfo)
+
   const {
-    tripNickname,
-    originAirportList,
-    originAirport,
-    destinationAirportList,
-    destinationAirport,
-    departureDate,
-    returnDate,
-    oneWayOrRound,
-    numOfAdults,
-    numOfChildren,
-    numOfInfants,
-    cabinClass,
+    trip_nickname: tripNickname,
+    origin_airport: originAirport,
+    origin_airport_list,
+    departure_airport: destinationAirport,
+    departure_airport_list,
+    departure_date: departureDate,
+    return_date: returnDate,
+    one_way_or_round: oneWayOrRound,
+    num_of_adults: numOfAdults,
+    num_of_children: numOfChildren,
+    num_of_infants: numOfInfants,
+    cabin_class: cabinClass,
   } = savedTripInfo;
+
+  // parse stringified arrays
+  const originAirportList = JSON.parse(origin_airport_list);
+  const destinationAirportList = JSON.parse(departure_airport_list);
 
   //this is top level state that will be used to fetch flight results
   const [tripInfo, setTripInfo] = useState({
