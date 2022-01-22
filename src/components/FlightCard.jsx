@@ -10,7 +10,7 @@ const FlightCard = ({ flightInfo }) => {
     // taxesAndFees,
     // totalPricePerPassenger,
   } = flightInfo;
-  console.log("flightInfo", flightInfo);
+  // console.log("flightInfo", flightInfo);
 
   return (
     <div className="border-solid rounded-sm">
