@@ -5,7 +5,7 @@ const FlightCard = ({ flightInfo }) => {
     flightInfo;
 
   return (
-    <div className="flex space-x-5 space-y-5 px-5 bg-gradient-to-b from-blue-300 to-blue-200 box-content border-2 border-indigo-700 rounded-md py-3 my-3">
+    <div className="flex space-x-5 space-y-5 px-5 bg-gradient-to-br from-blue-200 to-blue-200 via-blue-300 box-content border-2 border-indigo-700 rounded-md py-3 my-3">
       <div>
         <h2 className="font-bold underline">
           Airline: {legOneInfo.airlineCodes[0]}
