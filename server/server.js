@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 const session = require('express-session');
+// const cookieSession = require('cookie-session');
 const cors = require('cors');
 // const path = require('path');
 const passport = require('passport');
@@ -10,6 +11,11 @@ require('./passport-config')(passport);
 
 app.use(cors());
 app.use(express.urlencoded({ extended: true }));
+
+// app.use(cookieSession({
+// 	maxAge: 1000 * 60,
+// 	keys: ['stealthy-cat']
+// }))
 app.use(
 	session({
 		secret: 'stealthy-cat',
