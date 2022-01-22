@@ -53,7 +53,10 @@ flightsController.getFlights = async (req, res, next) => {
         legIdOne: tripApiCall.trips[i].legIds[0],
         legIdTwo:
           oneWayOrRound === "roundtrip" ? tripApiCall.trips[i].legIds[1] : null,
-        total: tripApiCall.fares[i].price.totalAmountUsd,
+        total: new Intl.NumberFormat("en-US", {
+          style: "currency",
+          currency: "USD",
+        }).format(+tripApiCall.fares[i].price.totalAmountUsd),
         remainingSeatsCount: tripApiCall.fares[i].remainingSeatsCount,
         refundable: tripApiCall.fares[i].refundable,
         exchangeable: tripApiCall.fares[i].exchangeable,
@@ -71,7 +74,8 @@ flightsController.getFlights = async (req, res, next) => {
       });
 
       //sets value to false if no leg two
-      if (!Object.hasOwnProperty.call(flight, "legTwoInfo")) flight.legTwoInfo = false;
+      if (!Object.hasOwnProperty.call(flight, "legTwoInfo"))
+        flight.legTwoInfo = false;
 
       flightList.push(flight);
     }

@@ -42,7 +42,7 @@ const FlightCard = ({ flightInfo }) => {
 
       <div className="flex flex-col justify-end pl-5">
         <h3>
-          Total Price <h3 className="font-bold">${total}</h3>
+          Total Price <h3 className="font-bold">{total}</h3>
         </h3>
 
         <br />

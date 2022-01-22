@@ -16,7 +16,8 @@ const FlightFeed = ({ flights }) => {
   }, []);
   return (
     <div className="flex flex-col">
-      <h1 className="font-extrabold text-3xl">Flights: </h1>
+
+      <h1 className="font-extrabold text-3xl mt-2">Flights: </h1>
       {flightsArr}
 
       {flights.length === 0 && (

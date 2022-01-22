@@ -6,7 +6,10 @@ import ReactModal from 'react-modal';
 import Loader from './Spinner';
 import SubmitSearchButton from './SubmitSearchButton';
 import SaveTripsModal from './SaveTripsModal';
+// import { data } from 'autoprefixer';
 import { MdError } from 'react-icons/md';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Switch from '@material-ui/core/Switch';
 
 const FlightModal = ({ tripLocationInfo }) => {
 	// console.log('tripLocationInfo in Modal:', tripLocationInfo)
@@ -36,6 +39,8 @@ const FlightModal = ({ tripLocationInfo }) => {
 		cabinClass: 'Economy',
 	});
 
+	// const [submitDisabled, setSubmitDisabled] = useState(true);
+	const [toggle, setToggle] = useState({ status: false });
 	// on FlightModal component mount
 	useEffect(() => {
 		getAirportCode(originSelected, destinationSelected);
@@ -81,6 +86,30 @@ const FlightModal = ({ tripLocationInfo }) => {
 			console.error('err in getAirportCode func:', err);
 		}
 	};
+
+	// const getAirportCode = async (originCity, destinationCity) => {
+	//   try {
+	//     // get airport codes from api
+	//     const originUrl = originCity.replace(/\s/g, '%20');
+	//     const destinationUrl = destinationCity.replace(/\s/g, '%20');
+	//     const originRes = await axios.get(`/api/flights/airport/${originUrl}`);
+	//     const destinationRes = await axios.get(
+	//       `/api/flights/airport/${destinationUrl}`
+	//     );
+	//     // update airport code lists
+	//     setAirportLists({
+	//       ...airportLists,
+	//       originAirportList: originRes.data,
+	//       destinationAirportList: destinationRes.data,
+	//     });
+	//     // default selected airport code to first option
+	//     setTripInfo({
+	//       ...tripInfo,
+	//       originAirport: originRes.data[0],
+	//       destinationAirport: destinationRes.data[0],
+	//     });
+	//     // done loading
+	//     setLoading(false);
 
 	// populate origin airport codes options
 	const originAirportOptions =
@@ -135,27 +164,45 @@ const FlightModal = ({ tripLocationInfo }) => {
 			);
 		});
 
-	// // populate destination airport codes options
+	// populate destination airport codes options
 	// const destinationAirportOptions =
-	// 	airportLists.destinationAirportList.length > 0 &&
-	// 	airportLists.destinationAirportList.map((code, i) => {
-	// 		return (
-	// 			<option key={i} value={code}>
-	// 				{code}
-	// 			</option>
-	// 		);
-	// 	});
+	//   airportLists.destinationAirportList.length > 0 &&
+	//   airportLists.destinationAirportList.map((code, i) => {
+	//     return (
+	//       <option key={i} value={code}>
+	//         {code}
+	//       </option>
+	//     );
+	//   });
+
+	const handleToggle = (e) => {
+		setToggle({ ...toggle, [e.target.name]: e.target.checked });
+		let toggledTrip;
+		if (toggle.status === true) {
+			toggledTrip = 'round-trip';
+		} else {
+			toggledTrip = 'one-way';
+		}
+		setTripInfo({ ...tripInfo, oneWayOrRound: toggledTrip });
+	};
 
 	// update trip info when fields changed
 	const handleChange = (type) => (e) => {
+		// let toggledTrip;
+		// if (toggle.status === true) {
+		//   toggledTrip = 'round-trip';
+		// } else {
+		//   toggledTrip = 'one-way';
+		// }
+
 		let removedText;
 		switch (type) {
-			case 'onewaytrip':
-				setTripInfo({ ...tripInfo, oneWayOrRound: type });
-				break;
-			case 'roundtrip':
-				setTripInfo({ ...tripInfo, oneWayOrRound: type });
-				break;
+			// case 'onewaytrip':
+			//   setTripInfo({ ...tripInfo, oneWayOrRound: toggledTrip });
+			//   break;
+			// case 'roundtrip':
+			//   setTripInfo({ ...tripInfo, oneWayOrRound: toggledTrip });
+			//   break;
 			case 'originAirport':
 				setTripInfo({ ...tripInfo, originAirport: e.target.value });
 				break;
@@ -246,26 +293,39 @@ const FlightModal = ({ tripLocationInfo }) => {
 						<h3 className='text-base font-semibold text-xl tracking-tight'>
 							Staying or returning?
 						</h3>
-						<span>
-							<button
-								onClick={handleChange('onewaytrip')}
-								className='rounded-md py-2.5 px-2.5 m-1 text-white bg-blue-500 hover:bg-blue-400 active:bg-blue-600 shadow-md scale-90 focus:outline-none focus:ring focus:ring-blue-300'
-								id='one-way'
-							>
-								One Way
-							</button>
-							{' or '}
-							<button
-								onClick={handleChange('roundtrip')}
-								className='rounded-md py-2.5 px-2.5 m-1 text-white bg-blue-500 hover:bg-blue-400 active:bg-blue-600 shadow-md scale-90 focus:outline-none focus:ring focus:ring-blue-300'
-								id='round-trip'
-							>
-								Round Trip
-							</button>
-						</span>
+						{/* <span>
+              <button
+                onClick={handleChange("onewaytrip")}
+                className="rounded-md py-2.5 px-2.5 m-1 text-white bg-blue-500 hover:bg-blue-400 active:bg-blue-600 shadow-md scale-90 focus:outline-none focus:ring focus:ring-blue-300"
+                id="one-way"
+              >
+                One Way
+              </button>
+              {" or "}
+              <button
+                onClick={handleChange("roundtrip")}
+                className="rounded-md py-2.5 px-2.5 m-1 text-white bg-blue-500 hover:bg-blue-400 active:bg-blue-600 shadow-md scale-90 focus:outline-none focus:ring focus:ring-blue-300"
+                id="round-trip"
+              >
+                Round Trip
+              </button>
+            </span> */}
+						<div className='space-x-1'>
+							<p className='inline-block'>One-Way</p>
+							<FormControlLabel
+								className='inline-block'
+								control={
+									<Switch
+										checked={toggle.status}
+										onChange={handleToggle}
+										color='primary'
+										name='status'
+									/>
+								}
+								label='Round Trip'
+							/>
+						</div>
 						<br />
-						<br />
-
 						{/* dates */}
 						<span>
 							<label
