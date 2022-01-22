@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "regenerator-runtime";
 import FlightModal from "./FlightModal";
+import MyTrips from "./MyTrips";
 
 const FlightLocationSelector = () => {
   const [tripLocationInfo, setTripLocationInfo] = useState({
