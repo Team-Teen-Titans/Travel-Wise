@@ -11,7 +11,8 @@ const CovidMap = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    axios.get(NEW_VACCINE_ENDPOINT)
+    axios
+      .get(NEW_VACCINE_ENDPOINT)
       .then(({ data }) => {
         //initialize data array with the names of the columns
         const formattedData = [["Country", "Cases per million"]];
@@ -20,11 +21,11 @@ const CovidMap = () => {
         for (let i = 0; i < data.length; i++) {
           if (!data[i].countryInfo.iso3) {
             continue;
-          };
+          }
           const {
             country,
             countryInfo: { iso2, iso3 },
-            casesPerOneMillion
+            casesPerOneMillion,
           } = data[i];
           // if (
           //   Country === "Diamond Princess" ||
@@ -43,7 +44,7 @@ const CovidMap = () => {
               f: country,
               iso: iso3.toUpperCase(),
             },
-            casesPerOneMillion
+            casesPerOneMillion,
           ]);
           //NOTE: the google map chart does not require a "iso" property for the first column, but we save it there so we can pass that object to the "VaccineMap" component
           //  because that component needs a three-letter iso code in order to make its API request
@@ -64,8 +65,8 @@ const CovidMap = () => {
   };
 
   return (
-    <div className="flex flex-col min-h-screen">
-      <h1 align="center" className="py-4 text-lg font-mono">
+    <div className="flex flex-col">
+      <h1 align="center" className="py-4 text-xl font-semibold">
         Active Covid-19 Cases per 100,000 People
       </h1>
       {loading ? (

@@ -69,7 +69,7 @@ const Login = ({ setRefetchAuth }) => {
             </label>
             <div>
               <button
-                className="w-full bg-indigo-700 hover:bg-pink-700 text-white font-bold py-2 px-4 mb-6 rounded"
+                className="w-full bg-indigo-700 hover:bg-green-300 text-white font-bold py-2 px-4 mb-6 rounded"
                 type="submit"
                 onClick={handleSubmit}
               >

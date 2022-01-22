@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import TripCard from "./TripCard"
+import TripCard from "./TripCard";
 import { Link } from "react-router-dom";
 import Loader from "./Spinner";
 import axios from "axios";
@@ -11,7 +11,7 @@ const MyTrips = () => {
   // on mount pull users saved tripInfo searches from database and put into an array
   useEffect(() => {
     axios
-      .get('/api/saved-flights/get-saved-flights')
+      .get("/api/saved-flights/get-saved-flights")
       .then(({ data }) => {
         setMyTripsList(data);
       })
@@ -27,24 +27,27 @@ const MyTrips = () => {
   return (
     <div>
       {loading ? (
-        <Loader />
-      )
-        :
-        (
-          <div>
-            <h3>My Trips</h3>
-            {myTripsList.map((savedTripInfo, index) => (
-              <TripCard key={index} savedTripInfo={savedTripInfo} />
-            ))}
-            {myTripsList.length === 0 && (
-              <p>
-                {' '}
-        No trips saved yet! Click <Link to={'/'}>here</Link> to return
-        to the home page. 
-              </p>
-            )}
-          </div>
-        )}
+        <div className="flex justify-center items-center pt-20">
+          <Loader />
+        </div>
+      ) : (
+        <div className="flex flex-col justify-center items-center py-3">
+          <h1 className="self-center text-3xl font-bold">My Trips</h1>
+          {myTripsList.map((savedTripInfo, index) => (
+            <TripCard key={index} savedTripInfo={savedTripInfo} />
+          ))}
+          {myTripsList.length === 0 && (
+            <h3 className="pt-2">
+              {" "}
+              No trips saved yet! Click{" "}
+              <span className="text-indigo-700 font-semibold underline">
+                <Link to={"/"}>here</Link>
+              </span>{" "}
+              to search for flights.
+            </h3>
+          )}
+        </div>
+      )}
     </div>
   );
 };
