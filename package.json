@@ -27,6 +27,7 @@
     "axios": "^0.24.0",
     "bcrypt": "^5.0.1",
     "concurrently": "^7.0.0",
+    "cookie-session": "^2.0.0",
     "cors": "^2.8.5",
     "dotenv": "^10.0.0",
     "dotenv-webpack": "^7.0.3",
