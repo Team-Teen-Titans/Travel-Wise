@@ -121,8 +121,10 @@ function initialize(passport) {
 		return done(null, user);
 	});
 
-	passport.deserializeUser(function (user, done) {
+	passport.deserializeUser(async (user, done) => {
 		// console.log('are we in deserializeUser func? user:', user)
+		// const query = `SELECT `;
+		// const findUser = await db.query()
 		return done(null, user);
 	});
 }

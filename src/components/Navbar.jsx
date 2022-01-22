@@ -1,14 +1,20 @@
-import React from "react";
-import { Link, Outlet } from "react-router-dom";
+import axios from 'axios';
+import React, { useContext } from 'react';
+import { Link, Outlet } from 'react-router-dom';
+import { AuthContext } from './App';
 
-function NavBar() {
-  return (
-    <>
-      <nav className="flex items-center justify-between flex-wrap bg-gradient-to-r from-blue-400 via-indigo-400 to-blue-400  p-6">
-        <div className="flex items-center flex-shrink-0 text-white mr-6">
-          {/* <span className="font-semibold text-xl tracking-tight">
-            COVID SENTINEL
-          </span> */}
+function NavBar({ setRefetchAuth }) {
+  const isUserLoggedIn = useContext(AuthContext);
+
+  const handleLogOut = async () => {
+    axios.post('/api/user/logout');
+    setRefetchAuth(prev => ++prev)
+  }
+
+	return (
+		<>
+			<nav className="flex items-center justify-between flex-wrap bg-gradient-to-r from-blue-400 via-indigo-400 to-blue-400  p-6">
+				<div className='flex items-center flex-shrink-0 text-white mr-6'>
           <Link to="/" className="font-semibold text-xl tracking-tight">
             travel wise.
           </Link>
@@ -34,36 +40,55 @@ function NavBar() {
               Home
             </Link>
             <Link
-              to="/my-trips"
-              className="block mt-4 lg:inline-block lg:mt-0 text-white hover:text-green-300 mr-5 ml-5"
-            >
-              My Trips
-            </Link>
-            <Link
-              to="/covid-update"
-              className="block mt-4 lg:inline-block lg:mt-0 text-white hover:text-green-300 mr-5 ml-5"
+              to='/covid-update'
+              className='block mt-4 lg:inline-block lg:mt-0 text-white hover:text-green-300 mr-5 ml-5'
             >
               COVID Update
             </Link>
-            <Link
-              to="/login"
-              className="block mt-4 lg:inline-block lg:mt-0 text-white hover:text-green-300 mr-5 ml-5"
-            >
-              Login
-            </Link>
-            <Link
-              to="/signup"
-              className="block mt-4 lg:inline-block lg:mt-0 text-white hover:text-green-300 mr-5 ml-5"
-            >
-              Sign up
-            </Link>
+            {isUserLoggedIn && (<>
+              <Link
+              to='/my-trips'
+              className='block mt-4 lg:inline-block lg:mt-0 text-white hover:text-green-300 mr-5 ml-5'
+              >
+                My Trips
+              </Link>
+              <Link
+                to='/profile'
+                className='block mt-4 lg:inline-block lg:mt-0 text-white hover:text-green-300 mr-5 ml-5'
+              >
+                {/* {`Welcome, ${isUserLoggedIn.first_name} ${isUserLoggedIn.last_name}`} */}
+                {`Welcome, ${isUserLoggedIn.first_name} ${isUserLoggedIn.last_name}`}
+
+              </Link>
+              <Link
+                to='/'
+                onClick={handleLogOut}
+                className='block mt-4 lg:inline-block lg:mt-0 text-white hover:text-green-300 mr-5 ml-5'
+              >
+                Log Out
+              </Link>
+            </>)}
+            {!isUserLoggedIn && (<>
+              <Link
+                to='/login'
+                className='block mt-4 lg:inline-block lg:mt-0 text-white hover:text-green-300 mr-5 ml-5'
+              >
+                Login
+              </Link>
+              <Link
+                to='/signup'
+                className='block mt-4 lg:inline-block lg:mt-0 text-white hover:text-green-300 mr-5 ml-5'
+              >
+                Sign up
+              </Link>
+            </>)}
           </div>
         </div>
         <hr />
       </nav>
       <Outlet />
     </>
-  );
+  )
 }
 
 export default NavBar;
