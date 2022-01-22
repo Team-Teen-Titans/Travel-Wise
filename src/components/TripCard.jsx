@@ -147,12 +147,12 @@ const TripCard = ({ savedTripInfo }) => {
 		}
 	};
 
-	//sets minimum departure date to today
-	// const minDate = new Date().toLocaleDateString('en-CA', {
-	// 	day: '2-digit',
-	// 	month: '2-digit',
-	// 	year: 'numeric',
-	// });
+	const findRoundTripMinDate = (date) => {
+		const minDate = date.split("");
+		const changeDay = +minDate[minDate.length - 1] + 1;
+		minDate[minDate.length - 1] = changeDay;
+		return minDate.join("");
+	};
 
 	return (
 		<div>

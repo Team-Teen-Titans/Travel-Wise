@@ -32,7 +32,7 @@ const FlightModal = ({ tripLocationInfo }) => {
 		destinationAirport: null,
 		departureDate: null,
 		returnDate: null,
-		oneWayOrRound: null,
+		oneWayOrRound: 'one-way',
 		numOfAdults: 1,
 		numOfChildren: 0,
 		numOfInfants: 0,
@@ -86,31 +86,6 @@ const FlightModal = ({ tripLocationInfo }) => {
 			console.error('err in getAirportCode func:', err);
 		}
 	};
-
-	// const getAirportCode = async (originCity, destinationCity) => {
-	//   try {
-	//     // get airport codes from api
-	//     const originUrl = originCity.replace(/\s/g, '%20');
-	//     const destinationUrl = destinationCity.replace(/\s/g, '%20');
-	//     const originRes = await axios.get(`/api/flights/airport/${originUrl}`);
-	//     const destinationRes = await axios.get(
-	//       `/api/flights/airport/${destinationUrl}`
-	//     );
-	//     // update airport code lists
-	//     setAirportLists({
-	//       ...airportLists,
-	//       originAirportList: originRes.data,
-	//       destinationAirportList: destinationRes.data,
-	//     });
-	//     // default selected airport code to first option
-	//     setTripInfo({
-	//       ...tripInfo,
-	//       originAirport: originRes.data[0],
-	//       destinationAirport: destinationRes.data[0],
-	//     });
-	//     // done loading
-	//     setLoading(false);
-
 	// populate origin airport codes options
 	const originAirportOptions =
 		airportLists.originAirportList.length > 0 &&
@@ -121,37 +96,6 @@ const FlightModal = ({ tripLocationInfo }) => {
 				</option>
 			);
 		});
-	/*const getAirportCode = async (originCity, destinationCity) => {
-		try {
-			// get airport codes from api
-			const originUrl = originCity.replace(/\s/g, '%20');
-			const destinationUrl = destinationCity.replace(/\s/g, '%20');
-			const originRes = await axios.get(`/api/flights/airport/${originUrl}`);
-			const destinationRes = await axios.get(
-				`/api/flights/airport/${destinationUrl}`
-			);
-			// update airport code lists
-			setAirportLists({
-				...airportLists,
-				originAirportList: originRes.data,
-				destinationAirportList: destinationRes.data,
-			});
-			// default selected airport code to first option
-			setTripInfo({
-				...tripInfo,
-				originAirport: originRes.data[0],
-				destinationAirport: destinationRes.data[0],
-			});
-			// done loading
-			setLoading(false);
-
-			if (originRes.data.length > 0 && destinationRes.data.length > 0) {
-				setAirportCodeFound(true);
-			}
-		} catch (err) {
-			console.error('err in getAirportCode func:', err);
-		}
-	};*/
 
 	// populate destination airport codes options
 	const destinationAirportOptions =
@@ -164,37 +108,19 @@ const FlightModal = ({ tripLocationInfo }) => {
 			);
 		});
 
-	// populate destination airport codes options
-	// const destinationAirportOptions =
-	//   airportLists.destinationAirportList.length > 0 &&
-	//   airportLists.destinationAirportList.map((code, i) => {
-	//     return (
-	//       <option key={i} value={code}>
-	//         {code}
-	//       </option>
-	//     );
-	//   });
-
 	const handleToggle = (e) => {
 		setToggle({ ...toggle, [e.target.name]: e.target.checked });
 		let toggledTrip;
 		if (toggle.status === true) {
-			toggledTrip = 'round-trip';
-		} else {
 			toggledTrip = 'one-way';
+		} else {
+			toggledTrip = 'round-trip';
 		}
 		setTripInfo({ ...tripInfo, oneWayOrRound: toggledTrip });
 	};
 
 	// update trip info when fields changed
 	const handleChange = (type) => (e) => {
-		// let toggledTrip;
-		// if (toggle.status === true) {
-		//   toggledTrip = 'round-trip';
-		// } else {
-		//   toggledTrip = 'one-way';
-		// }
-
 		let removedText;
 		switch (type) {
 			// case 'onewaytrip':
@@ -333,27 +259,31 @@ const FlightModal = ({ tripLocationInfo }) => {
 								className='text-base font-semibold text-xl tracking-tight'
 							>
 								Departure Date:{' '}
-							</label>
-							<input
-								type='date'
-								name='departure'
-								className='border 1px rounded'
-								min={minDate}
-								onChange={handleChange('departureDate')}
-							></input>{' '}
-							<label
-								htmlFor='return-date'
-								className='text-base font-semibold text-xl tracking-tight'
-							>
-								Return Date:{' '}
-							</label>
-							<input
-								type='date'
-								name='return'
-								className='border 1px rounded'
-								min={findRoundTripMinDate(minDate)}
-								onChange={handleChange('returnDate')}
-							></input>
+							
+								<input
+									type='date'
+									name='departure'
+									className='border 1px rounded'
+									min={minDate}
+									onChange={handleChange('departureDate')}
+								/>
+							</label>{' '}
+							{tripInfo.oneWayOrRound === 'round-trip' ? (<>
+								<label
+									htmlFor='return-date'
+									className='text-base font-semibold text-xl tracking-tight'
+								>
+									Return Date:{' '}
+								
+									<input
+										type='date'
+										name='return'
+										className='border 1px rounded'
+										min={findRoundTripMinDate(minDate)}
+										onChange={handleChange('returnDate')}
+									/>
+								</label>
+							</>) : null}
 						</span>
 						<br />
 						<br />
