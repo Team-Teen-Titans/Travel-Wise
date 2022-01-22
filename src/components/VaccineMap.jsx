@@ -27,6 +27,7 @@ const VaccineMap = () => {
           const formattedPropertyName = property.replace(/(^[a-z])|(_[a-z])/g, matched => matched.toUpperCase().replace('_', ' '));
           countryDataArray.push([formattedPropertyName, latestVaccinationData[property]])
         }
+        console.log(countryDataArray)
         setCountryData(countryDataArray);
         setLoading(false);
       })

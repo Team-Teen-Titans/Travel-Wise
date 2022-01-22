@@ -1,8 +1,7 @@
 const VACCOVID_API_HOST =
-  'vaccovid-coronavirus-vaccine-and-treatment-tracker.p.rapidapi.com';
-const VACCINATION_API_HOST = 'covid-19-world-vaccination-data.p.rapidapi.com';
-
-const vaccinationOptions = {
+  'vaccovid-coronavirus-vaccine-and-treatment-tracker.p.rapidapi.com';//doesnt work as of Jan 21, 2022
+const VACCINATION_API_HOST = 'covid-19-world-vaccination-data.p.rapidapi.com';//doesnt work as of Jan 21, 2022
+const vaccinationOptions = {//doesnt work as of Jan 21, 2022
   method: 'GET',
   url: process.env.VACCINATION_API_ENDPOINT,
   params: { iso: 'USA' },
@@ -12,6 +11,7 @@ const vaccinationOptions = {
   },
 };
 
+const NEW_VACCINE_ENDPOINT = process.env.NEW_VACCINE_ENDPOINT;
 const covidOptions = {
   method: 'GET',
   url: 'https://vaccovid-coronavirus-vaccine-and-treatment-tracker.p.rapidapi.com/api/npm-covid-data/countries', // example uses Asia only, need to update .env to include different endpoints
@@ -134,5 +134,6 @@ export {
   countryNameToCode,
   flightKey,
   getFlightsList,
-  globalCovidOptions
+  globalCovidOptions,
+  NEW_VACCINE_ENDPOINT
 };
