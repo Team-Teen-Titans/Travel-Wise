@@ -28,6 +28,7 @@ flightsController.getFlights = async (req, res, next) => {
     const headers = {
       Connection: "keep-alive",
       "Keep-Alive": "timeout=10, max=10",
+      timeout: 20000,
     };
     const { data: tripApiCall } = await axios.get(
       flightApiUrlWithParams,
@@ -37,8 +38,7 @@ flightsController.getFlights = async (req, res, next) => {
       throw new Error("Trips property is an empty array.");
     }
     console.log("url", flightApiUrlWithParams);
-    //-----------------------------------------------------------------------------------------------------------------------------------------------------
-    console.log("running processing algo");
+    // console.log("running processing algo");
     const flightList = [];
     for (let i = 0; i < 30; i++) {
       const flight = {
@@ -63,6 +63,9 @@ flightsController.getFlights = async (req, res, next) => {
           flight.legTwoInfo = leg;
         }
       });
+
+      //sets value to false if no leg two
+      if (!flight.hasOwnProperty("legTwoInfo")) flight.legTwoInfo = false;
 
       flightList.push(flight);
     }

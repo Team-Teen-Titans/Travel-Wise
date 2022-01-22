@@ -2,11 +2,11 @@ import React from 'react';
 import { Link, Outlet } from 'react-router-dom';
 
 function NavBar() {
-  return (
-    <>
-      <nav className='flex items-center justify-between flex-wrap bg-blue-500 p-6'>
-        <div className='flex items-center flex-shrink-0 text-white mr-6'>
-          {/* <span className="font-semibold text-xl tracking-tight">
+	return (
+		<>
+			<nav className='flex items-center justify-between flex-wrap bg-blue-500 p-6'>
+				<div className='flex items-center flex-shrink-0 text-white mr-6'>
+					{/* <span className="font-semibold text-xl tracking-tight">
             COVID SENTINEL
           </span> */}
           <Link to='/' className='font-semibold text-xl tracking-tight'>
@@ -29,13 +29,19 @@ function NavBar() {
           <div className='justify-between text-sm lg:flex-grow text-right'>
             <Link
               to='/'
-              className='block mt-4 lg:inline-block lg:mt-0 text-white hover:text-green-300 mr-5'
+              className='block mt-4 lg:inline-block lg:mt-0 text-white hover:text-green-300 mr-5 ml-5'
             >
               Home
             </Link>
             <Link
-              to='/explore'
-              className='block mt-4 lg:inline-block lg:mt-0 text-white hover:text-green-300 mr-5'
+              to='/my-trips'
+              className='block mt-4 lg:inline-block lg:mt-0 text-white hover:text-green-300 mr-5 ml-5'
+            >
+              My Trips
+            </Link>
+            <Link
+              to='/covid-update'
+              className='block mt-4 lg:inline-block lg:mt-0 text-white hover:text-green-300 mr-5 ml-5'
             >
               COVID Update
             </Link>

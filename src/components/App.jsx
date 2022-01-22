@@ -27,7 +27,7 @@ const App = () => {
         />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
-        <Route path="/explore" element={<CovidWorldData />} />
+        <Route path="/covid-update" element={<CovidWorldData />} />
         <Route
           path="/flights-display"
           element={<FlightsDisplayFeedContainer />}
