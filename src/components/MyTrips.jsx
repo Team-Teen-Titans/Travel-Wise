@@ -9,18 +9,15 @@ const MyTrips = () => {
   const [myTripsList, setMyTripsList] = useState([]);
 
   // on mount pull users saved tripInfo searches from database and put into an array
-  useEffect(() => {
-    axios
-      .get('/api/saved-flights/get-saved-flights')
-      .then(({ data }) => {
-        setMyTripsList(data);
-      })
-      .then(() => {
-        setLoading(false);
-      })
-      .catch((e) => {
-        console.log(e);
-      });
+  useEffect(async () => {
+    try {
+      const savedTripInfo = await axios.get('/api/saved-flights/get-saved-flights');
+      setMyTripsList(savedTripInfo.data);
+      setLoading(false);
+    }
+    catch (err) {
+      console.error('err in getting saved flights:', err);
+    }
   }, []);
 
   // render saved tripInfo

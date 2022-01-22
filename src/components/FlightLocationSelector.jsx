@@ -10,7 +10,7 @@ const FlightLocationSelector = () => {
   });
 
   const [showModal, setShowModal] = useState(false);
-  const [key, setKey] = useState(1);
+  const [key, setKey] = useState(0);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
