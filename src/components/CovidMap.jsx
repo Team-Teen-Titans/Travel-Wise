@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Chart } from "react-google-charts";
 import axios from "axios";
-import { covidOptions, countryCodeToName } from "../utils/constants";
+import { NEW_VACCINE_ENDPOINT } from "../utils/constants";
 import Loader from "./Spinner";
 import { Link, useNavigate } from "react-router-dom";
 
@@ -11,39 +11,39 @@ const CovidMap = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    axios
-      .request(covidOptions)
+    axios.get(NEW_VACCINE_ENDPOINT)
       .then(({ data }) => {
         //initialize data array with the names of the columns
-        const formattedData = [["Country", "Cases per 100,000"]];
+        const formattedData = [["Country", "Cases per million"]];
 
         //loop thru data, adding info from the API to "formattedData" array
         for (let i = 0; i < data.length; i++) {
-          const {
-            ActiveCases,
-            Population,
-            Country,
-            TwoLetterSymbol,
-            ThreeLetterSymbol,
-          } = data[i];
-          if (
-            Country === "Diamond Princess" ||
-            Country === "MS Zaandam" ||
-            Country === "Channel Islands"
-          ) {
+          if (!data[i].countryInfo.iso3) {
             continue;
-          }
-          const casesPerNum =
-            (Math.floor((ActiveCases / Population) * 100000) > 0 &&
-              Math.floor((ActiveCases / Population) * 100000)) ||
-            0;
+          };
+          const {
+            country,
+            countryInfo: { iso2, iso3 },
+            casesPerOneMillion
+          } = data[i];
+          // if (
+          //   Country === "Diamond Princess" ||
+          //   Country === "MS Zaandam" ||
+          //   Country === "Channel Islands"
+          // ) {
+          //   continue;
+          // }
+          // const casesPerNum =
+          //   (Math.floor((cases / population) * 100000) > 0 &&
+          //     Math.floor((cases / population) * 100000)) ||
+          //   0;
           formattedData.push([
             {
-              v: TwoLetterSymbol,
-              f: Country,
-              iso: ThreeLetterSymbol.toUpperCase(),
+              v: iso2,
+              f: country,
+              iso: iso3.toUpperCase(),
             },
-            casesPerNum,
+            casesPerOneMillion
           ]);
           //NOTE: the google map chart does not require a "iso" property for the first column, but we save it there so we can pass that object to the "VaccineMap" component
           //  because that component needs a three-letter iso code in order to make its API request

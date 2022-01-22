@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Loader from "./Spinner";
-import { globalCovidOptions } from "../utils/constants";
+import { NEW_COVID_WORLD_ENDPOINT } from "../utils/constants";
 import { BiWorld } from "react-icons/bi";
 import { AiFillCloseCircle } from "react-icons/ai";
 
@@ -12,8 +12,8 @@ const CovidWorldData = () => {
     activeCases: "",
     caseFatality: "",
     newCases: "",
-    newDeaths: "",
-    newRecovered: "",
+    todayDeaths: "",
+    todayRecovered: "",
     critical: "",
     totalCases: "",
     totalDeaths: "",
@@ -22,38 +22,22 @@ const CovidWorldData = () => {
 
   useEffect(() => {
     axios
-      .request(globalCovidOptions)
+      .get(NEW_COVID_WORLD_ENDPOINT)
       .then(({ data }) => {
         setLoading(false);
         setState({
-          activeCases: data[0].ActiveCases.toLocaleString(undefined, {
-            maximumFractionDigits: 2,
-          }),
-          caseFatality: data[0].Case_Fatality_Rate,
-          newCases: data[0].NewCases.toLocaleString(undefined, {
-            maximumFractionDigits: 2,
-          }),
-          newDeaths: data[0].NewDeaths.toLocaleString(undefined, {
-            maximumFractionDigits: 2,
-          }),
-          newRecovered: data[0].NewRecovered.toLocaleString(undefined, {
-            maximumFractionDigits: 2,
-          }),
-          critical: data[0].Serious_Critical.toLocaleString(undefined, {
-            maximumFractionDigits: 2,
-          }),
-          totalCases: data[0].TotalCases.toLocaleString(undefined, {
-            maximumFractionDigits: 2,
-          }),
-          totalDeaths: data[0].TotalDeaths.toLocaleString(undefined, {
-            maximumFractionDigits: 2,
-          }),
-          totalRecovered: Number(data[0].TotalRecovered).toLocaleString(
-            undefined,
-            {
-              maximumFractionDigits: 2,
-            }
-          ),
+          activeCases: data[0].active.toLocaleString(),
+          caseFatality: (
+            (data[0].deaths / data[0].cases) *
+            100
+          ).toLocaleString(),
+          newCases: data[0].todayCases.toLocaleString(),
+          todayDeaths: data[0].todayDeaths.toLocaleString(),
+          todayRecovered: data[0].todayRecovered.toLocaleString(),
+          critical: data[0].critical.toLocaleString(),
+          totalCases: data[0].cases.toLocaleString(),
+          totalDeaths: data[0].deaths.toLocaleString(),
+          totalRecovered: data[0].recovered.toLocaleString(),
         });
       })
       .catch((err) => {
@@ -110,10 +94,10 @@ const CovidWorldData = () => {
                 New Cases: {state.newCases}
               </span>
               <span className="m-2.5 p-2.5 flex justify-center items-center text-gray-900 font-bold uppercase px-6 py-2 text-l outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150">
-                New Deaths: {state.newDeaths}
+                New Deaths: {state.todayDeaths}
               </span>
               <span className="m-2.5 p-2.5 flex justify-center items-center text-gray-900 font-bold uppercase px-6 py-2 text-l outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150">
-                New Recovered: {state.newRecovered}
+                New Recovered: {state.todayRecovered}
               </span>
               <span className="m-2.5 p-2.5 flex justify-center items-center text-gray-900 font-bold uppercase px-6 py-2 text-l outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150">
                 Critical Cases: {state.critical}
