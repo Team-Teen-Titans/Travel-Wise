@@ -35,7 +35,9 @@ const FlightsDisplayFeedContainer = () => {
   return loading ? (
     <Loader />
   ) : flights ? (
-    <FlightFeed flights={flights} />
+    <div className="flex h-screen bg-indigo-700">
+      <FlightFeed flights={flights} />
+    </div>
   ) : (
     <p>
       {" "}
