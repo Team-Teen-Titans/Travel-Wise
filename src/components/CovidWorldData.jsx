@@ -46,7 +46,10 @@ const CovidWorldData = () => {
   }, []);
   return (
     <div className="flex flex-col min-h-screen flex h-screen">
-      <h1 align="center" className="py-4 text-3xl font-mono border-2 rounded">
+      <h1
+        align="center"
+        className="py-4 text-3xl font-extrabold border-2 rounded"
+      >
         Global Covid Data
       </h1>
       {loading ? (
@@ -83,7 +86,7 @@ const CovidWorldData = () => {
           <div className="m-2.5 p-2.5 flex justify-center items-center">
             <button
               onClick={() => setToggle(true)}
-              className="border 1px rounded text-blue-400 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+              className="hover:text-green-300 border 1px rounded bg-gradient-to-r from-blue-400 via-indigo-400 to-blue-400 font-bold text-white uppercase px-6 py-2 text-sm outline-none focus:outline-none hover:opacity-75 mr-1 mb-1 ease-linear transition-all duration-150"
             >
               View More
             </button>

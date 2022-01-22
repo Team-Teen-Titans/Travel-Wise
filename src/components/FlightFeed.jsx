@@ -13,15 +13,10 @@ const FlightFeed = ({ flights }) => {
           return <FlightCard key={index} flightInfo={flightInfo} />;
         })
     );
-    // console.log(flightsArr, "flights info in state");
   }, []);
   return (
-    <div>
-      {/* <h3>Available Departing Flights: </h3>
-      <br /> */}
-      {/* {flights.map((flightInfo, index) => (
-        <FlightCard key={index} flightInfo={flightInfo} />
-      ))} */}
+    <div className="flex flex-col">
+      <h1 className="font-extrabold text-3xl">Flights: </h1>
       {flightsArr}
 
       {flights.length === 0 && (
