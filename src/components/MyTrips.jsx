@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import TripCard from "./TripCard"
+import MyTripFeed from "./MyTripFeed"
 import { Link } from "react-router-dom";
 import Loader from "./Spinner";
 import axios from "axios";
@@ -28,19 +28,7 @@ const MyTrips = () => {
       )
         :
         (
-          <div>
-            <h3>My Trips</h3>
-            {myTripsList.map((savedTripInfo, index) => (
-              <TripCard key={index} savedTripInfo={savedTripInfo} />
-            ))}
-            {myTripsList.length === 0 && (
-              <p>
-                {' '}
-        No trips saved yet! Click <Link to={'/'}>here</Link> to return
-        to the home page. 
-              </p>
-            )}
-          </div>
+          <MyTripFeed myTripsList={myTripsList}/>
         )}
     </div>
   );

@@ -3,7 +3,7 @@ import { Navigate, useNavigate } from 'react-router';
 import SubmitSearchButton from './SubmitSearchButton';
 import axios from "axios";
 
-const TripCard = ({ savedTripInfo }) => {
+const TripCard = ({ savedTripInfo, setMyTripsKey, myTripsKey }) => {
   console.log('savedTripInfo:', savedTripInfo);
 
   const {
@@ -130,7 +130,7 @@ const TripCard = ({ savedTripInfo }) => {
       console.log('deleting trip id:', tripId);
       await axios.delete('/api/saved-flights/delete-saved-flights',
         { data: {tripId: tripId} });
-      navigate('/my-trips');
+      window.location.reload();
     }
     catch (err) {
       console.error('err in delete:', err);
