@@ -12,6 +12,7 @@ const vaccinationOptions = {//doesnt work as of Jan 21, 2022
 };
 
 const NEW_VACCINE_ENDPOINT = process.env.NEW_VACCINE_ENDPOINT;
+const NEW_COVID_WORLD_ENDPOINT = process.env.NEW_COVID_WORLD_ENDPOINT;
 const covidOptions = {
   method: 'GET',
   url: 'https://vaccovid-coronavirus-vaccine-and-treatment-tracker.p.rapidapi.com/api/npm-covid-data/countries', // example uses Asia only, need to update .env to include different endpoints
@@ -135,5 +136,6 @@ export {
   flightKey,
   getFlightsList,
   globalCovidOptions,
-  NEW_VACCINE_ENDPOINT
+  NEW_VACCINE_ENDPOINT,
+  NEW_COVID_WORLD_ENDPOINT,
 };
