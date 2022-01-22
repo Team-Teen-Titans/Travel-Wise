@@ -11,6 +11,7 @@ import Login from "./Login";
 import SignUp from "./SignUp";
 import CovidWorldData from './CovidWorldData';
 import FlightsDisplayFeedContainer from "./FlightsDisplayFeedContainer";
+import MyTrips from "./MyTrips";
 import "../stylesheets/styles.css";
 
 const App = () => {
@@ -27,16 +28,17 @@ const App = () => {
         />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
-        <Route path="/explore" element={<CovidWorldData />} />
+        <Route path="/covid-update" element={<CovidWorldData />} />
         <Route
           path="/flights-display"
           element={<FlightsDisplayFeedContainer />}
           render={(props) => <FlightsDisplayFeedContainer {...props} />}
         />
+        <Route path="/my-trips" element={<MyTrips />} />
       </Routes>
       <Footer/>
     </>
-  )
+  );
 };
 
 export default App;

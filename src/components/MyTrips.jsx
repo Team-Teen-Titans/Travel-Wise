@@ -10,8 +10,8 @@ const MyTrips = () => {
     originAirport: 'SEA',
     destinationAirportList: ['HNL', 'HIK'],
     destinationAirport: 'HNL',
-    departureDate: '2022-01-22',
-    returnDate: '2022-01-29',
+    departureDate: '2022-02-04',
+    returnDate: '2022-02-12',
     oneWayOrRound: 'onewaytrip',
     numOfAdults: 1,
     numOfChildren: 0,
@@ -24,12 +24,12 @@ const MyTrips = () => {
     originAirport: 'LAX',
     destinationAirportList: ['JFK','LGA'],
     destinationAirport: 'JFK',
-    departureDate: '2022-01-22',
-    returnDate: '2022-01-29',
+    departureDate: '2022-02-05',
+    returnDate: '2022-02-19',
     oneWayOrRound: 'roundtrip',
-    numOfAdults: 2,
-    numOfChildren: 1,
-    numOfInfants: 1,
+    numOfAdults: 1,
+    numOfChildren: 0,
+    numOfInfants: 0,
     cabinClass: 'First'
   }];
   // render saved tripInfo
