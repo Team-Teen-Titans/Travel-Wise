@@ -16,6 +16,7 @@ const FlightFeed = ({ flights }) => {
   }, []);
   return (
     <div className="flex flex-col">
+
       <h1 className="font-extrabold text-3xl mt-2">Flights: </h1>
       {flightsArr}
 
