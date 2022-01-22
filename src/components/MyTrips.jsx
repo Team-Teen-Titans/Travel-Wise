@@ -14,7 +14,6 @@ const MyTrips = () => {
       .get('/api/saved-flights/get-saved-flights')
       .then(({ data }) => {
         setMyTripsList(data);
-        console.log(data);
       })
       .then(() => {
         setLoading(false);
