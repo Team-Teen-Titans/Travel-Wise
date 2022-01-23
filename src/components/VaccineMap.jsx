@@ -1,45 +1,44 @@
-import React from 'react';
-import { useEffect, useState } from 'react/cjs/react.development';
-import { Chart } from 'react-google-charts';
-import axios from 'axios';
-import { vaccinationOptions } from '../utils/constants';
-import Loader from './Spinner';
-import { useLocation } from 'react-router';
-import object from '../utils/isoCodes';
-import Table from './Table';
+import React, { useEffect, useState } from "react";
+import { Chart } from "react-google-charts";
+import axios from "axios";
+import { vaccinationOptions } from "../utils/constants";
+import Loader from "./Spinner";
+import { useLocation } from "react-router";
+import Table from "./Table";
 
 const VaccineMap = () => {
-  const [ countryData, setCountryData ] = useState([]);
-  const [ loading, setLoading ] = useState(true);
+  const [countryData, setCountryData] = useState([]);
+  const [onHoverMapData, setOnHoverMapData] = useState([]);
+  const [loading, setLoading] = useState(true);
   const { state } = useLocation();
-  let iso;
-  if (!state) {
-    vaccinationOptions.params['iso'] = 'USA';
-    iso = 'USA';
-  } else {
-    const { Country } = state;
-    vaccinationOptions.params['iso'] = object[Country];
-    iso = object[Country];
-  }
 
   useEffect(() => {
+    vaccinationOptions.params.iso = state.iso;
     axios
       .request(vaccinationOptions)
-      .then((response) => response.data)
-      .then((data) => {
-        const { country, total_vaccinations } = data[data.length-1];
-        return { country, total_vaccinations };
-      })
-      .then((data) => {
-        const cache = [ [], [] ];
-        for (const property in data) {
-          const capitalizedString = `${property[0].toUpperCase()}${property.slice(1)}`;
-          const formattedString = capitalizedString.replaceAll(/_/g, ' ');
-          cache[0].push(formattedString);
-          const dataPoint = Number.isNaN(+data[property]) ? data[property] : +data[property];
-          cache[1].push(dataPoint);
+      .then(({ data }) => {
+        //setting onhover data for vaccine map
+        const latestVaccinationData = data[data.length - 1];
+        const onHoverMapDataArray = [
+          ["Country", "Total Vaccinations"],
+          [state, Number(latestVaccinationData.total_vaccinations)],
+        ];
+        setOnHoverMapData(onHoverMapDataArray);
+
+        //setting table data for the Table component
+        const countryDataArray = [["", ""]];
+        for (const property in latestVaccinationData) {
+          const formattedPropertyName = property.replace(
+            /(^[a-z])|(_[a-z])/g,
+            (matched) => matched.toUpperCase().replace("_", " ")
+          );
+          countryDataArray.push([
+            formattedPropertyName,
+            latestVaccinationData[property],
+          ]);
         }
-        setCountryData(cache);
+        console.log(countryDataArray);
+        setCountryData(countryDataArray);
         setLoading(false);
       })
       .catch(function (error) {
@@ -47,28 +46,32 @@ const VaccineMap = () => {
       });
   }, []);
 
-  const options = {
-  };
-    
+  const options = {};
 
   return (
     <div>
-      <h1>Vaccine Map</h1>
-      {loading ? <Loader/> :
-        <Chart 
-          chartType="GeoChart"
-          width="100%"
-          height="60vh"
-          data={countryData}
-          options={options}
-        />
-      }
-      {loading ? <Loader/> : 
-        <Table iso={iso}/>
-      }
+      {loading ? (
+        <div className="flex justify-center items-center h-full">
+          <Loader />
+        </div>
+      ) : (
+        <div className="flex flex-col items-center">
+          <h1 align="center" className="pt-4 text-xl ">
+            Traveling to {countryData[1].toString().replace(/Country,/g, "")}?
+          </h1>
+          <h2 className="pb-4 text-md">Here's the latest COVID stats.</h2>
+          <Chart
+            chartType="GeoChart"
+            width="100%"
+            height="60vh"
+            data={onHoverMapData}
+            options={options}
+          />
+        </div>
+      )}
+      {loading ? null : <Table countryData={countryData} />}
     </div>
   );
-
 };
 
 export default VaccineMap;
