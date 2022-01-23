@@ -31,7 +31,7 @@ const FlightModal = ({ tripLocationInfo }) => {
 		originAirport: null,
 		destinationAirport: null,
 		departureDate: null,
-		returnDate: null,
+		// returnDate: null,
 		oneWayOrRound: 'one-way',
 		numOfAdults: 1,
 		numOfChildren: 0,
@@ -113,10 +113,14 @@ const FlightModal = ({ tripLocationInfo }) => {
 		let toggledTrip;
 		if (toggle.status === true) {
 			toggledTrip = 'one-way';
+			const newTripObj = {...tripInfo};
+			delete newTripObj.returnDate;
+			setTripInfo({ ...newTripObj, oneWayOrRound: toggledTrip });
 		} else {
 			toggledTrip = 'round-trip';
+			setTripInfo({ ...tripInfo, oneWayOrRound: toggledTrip });
 		}
-		setTripInfo({ ...tripInfo, oneWayOrRound: toggledTrip });
+
 	};
 
 	// update trip info when fields changed
@@ -167,7 +171,7 @@ const FlightModal = ({ tripLocationInfo }) => {
 	// enable submit if there are no null fields
 	useEffect(() => {
 		console.log('checking fields');
-		console.log(Object.values(tripInfo));
+		console.log(tripInfo);
 		if (
 			submitDisabled &&
 			Object.values(tripInfo).every((field) => field !== null)
