@@ -114,11 +114,11 @@ const FlightModal = ({ tripLocationInfo }) => {
 		if (toggle.status === true) {
 			toggledTrip = 'one-way';
 			const newTripObj = {...tripInfo};
-			delete newTripObj.returnDate;
+			// delete newTripObj.returnDate;
 			setTripInfo({ ...newTripObj, oneWayOrRound: toggledTrip });
 		} else {
 			toggledTrip = 'round-trip';
-			setTripInfo({ ...tripInfo, oneWayOrRound: toggledTrip });
+			setTripInfo({ ...tripInfo, oneWayOrRound: toggledTrip, returnDate: null });
 		}
 
 	};
@@ -172,12 +172,30 @@ const FlightModal = ({ tripLocationInfo }) => {
 	useEffect(() => {
 		console.log('checking fields');
 		console.log(tripInfo);
-		if (
-			submitDisabled &&
-			Object.values(tripInfo).every((field) => field !== null)
-		) {
-			setSubmitDisabled(false);
+		if (tripInfo.oneWayOrRound === 'one-way') {
+			for (const property in tripInfo) {
+				if (property === 'returnDate' || (tripInfo[property] !== null && tripInfo[property] !== '')) {
+					continue;
+				}
+				return setSubmitDisabled(true);
+			}
+			return setSubmitDisabled(false);
 		}
+
+		for (const property in tripInfo) {
+			if (tripInfo[property] !== null && tripInfo[property] !== '') {
+				continue;
+			}
+			return setSubmitDisabled(true);
+		}
+		return setSubmitDisabled(false);
+		
+		// if (
+		// 	submitDisabled &&
+		// 	Object.values(tripInfo).every((field) => field !== null)
+		// ) {
+		// 	setSubmitDisabled(false);
+		// }
 	}, [tripInfo]);
 
 	const navigate = useNavigate();
